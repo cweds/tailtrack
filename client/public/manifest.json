@@ -1,7 +1,7 @@
 {
   "name": "TailTrack",
   "short_name": "TailTrack",
-  "description": "Keep track of Natty & Murphy's daily care - feeding and letting out",
+  "description": "Caring for your pet, made simple.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F5E1C0",
