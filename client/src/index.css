@@ -101,19 +101,17 @@
 
 .playful-bounce {
   @apply transition-all duration-200 ease-out;
-  will-change: transform, filter, box-shadow;
+  will-change: transform, box-shadow;
   position: relative;
 }
 
 .playful-bounce:hover {
   transform: translateY(-2px) scale(1.02);
-  filter: brightness(1.05);
   box-shadow: 0 8px 25px rgba(255, 213, 220, 0.4);
 }
 
 .playful-bounce:active {
   transform: translateY(1px) scale(0.98);
-  filter: brightness(1.1);
   box-shadow: 0 2px 10px rgba(255, 213, 220, 0.3);
 }
 
@@ -121,7 +119,6 @@
 @media (hover: none) {
   .playful-bounce:active {
     transform: scale(0.95);
-    filter: brightness(1.15);
     transition: all 100ms ease-out;
   }
 }
