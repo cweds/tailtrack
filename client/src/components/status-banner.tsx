@@ -34,14 +34,24 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     }
     
     emoji = "⚠️";
-    bgClass = "bg-gray-400 border-2 border-gray-700";
+    bgClass = "";
   }
 
   return (
-    <div className={cn(
-      "mx-4 mt-4 p-4 rounded-xl text-center font-medium paw-shadow text-gray-800",
-      bgClass
-    )}>
+    <div 
+      className={cn(
+        "mx-4 mt-4 p-4 rounded-xl text-center font-medium paw-shadow text-gray-800",
+        bgClass
+      )}
+      style={
+        !allComplete ? {
+          backgroundColor: '#9ca3af',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderColor: '#374151'
+        } : undefined
+      }
+    >
       <div className="flex items-center justify-center gap-2">
         <span className="text-2xl">{emoji}</span>
         <span className="font-semibold">{message}</span>
