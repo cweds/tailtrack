@@ -116,12 +116,13 @@ export class DatabaseStorage {
       const householdResponse = await fetch(`/api/activities/household/${userData.user.householdId}/today`);
       if (householdResponse.ok) {
         const result = await householdResponse.json();
-        console.log('Household activities received:', result.activities);
+        console.log(`Household activities received for user ${userId}:`, result.activities);
         const processedActivities = result.activities.map((activity: Activity) => ({
           ...activity,
           timestamp: new Date(activity.timestamp),
         }));
-        console.log('Processed household activities:', processedActivities);
+        console.log(`Processed household activities for user ${userId}:`, processedActivities);
+        console.log(`Returning ${processedActivities.length} activities for display`);
         return processedActivities;
       } else {
         console.error('Failed to fetch household activities');
