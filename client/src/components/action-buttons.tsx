@@ -1,6 +1,8 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import type { Action, Dog } from "@/hooks/use-dog-care";
-import { DogCareStorage } from "@/lib/dog-care-storage";
+import { DatabaseStorage } from "@/lib/database-storage";
+import { useAuth } from "@/contexts/auth-context";
 
 interface ActionButtonsProps {
   canTakeAction: boolean;
@@ -10,6 +12,10 @@ interface ActionButtonsProps {
 }
 
 export function ActionButtons({ canTakeAction, onAction, onQuickAction, selectedDogs }: ActionButtonsProps) {
+  const { user } = useAuth();
+  const [canFeed, setCanFeed] = useState(true);
+  const [canLetOut, setCanLetOut] = useState(true);
+
   // Only show buttons when dogs are selected
   if (selectedDogs.size === 0) {
     return null;
@@ -19,9 +25,31 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
   const isBothDogs = selectedDogsArray.length === 2;
   const dogText = isBothDogs ? "Both" : selectedDogsArray[0];
   
-  // Check if any selected dog is on cooldown for each action
-  const canFeed = selectedDogsArray.every(dog => DogCareStorage.canPerformAction(dog, 'Fed'));
-  const canLetOut = selectedDogsArray.every(dog => DogCareStorage.canPerformAction(dog, 'Let Out'));
+  // Check cooldowns when selection changes
+  useEffect(() => {
+    const checkCooldowns = async () => {
+      if (!user?.id || selectedDogsArray.length === 0) return;
+      
+      try {
+        const feedChecks = await Promise.all(
+          selectedDogsArray.map(dog => DatabaseStorage.canPerformAction(user.id, dog, 'Fed'))
+        );
+        const letOutChecks = await Promise.all(
+          selectedDogsArray.map(dog => DatabaseStorage.canPerformAction(user.id, dog, 'Let Out'))
+        );
+        
+        setCanFeed(feedChecks.every(can => can));
+        setCanLetOut(letOutChecks.every(can => can));
+      } catch (error) {
+        console.error('Error checking cooldowns:', error);
+        // Default to allowing actions if check fails
+        setCanFeed(true);
+        setCanLetOut(true);
+      }
+    };
+
+    checkCooldowns();
+  }, [user?.id, selectedDogsArray.join(',')]); // Re-check when selection changes
 
   return (
     <div className="space-y-3">
