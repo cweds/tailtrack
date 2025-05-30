@@ -4,7 +4,7 @@ import postgres from "postgres";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
-const sql = postgres(process.env.DATABASE_URL!);
+const sql = postgres("postgresql://postgres.azylofzqvhsodbhtipda:Wedekindlax174!@aws-0-us-east-1.pooler.supabase.com:6543/postgres");
 const db = drizzle(sql);
 
 export interface IStorage {
