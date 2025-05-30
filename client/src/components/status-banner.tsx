@@ -24,7 +24,7 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
       ? "Both dogs have been fed and let out for the evening — you're crushing it!"
       : "Both dogs have been fed and let out this morning — you're crushing it!";
     emoji = "🎉";
-    bgClass = "soft-blue-gradient";
+    bgClass = "pup-green-gradient";
   } else {
     // Determine what's missing for each dog
     const nattyNeedsFed = !nattyStatus.fed;

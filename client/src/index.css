@@ -29,6 +29,7 @@
   --golden-tan: 33 100% 76%; /* #F5E1C0 */
   --soft-blue: 207 100% 88%; /* #D4EAF7 */
   --dog-brown: 25 20% 58%; /* #B48A78 */
+  --pup-green: 113 42% 84%; /* #C8EBC5 */
 }
 
 .dark {
@@ -78,6 +79,10 @@
 
 .soft-blue-gradient {
   background: linear-gradient(135deg, #D4EAF7 0%, #B3D9F2 100%);
+}
+
+.pup-green-gradient {
+  background: linear-gradient(135deg, #C8EBC5 0%, #B5E3B1 100%);
 }
 
 .playful-bounce {
