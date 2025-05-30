@@ -99,46 +99,12 @@
 }
 
 .pup-pink-gradient {
-  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%) !important;
-  outline: none !important;
-  user-select: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-  -webkit-touch-callout: none !important;
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-}
-
-.pup-pink-gradient:hover,
-.pup-pink-gradient:focus,
-.pup-pink-gradient:active,
-.pup-pink-gradient:visited,
-.pup-pink-gradient:target {
-  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%) !important;
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-  transform: none !important;
-  filter: none !important;
-}
-
-.pup-pink-gradient *,
-.pup-pink-gradient *:hover,
-.pup-pink-gradient *:focus,
-.pup-pink-gradient *:active {
-  outline: none !important;
-  box-shadow: none !important;
-  user-select: none !important;
-  -webkit-tap-highlight-color: transparent !important;
-  -webkit-touch-callout: none !important;
-}
-
-.pup-pink-gradient.interactive {
+  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%);
   border: 2px solid transparent;
   transition: all 0.2s ease-out;
 }
 
-.pup-pink-gradient.interactive:hover {
+.pup-pink-gradient:hover {
   background: linear-gradient(135deg, #FFC0CB 0%, #FFB6C1 100%);
   border-color: #FF9FAB;
 }
