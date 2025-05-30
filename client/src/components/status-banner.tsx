@@ -93,7 +93,7 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete, nattyFed, natty
       }
     >
       <div className="flex items-center justify-center gap-2">
-        <span className="text-2xl">{emoji}</span>
+        <span className="text-2xl leading-none" style={{ marginTop: '-2px' }}>{emoji}</span>
         <span className="font-semibold">{message}</span>
       </div>
     </div>
