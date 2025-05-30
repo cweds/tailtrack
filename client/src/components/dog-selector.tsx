@@ -53,10 +53,10 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
       <div
         onClick={onSelectBothDogs}
         className={cn(
-          "w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none",
+          "w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center",
           selectedDogs.size === 2
-            ? "text-gray-800 bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300"
-            : "text-pink-500 bg-white border-pink-300 active:bg-pink-50"
+            ? "text-gray-800 bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300 active:opacity-80"
+            : "text-pink-500 bg-white border-pink-300 active:bg-pink-100 hover:bg-pink-50"
         )}
         style={{ 
           WebkitTapHighlightColor: 'transparent',
