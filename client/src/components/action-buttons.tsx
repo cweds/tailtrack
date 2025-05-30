@@ -29,6 +29,9 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
       return;
     }
 
+    // Start optimistic - assume buttons are available
+    setCanFeed(true);
+    setCanLetOut(true);
     setIsChecking(true);
     
     // Use a timeout to debounce rapid selection changes
