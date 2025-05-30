@@ -11,8 +11,8 @@ interface DogSelectorProps {
 
 export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs }: DogSelectorProps) {
   const dogEmojis: Record<Dog, string> = {
-    Natty: "🩶", // Grey dog
-    Murphy: "🐕‍🦺", // Black dog
+    Natty: "🐕", // Grey dog
+    Murphy: "🦮", // Black dog
   };
 
   return (
