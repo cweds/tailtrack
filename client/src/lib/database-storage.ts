@@ -51,11 +51,21 @@ export class DatabaseStorage {
     activityCache.clearAll();
   }
   static async createActivity(userId: number, dogs: string[], action: 'Fed' | 'Let Out'): Promise<DatabaseActivity> {
+    // Get user's household ID first
+    const userResponse = await fetch(`/api/users/${userId}`);
+    if (!userResponse.ok) {
+      throw new Error('Failed to get user info');
+    }
+    
+    const userData = await userResponse.json();
+    const householdId = userData.user.householdId || 1; // Default to household 1
+    
     const response = await fetch('/api/activities', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         userId,
+        householdId,
         dogs,
         action,
       }),
