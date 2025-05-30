@@ -51,14 +51,22 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
         ))}
       </div>
       <Button
-        onClick={onSelectBothDogs}
+        onClick={(e) => {
+          onSelectBothDogs();
+          // Force blur to remove focus state on mobile
+          e.currentTarget.blur();
+        }}
         variant="outline"
         className={cn(
-          "w-full mt-3 p-2 text-sm font-medium rounded-lg transition-all duration-200 playful-bounce",
+          "w-full mt-3 p-2 text-sm font-medium rounded-lg transition-all duration-200 playful-bounce active:scale-95 focus:outline-none",
           selectedDogs.size === 2
             ? "text-gray-800 golden-tan-gradient border-amber-300 hover:opacity-90"
-            : "text-pink-500 border-pink-300 hover:pup-pink-gradient hover:text-gray-800"
+            : "text-pink-500 border-pink-300 hover:pup-pink-gradient hover:text-gray-800 bg-white"
         )}
+        style={{ 
+          WebkitTapHighlightColor: 'transparent',
+          WebkitAppearance: 'none'
+        }}
       >
         {selectedDogs.size === 2 ? "Deselect All" : "Select Both Dogs"}
       </Button>
