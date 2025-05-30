@@ -98,6 +98,16 @@ export function useDogCare() {
     return DogCareStorage.getAllDogsStatusToday();
   };
 
+  const handleClearData = () => {
+    DogCareStorage.clearAllData();
+    setActivities([]);
+    toast({
+      title: "Data cleared",
+      description: "All activity data has been reset",
+      duration: 2000,
+    });
+  };
+
   return {
     selectedUser,
     selectedDogs,
@@ -109,5 +119,6 @@ export function useDogCare() {
     handleAction,
     handleQuickAction,
     getStatusToday,
+    handleClearData,
   };
 }

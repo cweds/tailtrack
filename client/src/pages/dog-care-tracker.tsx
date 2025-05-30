@@ -17,6 +17,7 @@ export default function DogCareTracker() {
     handleAction,
     handleQuickAction,
     getStatusToday,
+    handleClearData,
   } = useDogCare();
 
   const { bothFed, bothLetOut, allComplete } = getStatusToday();
@@ -24,9 +25,15 @@ export default function DogCareTracker() {
   return (
     <div className="app-container">
       {/* Header */}
-      <header className="warm-gradient text-white p-4 text-center">
+      <header className="warm-gradient text-white p-4 text-center relative">
         <h1 className="text-2xl font-bold">🐕 Dog Care Tracker</h1>
         <p className="text-orange-100 text-sm mt-1">Keep Natty & Murphy happy!</p>
+        <button
+          onClick={handleClearData}
+          className="absolute top-4 right-4 text-xs bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-white transition-colors"
+        >
+          Clear Data
+        </button>
       </header>
 
       {/* Status Banner */}

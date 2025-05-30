@@ -79,4 +79,12 @@ export class DogCareStorage {
 
     return { bothFed, bothLetOut, allComplete };
   }
+
+  static clearAllData(): void {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.error('Error clearing dog care data:', error);
+    }
+  }
 }
