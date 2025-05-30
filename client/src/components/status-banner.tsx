@@ -34,38 +34,16 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     
     const timeContext = isEvening ? "evening" : "morning";
     
-    // Build individual dog needs first
-    let warnings = [];
+    // Check if both dogs are completely cared for individually
+    const nattyComplete = nattyStatus.fed && nattyStatus.letOut;
+    const murphyComplete = murphyStatus.fed && murphyStatus.letOut;
     
-    if (nattyNeedsFed && nattyNeedsOut) {
-      warnings.push("Natty needs to be fed and let out");
-    } else if (nattyNeedsFed) {
-      warnings.push("Natty needs to be fed");
-    } else if (nattyNeedsOut) {
-      warnings.push("Natty needs to be let out");
-    }
-    
-    if (murphyNeedsFed && murphyNeedsOut) {
-      warnings.push("Murphy needs to be fed and let out");
-    } else if (murphyNeedsFed) {
-      warnings.push("Murphy needs to be fed");
-    } else if (murphyNeedsOut) {
-      warnings.push("Murphy needs to be let out");
-    }
-    
-    // Check if we can simplify to "both dogs" language
-    const bothNeedFedAndOut = (nattyNeedsFed && nattyNeedsOut) && (murphyNeedsFed && murphyNeedsOut);
-    const bothNeedOnlyFed = nattyNeedsFed && murphyNeedsFed && !nattyNeedsOut && !murphyNeedsOut;
-    const bothNeedOnlyOut = nattyNeedsOut && murphyNeedsOut && !nattyNeedsFed && !murphyNeedsFed;
-    
-    if (bothNeedFedAndOut) {
-      message = `Both Natty and Murphy need to be fed and let out for ${timeContext}.`;
-    } else if (bothNeedOnlyFed) {
-      message = `Both Natty and Murphy need to be fed for ${timeContext}.`;
-    } else if (bothNeedOnlyOut) {
-      message = `Both Natty and Murphy need to be let out for ${timeContext}.`;
-    } else {
-      message = `${warnings.join(" and ")} for ${timeContext}.`;
+    if (!nattyComplete && !murphyComplete) {
+      message = `Both dogs still need care this ${timeContext}.`;
+    } else if (!nattyComplete) {
+      message = `Natty still needs care this ${timeContext}.`;
+    } else if (!murphyComplete) {
+      message = `Murphy still needs care this ${timeContext}.`;
     }
     
     emoji = "⚠️";
