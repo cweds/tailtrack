@@ -2,11 +2,18 @@ import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
+export const households = pgTable("households", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
   username: text("username").notNull().unique(),
   passwordHash: text("password_hash").notNull(),
+  householdId: integer("household_id").references(() => households.id),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
@@ -18,10 +25,15 @@ export const activities = pgTable("activities", {
   timestamp: timestamp("timestamp").defaultNow().notNull(),
 });
 
+export const insertHouseholdSchema = createInsertSchema(households).pick({
+  name: true,
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   username: true,
   passwordHash: true,
+  householdId: true,
 });
 
 export const loginUserSchema = z.object({
@@ -41,6 +53,8 @@ export const insertActivitySchema = createInsertSchema(activities).pick({
   action: true,
 });
 
+export type InsertHousehold = z.infer<typeof insertHouseholdSchema>;
+export type Household = typeof households.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type LoginUser = z.infer<typeof loginUserSchema>;
