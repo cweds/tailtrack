@@ -99,12 +99,14 @@ export class DatabaseStorage implements IStorage {
   async createActivity(activity: InsertActivity): Promise<Activity> {
     // Get the user's household ID to associate the activity with the household
     const user = await this.getUser(activity.userId);
-    const activityData = {
-      ...activity,
-      householdId: user?.householdId || null
-    };
     
-    const result = await db.insert(activities).values(activityData).returning();
+    const result = await db.insert(activities).values({
+      userId: activity.userId,
+      dogs: activity.dogs,
+      action: activity.action,
+      householdId: user?.householdId || 1 // Default to household 1 if no household
+    }).returning();
+    
     return result[0];
   }
 

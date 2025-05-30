@@ -47,6 +47,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // User route
+  app.get("/api/users/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      const { passwordHash, ...userWithoutPassword } = user;
+      res.json({ user: userWithoutPassword });
+    } catch (error) {
+      console.error(`Get user error: ${error}`);
+      res.status(400).json({ error: "Failed to get user" });
+    }
+  });
+
   // Activity routes
   app.post("/api/activities", async (req, res) => {
     try {
@@ -70,14 +86,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Shared activities endpoint for household sharing - must come before the parameterized route
-  app.get("/api/activities/shared/today", async (req, res) => {
+  // Household activities endpoint - must come before the parameterized route
+  app.get("/api/activities/household/:householdId/today", async (req, res) => {
     try {
-      const activities = await (storage as any).getAllTodayActivitiesWithUsernames();
+      const householdId = parseInt(req.params.householdId);
+      const activities = await storage.getHouseholdTodayActivities(householdId);
       res.json({ activities });
     } catch (error) {
-      console.error(`Get shared activities error: ${error}`);
-      res.status(400).json({ error: "Failed to get shared activities" });
+      console.error(`Get household activities error: ${error}`);
+      res.status(400).json({ error: "Failed to get household activities" });
     }
   });
 
