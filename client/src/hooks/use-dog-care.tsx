@@ -31,6 +31,9 @@ export function useDogCare() {
     if (newSelectedDogs.has(dog)) {
       newSelectedDogs.delete(dog);
     } else {
+      // Only allow selecting one dog at a time via individual buttons
+      // Clear previous selection and add the new one
+      newSelectedDogs.clear();
       newSelectedDogs.add(dog);
     }
     setSelectedDogs(newSelectedDogs);
