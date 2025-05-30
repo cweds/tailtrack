@@ -16,11 +16,6 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
   const [canFeed, setCanFeed] = useState(true);
   const [canLetOut, setCanLetOut] = useState(true);
 
-  // Only show buttons when dogs are selected
-  if (selectedDogs.size === 0) {
-    return null;
-  }
-
   const selectedDogsArray = Array.from(selectedDogs);
   const isBothDogs = selectedDogsArray.length === 2;
   const dogText = isBothDogs ? "Both" : selectedDogsArray[0];
@@ -50,6 +45,11 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
 
     checkCooldowns();
   }, [user?.id, selectedDogsArray.join(',')]); // Re-check when selection changes
+
+  // Only show buttons when dogs are selected
+  if (selectedDogs.size === 0) {
+    return null;
+  }
 
   return (
     <div className="space-y-3">
