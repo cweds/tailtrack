@@ -1,8 +1,9 @@
 import { users, type User, type InsertUser, type RegisterUser } from "@shared/schema";
+import { drizzle } from "drizzle-orm/neon-serverless";
+import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
-// modify the interface with any CRUD methods
-// you might need
+const db = drizzle(process.env.DATABASE_URL!);
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -12,45 +13,33 @@ export interface IStorage {
   validateUser(email: string, password: string): Promise<User | null>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  currentId: number;
-
-  constructor() {
-    this.users = new Map();
-    this.currentId = 1;
-  }
-
+export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-    return this.users.get(id);
+    const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
+    return result[0];
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.email === email,
-    );
+    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    return result[0];
   }
 
   async createUser(registerUser: RegisterUser): Promise<User> {
-    const id = this.currentId++;
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(registerUser.password, saltRounds);
     
-    const user: User = { 
-      id,
+    const result = await db.insert(users).values({
       email: registerUser.email,
       username: registerUser.username,
       passwordHash,
-      createdAt: new Date()
-    };
-    this.users.set(id, user);
-    return user;
+    }).returning();
+    
+    return result[0];
   }
 
   async validateUser(email: string, password: string): Promise<User | null> {
@@ -62,4 +51,4 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
