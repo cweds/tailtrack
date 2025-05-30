@@ -91,31 +91,35 @@ export class DatabaseStorage {
   }
 
   static async getTodayActivitiesByUser(userId: number): Promise<DatabaseActivity[]> {
-    // First get user info to find their household
-    try {
-      const userResponse = await fetch(`/api/users/${userId}`);
-      if (userResponse.ok) {
-        const userData = await userResponse.json();
-        if (userData.user.householdId) {
-          // Get household activities if user is part of a household
-          const householdResponse = await fetch(`/api/activities/household/${userData.user.householdId}/today`);
-          if (householdResponse.ok) {
-            const result = await householdResponse.json();
-            console.log('Household activities received:', result.activities);
-            const processedActivities = result.activities.map((activity: Activity) => ({
-              ...activity,
-              timestamp: new Date(activity.timestamp),
-            }));
-            console.log('Processed household activities:', processedActivities);
-            return processedActivities;
-          }
-        }
-      }
-    } catch (error) {
-      console.log('Household activities not available, using user-specific activities');
+    // Always get user info to find their household first
+    const userResponse = await fetch(`/api/users/${userId}`);
+    if (!userResponse.ok) {
+      throw new Error('Failed to get user info');
     }
     
-    // Fallback to user-specific activities
+    const userData = await userResponse.json();
+    console.log(`User ${userId} household info:`, userData.user);
+    
+    if (userData.user.householdId) {
+      // Always use household activities if user is part of a household
+      console.log(`Fetching household ${userData.user.householdId} activities for user ${userId}`);
+      const householdResponse = await fetch(`/api/activities/household/${userData.user.householdId}/today`);
+      if (householdResponse.ok) {
+        const result = await householdResponse.json();
+        console.log('Household activities received:', result.activities);
+        const processedActivities = result.activities.map((activity: Activity) => ({
+          ...activity,
+          timestamp: new Date(activity.timestamp),
+        }));
+        console.log('Processed household activities:', processedActivities);
+        return processedActivities;
+      } else {
+        console.error('Failed to fetch household activities');
+      }
+    }
+    
+    // Only fallback to user-specific activities if no household
+    console.log(`No household found for user ${userId}, using user-specific activities`);
     const response = await fetch(`/api/activities/${userId}/today`);
     if (!response.ok) {
       throw new Error('Failed to get today\'s activities');
