@@ -18,7 +18,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-sm border border-orange-200">
+    <div className="bg-white p-4 rounded-xl shadow-lg border border-orange-200">
       <label className="block text-sm font-medium text-gray-700 mb-3">
         🐶 Which pup(s) need care?
       </label>
