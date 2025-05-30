@@ -24,7 +24,7 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
       ? "Both dogs have been fed and let out for the evening — you're crushing it!"
       : "Both dogs have been fed and let out this morning — you're crushing it!";
     emoji = "🎉";
-    bgClass = "success-gradient";
+    bgClass = "soft-blue-gradient";
   } else {
     // Determine what's missing for each dog
     const nattyNeedsFed = !nattyStatus.fed;
@@ -49,12 +49,12 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     }
     
     emoji = "⚠️";
-    bgClass = "bg-gradient-to-r from-slate-600 to-gray-600";
+    bgClass = "golden-tan-gradient";
   }
 
   return (
     <div className={cn(
-      "mx-4 mt-4 p-4 rounded-xl text-center font-medium shadow-lg text-white",
+      "mx-4 mt-4 p-4 rounded-xl text-center font-medium paw-shadow text-gray-800",
       bgClass
     )}>
       <div className="flex items-center justify-center gap-2">
