@@ -25,37 +25,41 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
       : "Both dogs have been fed and let out this morning — you're crushing it!";
     emoji = "🎉";
     bgClass = "success-gradient";
-  } else if (bothFed && !bothLetOut) {
-    message = isEvening
-      ? "Both dogs have been fed for the evening — still need to let them out!"
-      : "Both dogs have been fed this morning — still need to let them out!";
-    emoji = "✅";
-    bgClass = "bg-gradient-to-r from-emerald-500 to-blue-400";
-  } else if (!bothFed && bothLetOut) {
-    message = isEvening
-      ? "Both dogs have been let out for the evening — still need to feed them!"
-      : "Both dogs have been let out this morning — still need to feed them!";
-    emoji = "🚪";
-    bgClass = "bg-gradient-to-r from-blue-500 to-emerald-400";
   } else {
-    // Determine which dogs need care
-    const nattyComplete = nattyStatus.fed && nattyStatus.letOut;
-    const murphyComplete = murphyStatus.fed && murphyStatus.letOut;
+    // Determine what's missing for each dog
+    const nattyNeedsFed = !nattyStatus.fed;
+    const nattyNeedsOut = !nattyStatus.letOut;
+    const murphyNeedsFed = !murphyStatus.fed;
+    const murphyNeedsOut = !murphyStatus.letOut;
     
-    let dogsNeedingCare: string;
-    if (!nattyComplete && !murphyComplete) {
-      dogsNeedingCare = "both pups";
-    } else if (!nattyComplete) {
-      dogsNeedingCare = "Natty";
-    } else {
-      dogsNeedingCare = "Murphy";
+    const timeContext = isEvening ? "evening" : "morning";
+    
+    let warnings = [];
+    
+    if (nattyNeedsFed && nattyNeedsOut) {
+      warnings.push("Natty needs to be fed and let out");
+    } else if (nattyNeedsFed) {
+      warnings.push("Natty needs to be fed");
+    } else if (nattyNeedsOut) {
+      warnings.push("Natty needs to be let out");
     }
     
-    message = isEvening
-      ? `Still need evening care for ${dogsNeedingCare}…`
-      : `Still need morning care for ${dogsNeedingCare}…`;
-    emoji = "👀";
-    bgClass = "bg-gradient-to-r from-slate-500 to-gray-500";
+    if (murphyNeedsFed && murphyNeedsOut) {
+      warnings.push("Murphy needs to be fed and let out");
+    } else if (murphyNeedsFed) {
+      warnings.push("Murphy needs to be fed");
+    } else if (murphyNeedsOut) {
+      warnings.push("Murphy needs to be let out");
+    }
+    
+    if (warnings.length === 1) {
+      message = `${warnings[0]} for ${timeContext}`;
+    } else {
+      message = `${warnings.join(" and ")} for ${timeContext}`;
+    }
+    
+    emoji = "⚠️";
+    bgClass = "bg-gradient-to-r from-amber-500 to-orange-500";
   }
 
   return (
