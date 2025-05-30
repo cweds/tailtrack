@@ -1,7 +1,7 @@
-import { users, activities, households, type User, type InsertUser, type RegisterUser, type Activity, type InsertActivity, type Household, type InsertHousehold } from "@shared/schema";
+import { users, activities, type User, type InsertUser, type RegisterUser, type Activity, type InsertActivity } from "@shared/schema";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { eq, desc, and, gte, inArray } from "drizzle-orm";
+import { eq, desc, and, gte } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
 const sql = postgres("postgresql://postgres.azylofzqvhsodbhtipda:Wedekindlax174!@aws-0-us-east-1.pooler.supabase.com:6543/postgres");
@@ -14,16 +14,11 @@ export interface IStorage {
   createUser(user: RegisterUser): Promise<User>;
   validateUser(email: string, password: string): Promise<User | null>;
   
-  // Household methods
-  createHousehold(household: InsertHousehold): Promise<Household>;
-  getDefaultHousehold(): Promise<Household>;
-  
   // Activity methods
   createActivity(activity: InsertActivity): Promise<Activity>;
   getActivitiesByUser(userId: number): Promise<Activity[]>;
   getTodayActivitiesByUser(userId: number): Promise<Activity[]>;
-  getActivitiesByHousehold(householdId: number): Promise<Activity[]>;
-  getTodayActivitiesByHousehold(householdId: number): Promise<Activity[]>;
+  getAllTodayActivitiesWithUsernames(): Promise<(Activity & { username: string })[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -42,37 +37,14 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  async createHousehold(household: InsertHousehold): Promise<Household> {
-    const result = await db.insert(households).values(household).returning();
-    return result[0];
-  }
-
-  async getDefaultHousehold(): Promise<Household> {
-    // Check if default household exists
-    let result = await db.select().from(households).where(eq(households.name, "Default Family")).limit(1);
-    
-    if (result.length === 0) {
-      // Create default household if it doesn't exist
-      result = await db.insert(households).values({
-        name: "Default Family"
-      }).returning();
-    }
-    
-    return result[0];
-  }
-
   async createUser(registerUser: RegisterUser): Promise<User> {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(registerUser.password, saltRounds);
-    
-    // Get or create default household for new users
-    const defaultHousehold = await this.getDefaultHousehold();
     
     const result = await db.insert(users).values({
       email: registerUser.email,
       username: registerUser.username,
       passwordHash,
-      householdId: defaultHousehold.id,
     }).returning();
     
     return result[0];

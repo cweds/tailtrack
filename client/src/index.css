@@ -86,10 +86,16 @@
 }
 
 .playful-bounce {
-  @apply transition-all duration-200 hover:scale-105 active:scale-95;
-  transform-origin: center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  @apply transition-all duration-150 ease-out;
+  will-change: transform;
+}
+
+.playful-bounce:hover {
+  transform: translateY(-1px);
+}
+
+.playful-bounce:active {
+  transform: translateY(0px);
 }
 
 .paw-shadow {
