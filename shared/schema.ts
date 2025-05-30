@@ -33,10 +33,18 @@ export const registerUserSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   username: z.string().min(2, "Username must be at least 2 characters"),
   password: z.string().min(6, "Password must be at least 6 characters"),
+  householdName: z.string().min(1, "Household name is required").optional(),
+  inviteCode: z.string().optional(),
+});
+
+export const insertHouseholdSchema = createInsertSchema(households).pick({
+  name: true,
+  inviteCode: true,
 });
 
 export const insertActivitySchema = createInsertSchema(activities).pick({
   userId: true,
+  householdId: true,
   dogs: true,
   action: true,
 });
@@ -47,3 +55,5 @@ export type LoginUser = z.infer<typeof loginUserSchema>;
 export type RegisterUser = z.infer<typeof registerUserSchema>;
 export type Activity = typeof activities.$inferSelect;
 export type InsertActivity = z.infer<typeof insertActivitySchema>;
+export type Household = typeof households.$inferSelect;
+export type InsertHousehold = z.infer<typeof insertHouseholdSchema>;
