@@ -32,17 +32,23 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete, nattyFed, natty
     const murphyComplete = murphyFed && murphyLetOut;
     
     if (!nattyComplete && !murphyComplete) {
-      // Check what both dogs need
+      // Check what both dogs need - only use specific messages if BOTH dogs need the SAME thing
       const bothNeedFeeding = !nattyFed && !murphyFed;
       const bothNeedLetOut = !nattyLetOut && !murphyLetOut;
+      const nattyNeedsFeeding = !nattyFed;
+      const nattyNeedsLetOut = !nattyLetOut;
+      const murphyNeedsFeeding = !murphyFed;
+      const murphyNeedsLetOut = !murphyLetOut;
       
-      if (bothNeedFeeding && bothNeedLetOut) {
-        message = `Both dogs still need care this ${timeContext}.`;
-      } else if (bothNeedFeeding) {
+      // Only show specific action if both dogs need exactly the same thing AND nothing else
+      if (bothNeedFeeding && nattyLetOut && murphyLetOut) {
+        // Both dogs have been let out, both need feeding
         message = `Both dogs still need to be fed this ${timeContext}.`;
-      } else if (bothNeedLetOut) {
+      } else if (bothNeedLetOut && nattyFed && murphyFed) {
+        // Both dogs have been fed, both need letting out
         message = `Both dogs still need to be let out this ${timeContext}.`;
       } else {
+        // Mixed scenarios - use general message
         message = `Both dogs still need care this ${timeContext}.`;
       }
     } else if (!nattyComplete && murphyComplete) {
