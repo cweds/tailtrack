@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { loginUserSchema, registerUserSchema, type LoginUser, type RegisterUser } from "@shared/schema";
-import { PawIcon } from "./paw-icon";
 
 import { useToast } from "@/hooks/use-toast";
 
@@ -105,10 +104,7 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-            <PawIcon className="text-white" size={24} />
-            TailTrack
-          </CardTitle>
+          <CardTitle className="text-2xl font-bold text-gray-800">🐾 TailTrack</CardTitle>
           <CardDescription>
             Caring for your pet, made simple.
           </CardDescription>
