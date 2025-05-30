@@ -69,7 +69,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
       <Button
         onClick={() => onAction('Fed')}
         disabled={!canFeed}
-        className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-4 px-6 rounded-xl shadow-lg transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 h-auto"
+        className="w-full pup-pink-gradient hover:opacity-90 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-800 font-medium py-4 px-6 rounded-xl paw-shadow playful-bounce disabled:hover:scale-100 h-auto"
       >
         <span className="flex items-center justify-center gap-2">
           <span className="text-lg">🍖</span>
@@ -80,7 +80,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
       <Button
         onClick={() => onAction('Let Out')}
         disabled={!canLetOut}
-        className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium py-4 px-6 rounded-xl shadow-lg transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 h-auto"
+        className="w-full soft-blue-gradient hover:opacity-90 disabled:bg-gray-300 disabled:cursor-not-allowed text-gray-800 font-medium py-4 px-6 rounded-xl paw-shadow playful-bounce disabled:hover:scale-100 h-auto"
       >
         <span className="flex items-center justify-center gap-2">
           <span className="text-lg">🚪</span>

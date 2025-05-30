@@ -37,19 +37,19 @@ export default function DogCareTracker() {
   return (
     <div className="app-container">
       {/* Header */}
-      <header className="warm-gradient text-white p-4 text-center">
-        <h1 className="text-2xl font-bold">🐕 Dog Care Tracker</h1>
-        <p className="text-orange-100 text-sm mt-1">Keep Natty & Murphy happy!</p>
+      <header className="pup-pink-gradient p-4 text-center">
+        <h1 className="text-2xl font-bold text-gray-800">🐾 Pup Care Tracker 🐾</h1>
+        <p className="text-gray-700 text-sm mt-1">Keeping Natty & Murphy happy & healthy!</p>
       </header>
 
       {/* User Info Bar */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center">
-        <span className="text-sm text-gray-700">
-          Welcome back, <span className="font-medium text-gray-900">{user?.username}</span>!
+      <div className="golden-tan-gradient border-b border-amber-200 px-4 py-3 flex justify-between items-center">
+        <span className="text-sm text-gray-800">
+          Welcome back, <span className="font-medium text-gray-900">{user?.username}</span>! 🦴
         </span>
         <button
           onClick={logout}
-          className="text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors"
+          className="text-sm text-gray-700 hover:text-gray-900 font-medium transition-colors playful-bounce"
         >
           Sign Out
         </button>
