@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { DogCareStorage, type DogActivity } from "@/lib/dog-care-storage";
+import { DatabaseStorage, type DatabaseActivity } from "@/lib/database-storage";
+import { useAuth } from "@/contexts/auth-context";
 import { useToast } from "@/hooks/use-toast";
 
 export const DOGS = ['Natty', 'Murphy'] as const;
@@ -8,8 +9,10 @@ export type Dog = typeof DOGS[number];
 export type Action = 'Fed' | 'Let Out';
 
 export function useDogCare(username: string) {
+  const { user } = useAuth();
   const [selectedDogs, setSelectedDogs] = useState<Set<Dog>>(new Set());
-  const [activities, setActivities] = useState<DogActivity[]>([]);
+  const [activities, setActivities] = useState<DatabaseActivity[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   // Load activities on mount

@@ -10,6 +10,14 @@ export const users = pgTable("users", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const activities = pgTable("activities", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").notNull().references(() => users.id),
+  dogs: text("dogs").array().notNull(),
+  action: text("action").notNull(),
+  timestamp: timestamp("timestamp").defaultNow().notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   username: true,
@@ -27,7 +35,15 @@ export const registerUserSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+export const insertActivitySchema = createInsertSchema(activities).pick({
+  userId: true,
+  dogs: true,
+  action: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type LoginUser = z.infer<typeof loginUserSchema>;
 export type RegisterUser = z.infer<typeof registerUserSchema>;
+export type Activity = typeof activities.$inferSelect;
+export type InsertActivity = z.infer<typeof insertActivitySchema>;

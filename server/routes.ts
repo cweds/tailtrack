@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { registerUserSchema, loginUserSchema } from "@shared/schema";
+import { registerUserSchema, loginUserSchema, insertActivitySchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Authentication routes
@@ -44,6 +44,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error(`Login error: ${error}`);
       res.status(400).json({ error: "Invalid login data" });
+    }
+  });
+
+  // Activity routes
+  app.post("/api/activities", async (req, res) => {
+    try {
+      const activityData = insertActivitySchema.parse(req.body);
+      const activity = await storage.createActivity(activityData);
+      res.json({ activity });
+    } catch (error) {
+      console.error(`Create activity error: ${error}`);
+      res.status(400).json({ error: "Invalid activity data" });
+    }
+  });
+
+  app.get("/api/activities/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const activities = await storage.getActivitiesByUser(userId);
+      res.json({ activities });
+    } catch (error) {
+      console.error(`Get activities error: ${error}`);
+      res.status(400).json({ error: "Failed to get activities" });
+    }
+  });
+
+  app.get("/api/activities/:userId/today", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const activities = await storage.getTodayActivitiesByUser(userId);
+      res.json({ activities });
+    } catch (error) {
+      console.error(`Get today activities error: ${error}`);
+      res.status(400).json({ error: "Failed to get today's activities" });
     }
   });
 

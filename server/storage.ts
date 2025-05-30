@@ -1,7 +1,7 @@
-import { users, type User, type InsertUser, type RegisterUser } from "@shared/schema";
+import { users, activities, type User, type InsertUser, type RegisterUser, type Activity, type InsertActivity } from "@shared/schema";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import { eq } from "drizzle-orm";
+import { eq, desc, and, gte } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
 const sql = postgres("postgresql://postgres.azylofzqvhsodbhtipda:Wedekindlax174!@aws-0-us-east-1.pooler.supabase.com:6543/postgres");
@@ -13,6 +13,11 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: RegisterUser): Promise<User>;
   validateUser(email: string, password: string): Promise<User | null>;
+  
+  // Activity methods
+  createActivity(activity: InsertActivity): Promise<Activity>;
+  getActivitiesByUser(userId: number): Promise<Activity[]>;
+  getTodayActivitiesByUser(userId: number): Promise<Activity[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -50,6 +55,27 @@ export class DatabaseStorage implements IStorage {
     
     const isValidPassword = await bcrypt.compare(password, user.passwordHash);
     return isValidPassword ? user : null;
+  }
+
+  async createActivity(activity: InsertActivity): Promise<Activity> {
+    const result = await db.insert(activities).values(activity).returning();
+    return result[0];
+  }
+
+  async getActivitiesByUser(userId: number): Promise<Activity[]> {
+    return await db.select().from(activities).where(eq(activities.userId, userId)).orderBy(desc(activities.timestamp));
+  }
+
+  async getTodayActivitiesByUser(userId: number): Promise<Activity[]> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    return await db.select().from(activities)
+      .where(and(
+        eq(activities.userId, userId),
+        gte(activities.timestamp, today)
+      ))
+      .orderBy(desc(activities.timestamp));
   }
 }
 
