@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { loginUserSchema, registerUserSchema, type LoginUser, type RegisterUser } from "@shared/schema";
-import { apiRequest } from "@/lib/queryClient";
+
 import { useToast } from "@/hooks/use-toast";
 
 interface AuthFormProps {
@@ -71,7 +71,7 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
   const handleRegister = async (data: RegisterUser) => {
     setIsLoading(true);
     try {
-      const response = await apiRequest("/api/auth/register", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),

@@ -2,15 +2,12 @@ import { useState, useEffect } from "react";
 import { DogCareStorage, type DogActivity } from "@/lib/dog-care-storage";
 import { useToast } from "@/hooks/use-toast";
 
-export const USERS = ['Chase', 'Becca', 'Megan'] as const;
 export const DOGS = ['Natty', 'Murphy'] as const;
 
-export type User = typeof USERS[number];
 export type Dog = typeof DOGS[number];
 export type Action = 'Fed' | 'Let Out';
 
-export function useDogCare() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+export function useDogCare(username: string) {
   const [selectedDogs, setSelectedDogs] = useState<Set<Dog>>(new Set());
   const [activities, setActivities] = useState<DogActivity[]>([]);
   const { toast } = useToast();
@@ -20,11 +17,7 @@ export function useDogCare() {
     setActivities(DogCareStorage.getActivities());
   }, []);
 
-  const canTakeAction = selectedUser && selectedDogs.size > 0;
-
-  const handleUserSelect = (user: User) => {
-    setSelectedUser(user);
-  };
+  const canTakeAction = selectedDogs.size > 0;
 
   const handleDogToggle = (dog: Dog) => {
     const newSelectedDogs = new Set(selectedDogs);

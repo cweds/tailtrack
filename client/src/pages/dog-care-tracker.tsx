@@ -1,9 +1,11 @@
-import { useDogCare, USERS, DOGS } from "@/hooks/use-dog-care";
+import { useDogCare, DOGS } from "@/hooks/use-dog-care";
+import { useAuth } from "@/contexts/auth-context";
 import { StatusBanner } from "@/components/status-banner";
-import { UserSelector } from "@/components/user-selector";
 import { DogSelector } from "@/components/dog-selector";
 import { ActionButtons } from "@/components/action-buttons";
 import { ActivityLog } from "@/components/activity-log";
+import { Button } from "@/components/ui/button";
+import { DogCareStorage } from "@/lib/dog-care-storage";
 
 export default function DogCareTracker() {
   const {
