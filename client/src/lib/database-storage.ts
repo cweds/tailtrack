@@ -101,10 +101,13 @@ export class DatabaseStorage {
           const householdResponse = await fetch(`/api/activities/household/${userData.user.householdId}/today`);
           if (householdResponse.ok) {
             const result = await householdResponse.json();
-            return result.activities.map((activity: Activity) => ({
+            console.log('Household activities received:', result.activities);
+            const processedActivities = result.activities.map((activity: Activity) => ({
               ...activity,
               timestamp: new Date(activity.timestamp),
             }));
+            console.log('Processed household activities:', processedActivities);
+            return processedActivities;
           }
         }
       }
