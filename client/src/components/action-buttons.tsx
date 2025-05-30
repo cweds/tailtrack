@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
-import type { Action } from "@/hooks/use-dog-care";
+import type { Action, User } from "@/hooks/use-dog-care";
 
 interface ActionButtonsProps {
   canTakeAction: boolean;
   onAction: (action: Action) => void;
   onQuickAction: (action: Action) => void;
-  selectedUser: string | null;
+  selectedUser: User | null;
 }
 
 export function ActionButtons({ canTakeAction, onAction, onQuickAction, selectedUser }: ActionButtonsProps) {

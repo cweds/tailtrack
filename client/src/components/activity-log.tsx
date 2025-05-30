@@ -22,6 +22,11 @@ function formatTime(timestamp: string): string {
   return date.toLocaleDateString();
 }
 
+function formatFullTimestamp(timestamp: string): string {
+  const date = new Date(timestamp);
+  return date.toLocaleString();
+}
+
 export function ActivityLog({ activities }: ActivityLogProps) {
   if (activities.length === 0) {
     return (
@@ -53,6 +58,7 @@ export function ActivityLog({ activities }: ActivityLogProps) {
               <div
                 key={activity.id}
                 className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100"
+                title={formatFullTimestamp(activity.timestamp)}
               >
                 <div className="flex-1">
                   <div className="flex items-center text-sm font-medium text-gray-900">

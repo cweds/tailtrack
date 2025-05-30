@@ -54,10 +54,15 @@ export default function DogCareTracker() {
           dogs={DOGS}
         />
 
+        {/* Status Overview */}
+        <DogStatusOverview />
+
         {/* Action Buttons */}
         <ActionButtons
           canTakeAction={canTakeAction}
           onAction={handleAction}
+          onQuickAction={handleQuickAction}
+          selectedUser={selectedUser}
         />
 
         {/* Activity Log */}
