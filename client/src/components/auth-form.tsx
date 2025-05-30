@@ -104,7 +104,11 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-gray-800">🐾 TailTrack</CardTitle>
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <img src="/icon-192.png" alt="TailTrack" className="w-8 h-8" />
+            <CardTitle className="text-2xl font-bold text-gray-800">TailTrack</CardTitle>
+            <img src="/icon-192.png" alt="TailTrack" className="w-8 h-8" />
+          </div>
           <CardDescription>
             Caring for your pet, made simple.
           </CardDescription>
