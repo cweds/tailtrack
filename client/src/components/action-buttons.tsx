@@ -13,8 +13,8 @@ interface ActionButtonsProps {
 
 export function ActionButtons({ canTakeAction, onAction, onQuickAction, selectedDogs }: ActionButtonsProps) {
   const { user } = useAuth();
-  const [canFeed, setCanFeed] = useState(false);
-  const [canLetOut, setCanLetOut] = useState(false);
+  const [canFeed, setCanFeed] = useState(true);  // Optimistic - assume available until proven otherwise
+  const [canLetOut, setCanLetOut] = useState(true);  // Optimistic - assume available until proven otherwise
   const [isChecking, setIsChecking] = useState(false);
 
   const selectedDogsArray = Array.from(selectedDogs);
@@ -45,12 +45,13 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
         setCanLetOut(letOutChecks.every(can => can));
       } catch (error) {
         console.error('Error checking cooldowns:', error);
+        // On error, keep buttons enabled rather than blocking user
         setCanFeed(true);
         setCanLetOut(true);
       } finally {
         setIsChecking(false);
       }
-    }, 100); // 100ms debounce
+    }, 50); // Reduced to 50ms for faster response
 
     return () => clearTimeout(timeout);
   }, [user?.id, selectedDogsArray.join(',')]);
