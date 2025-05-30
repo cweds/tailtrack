@@ -8,27 +8,24 @@ export function PawIcon({ className = "", size = 16 }: PawIconProps) {
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 100 100"
       fill="currentColor"
       className={className}
     >
-      {/* Main paw pad */}
-      <ellipse cx="12" cy="16" rx="4" ry="3" />
+      {/* Main paw pad - larger oval at bottom */}
+      <ellipse cx="50" cy="70" rx="18" ry="15" />
       
-      {/* Top left toe pad */}
-      <ellipse cx="8" cy="10" rx="1.5" ry="2" />
+      {/* Top left toe */}
+      <ellipse cx="35" cy="35" rx="7" ry="10" transform="rotate(-15 35 35)" />
       
-      {/* Top center toe pad */}
-      <ellipse cx="12" cy="8" rx="1.5" ry="2.5" />
+      {/* Top middle toe */}
+      <ellipse cx="50" cy="25" rx="7" ry="12" />
       
-      {/* Top right toe pad */}
-      <ellipse cx="16" cy="10" rx="1.5" ry="2" />
+      {/* Top right toe */}
+      <ellipse cx="65" cy="35" rx="7" ry="10" transform="rotate(15 65 35)" />
       
-      {/* Far left toe pad */}
-      <ellipse cx="6" cy="12.5" rx="1.2" ry="1.8" />
-      
-      {/* Far right toe pad */}
-      <ellipse cx="18" cy="12.5" rx="1.2" ry="1.8" />
+      {/* Left side toe */}
+      <ellipse cx="25" cy="50" rx="6" ry="9" transform="rotate(-30 25 50)" />
     </svg>
   );
 }
