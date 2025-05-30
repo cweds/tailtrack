@@ -6,6 +6,7 @@ import { DogSelector } from "@/components/dog-selector";
 import { ActionButtons } from "@/components/action-buttons";
 import { ActivityLog } from "@/components/activity-log";
 import { Button } from "@/components/ui/button";
+import { PawIcon } from "@/components/paw-icon";
 
 export default function DogCareTracker() {
   const { user, logout } = useAuth();
@@ -38,7 +39,11 @@ export default function DogCareTracker() {
     <div className="app-container">
       {/* Header */}
       <header className="pup-pink-gradient p-4 text-center">
-        <h1 className="text-2xl font-bold text-gray-800">🐾 TailTrack 🐾</h1>
+        <h1 className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
+          <PawIcon className="text-white" size={24} />
+          TailTrack
+          <PawIcon className="text-white" size={24} />
+        </h1>
         <p className="text-gray-700 text-sm mt-1">Caring for your pet, made simple.</p>
       </header>
 
