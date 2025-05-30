@@ -4,7 +4,11 @@ import postgres from "postgres";
 import { eq, desc, and, gte } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
-const sql = postgres("postgresql://postgres.azylofzqvhsodbhtipda:Wedekindlax174!@aws-0-us-east-1.pooler.supabase.com:6543/postgres");
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL environment variable is required");
+}
+
+const sql = postgres(process.env.DATABASE_URL);
 const db = drizzle(sql);
 
 export interface IStorage {
