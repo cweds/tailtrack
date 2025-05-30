@@ -1,9 +1,11 @@
 import { users, type User, type InsertUser, type RegisterUser } from "@shared/schema";
-import { drizzle } from "drizzle-orm/neon-serverless";
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
-const db = drizzle(process.env.DATABASE_URL!);
+const sql = postgres(process.env.DATABASE_URL!);
+const db = drizzle(sql);
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
