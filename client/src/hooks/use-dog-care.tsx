@@ -17,8 +17,28 @@ export function useDogCare(username: string) {
 
   // Load activities on mount
   useEffect(() => {
-    setActivities(DogCareStorage.getActivities());
-  }, []);
+    if (user?.id) {
+      loadActivities();
+    }
+  }, [user?.id]);
+
+  const loadActivities = async () => {
+    if (!user?.id) return;
+    try {
+      setIsLoading(true);
+      const userActivities = await DatabaseStorage.getActivitiesByUser(user.id);
+      setActivities(userActivities);
+    } catch (error) {
+      console.error('Failed to load activities:', error);
+      toast({
+        title: "Error loading activities",
+        description: "Could not load activity history",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const canTakeAction = selectedDogs.size > 0;
 
@@ -43,93 +63,104 @@ export function useDogCare(username: string) {
     }
   };
 
-  const handleAction = (action: Action) => {
-    if (!canTakeAction) return;
+  const handleAction = async (action: Action) => {
+    if (!canTakeAction || !user?.id) return;
 
     const dogsArray = Array.from(selectedDogs);
     
-    // Check cooldowns for all selected dogs
-    const canPerformAction = dogsArray.every(dog => DogCareStorage.canPerformAction(dog, action));
-    
-    if (!canPerformAction) {
-      const cooldownMinutes = action === 'Fed' ? 60 : 15;
+    try {
+      // Check cooldowns for all selected dogs
+      const cooldownChecks = await Promise.all(
+        dogsArray.map(dog => DatabaseStorage.canPerformAction(user.id, dog, action))
+      );
+      
+      const canPerformAction = cooldownChecks.every(can => can);
+      
+      if (!canPerformAction) {
+        const cooldownMinutes = action === 'Fed' ? 60 : 15;
+        toast({
+          title: `⏰ Cooldown active`,
+          description: `${action === 'Fed' ? 'Feeding' : 'Letting out'} is on cooldown for ${cooldownMinutes} minutes`,
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      await DatabaseStorage.createActivity(user.id, dogsArray, action);
+
+      // Refresh activities
+      await loadActivities();
+
+      // Show success toast
+      const dogsText = dogsArray.length === 2 ? 'both dogs' : dogsArray[0];
+      const emoji = action === 'Fed' ? '🍖' : '🚪';
+      
       toast({
-        title: `⏰ Cooldown active`,
-        description: `${action === 'Fed' ? 'Feeding' : 'Letting out'} is on cooldown for ${cooldownMinutes} minutes`,
+        title: `${emoji} ${action} ${dogsText}!`,
+        description: `Logged by ${username}`,
+        duration: 3000,
+      });
+
+      // Clear selection after action
+      setSelectedDogs(new Set());
+    } catch (error) {
+      console.error('Failed to create activity:', error);
+      toast({
+        title: "Error saving activity",
+        description: "Could not save the activity",
         variant: "destructive",
       });
-      return;
     }
-    
-    DogCareStorage.addActivity({
-      dogs: dogsArray,
-      action,
-      user: username,
-      timestamp: new Date().toISOString(),
-    });
-
-    // Refresh activities
-    setActivities(DogCareStorage.getActivities());
-
-    // Show success toast
-    const dogsText = dogsArray.length === 2 ? 'both dogs' : dogsArray[0];
-    const emoji = action === 'Fed' ? '🍖' : '🚪';
-    
-    toast({
-      title: `${emoji} ${action} ${dogsText}!`,
-      description: `Logged by ${username}`,
-      duration: 3000,
-    });
-
-    // Clear selection after action
-    setSelectedDogs(new Set());
   };
 
-  const handleQuickAction = (action: Action) => {
-    // Quick actions always apply to both dogs
-    DogCareStorage.addActivity({
-      dogs: ['Natty', 'Murphy'],
-      action,
-      user: username,
-      timestamp: new Date().toISOString(),
-    });
-
-    // Refresh activities
-    setActivities(DogCareStorage.getActivities());
-
-    // Show success toast
-    const emoji = action === 'Fed' ? '🍖' : '🚪';
+  const handleQuickAction = async (action: Action) => {
+    if (!user?.id) return;
     
-    toast({
-      title: `${emoji} ${action} both dogs!`,
-      description: `Logged by ${username}`,
-      duration: 3000,
-    });
+    try {
+      // Quick actions always apply to both dogs
+      await DatabaseStorage.createActivity(user.id, ['Natty', 'Murphy'], action);
+
+      // Refresh activities
+      await loadActivities();
+
+      // Show success toast
+      const emoji = action === 'Fed' ? '🍖' : '🚪';
+      
+      toast({
+        title: `${emoji} ${action} both dogs!`,
+        description: `Logged by ${username}`,
+        duration: 3000,
+      });
+    } catch (error) {
+      console.error('Failed to create quick action:', error);
+      toast({
+        title: "Error saving activity",
+        description: "Could not save the activity",
+        variant: "destructive",
+      });
+    }
   };
 
-  const getStatusToday = () => {
-    return DogCareStorage.getAllDogsStatusToday();
-  };
-
-  const handleClearData = () => {
-    DogCareStorage.clearAllData();
-    setActivities([]);
-    toast({
-      title: "Data cleared",
-      description: "All activity data has been reset",
-      duration: 2000,
-    });
+  const getStatusToday = async () => {
+    if (!user?.id) return { bothFed: false, bothLetOut: false, allComplete: false };
+    
+    try {
+      return await DatabaseStorage.getAllDogsStatusToday(user.id);
+    } catch (error) {
+      console.error('Failed to get status:', error);
+      return { bothFed: false, bothLetOut: false, allComplete: false };
+    }
   };
 
   return {
     selectedDogs,
     activities,
     canTakeAction,
+    isLoading,
     handleDogToggle,
     handleSelectBothDogs,
     handleAction,
     handleQuickAction,
     getStatusToday,
-    handleClearData,
   };
 }

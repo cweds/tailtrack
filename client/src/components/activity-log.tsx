@@ -1,16 +1,16 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import type { DogActivity } from "@/lib/dog-care-storage";
+import type { DatabaseActivity } from "@/lib/database-storage";
+import { useAuth } from "@/contexts/auth-context";
 
 interface ActivityLogProps {
-  activities: DogActivity[];
+  activities: DatabaseActivity[];
 }
 
-function formatTime(timestamp: string): string {
-  const date = new Date(timestamp);
+function formatTime(timestamp: Date): string {
   const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
+  const diffMs = now.getTime() - timestamp.getTime();
   const diffMins = Math.floor(diffMs / (1000 * 60));
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
@@ -21,12 +21,11 @@ function formatTime(timestamp: string): string {
   if (diffDays === 1) return 'Yesterday';
   if (diffDays < 7) return `${diffDays} days ago`;
   
-  return date.toLocaleDateString();
+  return timestamp.toLocaleDateString();
 }
 
-function formatFullTimestamp(timestamp: string): string {
-  const date = new Date(timestamp);
-  return date.toLocaleString();
+function formatFullTimestamp(timestamp: Date): string {
+  return timestamp.toLocaleString();
 }
 
 export function ActivityLog({ activities }: ActivityLogProps) {

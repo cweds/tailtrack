@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useDogCare, DOGS } from "@/hooks/use-dog-care";
 import { useAuth } from "@/contexts/auth-context";
 import { StatusBanner } from "@/components/status-banner";
@@ -12,15 +13,26 @@ export default function DogCareTracker() {
     selectedDogs,
     activities,
     canTakeAction,
+    isLoading,
     handleDogToggle,
     handleSelectBothDogs,
     handleAction,
     handleQuickAction,
     getStatusToday,
-    handleClearData,
   } = useDogCare(user?.username || "");
 
-  const { bothFed, bothLetOut, allComplete } = getStatusToday();
+  const [statusToday, setStatusToday] = useState({ bothFed: false, bothLetOut: false, allComplete: false });
+
+  useEffect(() => {
+    const loadStatus = async () => {
+      const status = await getStatusToday();
+      setStatusToday(status);
+    };
+    
+    if (user?.id) {
+      loadStatus();
+    }
+  }, [user?.id, activities]); // Reload when activities change
 
   return (
     <div className="app-container">
@@ -45,9 +57,9 @@ export default function DogCareTracker() {
 
       {/* Status Banner */}
       <StatusBanner 
-        bothFed={bothFed} 
-        bothLetOut={bothLetOut} 
-        allComplete={allComplete} 
+        bothFed={statusToday.bothFed} 
+        bothLetOut={statusToday.bothLetOut} 
+        allComplete={statusToday.allComplete} 
       />
 
       {/* Main Content */}
