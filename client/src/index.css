@@ -70,7 +70,7 @@
 }
 
 .header-static {
-  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%);
+  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%) !important;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -83,10 +83,10 @@
 .header-static:focus,
 .header-static:active,
 .header-static:visited {
-  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%);
-  outline: none;
-  box-shadow: none;
-  border: none;
+  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .header-static * {
