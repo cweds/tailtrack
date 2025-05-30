@@ -61,7 +61,7 @@ export function useDogCare(username: string) {
     DogCareStorage.addActivity({
       dogs: dogsArray,
       action,
-      user: selectedUser!,
+      user: username,
       timestamp: new Date().toISOString(),
     });
 
@@ -74,19 +74,20 @@ export function useDogCare(username: string) {
     
     toast({
       title: `${emoji} ${action} ${dogsText}!`,
-      description: `Logged by ${selectedUser}`,
+      description: `Logged by ${username}`,
       duration: 3000,
     });
+
+    // Clear selection after action
+    setSelectedDogs(new Set());
   };
 
   const handleQuickAction = (action: Action) => {
-    if (!selectedUser) return;
-
     // Quick actions always apply to both dogs
     DogCareStorage.addActivity({
       dogs: ['Natty', 'Murphy'],
       action,
-      user: selectedUser,
+      user: username,
       timestamp: new Date().toISOString(),
     });
 
@@ -94,11 +95,11 @@ export function useDogCare(username: string) {
     setActivities(DogCareStorage.getActivities());
 
     // Show success toast
-    const emoji = action === 'Fed' ? '✅' : '🚪';
+    const emoji = action === 'Fed' ? '🍖' : '🚪';
     
     toast({
       title: `${emoji} ${action} both dogs!`,
-      description: `Logged by ${selectedUser}`,
+      description: `Logged by ${username}`,
       duration: 3000,
     });
   };
@@ -118,11 +119,9 @@ export function useDogCare(username: string) {
   };
 
   return {
-    selectedUser,
     selectedDogs,
     activities,
     canTakeAction,
-    handleUserSelect,
     handleDogToggle,
     handleSelectBothDogs,
     handleAction,
