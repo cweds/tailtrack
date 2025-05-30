@@ -70,6 +70,30 @@ export function useDogCare() {
     });
   };
 
+  const handleQuickAction = (action: Action) => {
+    if (!selectedUser) return;
+
+    // Quick actions always apply to both dogs
+    DogCareStorage.addActivity({
+      dogs: ['Natty', 'Murphy'],
+      action,
+      user: selectedUser,
+      timestamp: new Date().toISOString(),
+    });
+
+    // Refresh activities
+    setActivities(DogCareStorage.getActivities());
+
+    // Show success toast
+    const emoji = action === 'Fed' ? '✅' : '🚪';
+    
+    toast({
+      title: `${emoji} ${action} both dogs!`,
+      description: `Logged by ${selectedUser}`,
+      duration: 3000,
+    });
+  };
+
   const getStatusToday = () => {
     return DogCareStorage.getAllDogsStatusToday();
   };
@@ -83,6 +107,7 @@ export function useDogCare() {
     handleDogToggle,
     handleSelectBothDogs,
     handleAction,
+    handleQuickAction,
     getStatusToday,
   };
 }

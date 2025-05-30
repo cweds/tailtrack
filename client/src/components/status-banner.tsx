@@ -7,26 +7,37 @@ interface StatusBannerProps {
 }
 
 export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerProps) {
+  const currentHour = new Date().getHours();
+  const isEvening = currentHour >= 16; // 4 PM and later
+  
   let message: string;
   let emoji: string;
   let bgClass: string;
 
   if (allComplete) {
-    message = "Both dogs have been fed and let out — you're crushing it!";
+    message = isEvening 
+      ? "Both dogs have been fed and let out for the evening — you're crushing it!"
+      : "Both dogs have been fed and let out this morning — you're crushing it!";
     emoji = "🎉";
     bgClass = "success-gradient";
   } else if (bothFed && !bothLetOut) {
-    message = "Both dogs have been fed!";
+    message = isEvening
+      ? "Both dogs have been fed for the evening!"
+      : "Both dogs have been fed this morning!";
     emoji = "✅";
     bgClass = "success-gradient";
   } else if (!bothFed && bothLetOut) {
-    message = "Both dogs have been let out!";
+    message = isEvening
+      ? "Both dogs have been let out for the evening!"
+      : "Both dogs have been let out this morning!";
     emoji = "🚪";
     bgClass = "info-gradient";
   } else {
-    message = "Still missing care for one or both pups…";
+    message = isEvening
+      ? "Still need evening care for one or both pups…"
+      : "Still need morning care for one or both pups…";
     emoji = "👀";
-    bgClass = "warm-gradient";
+    bgClass = "bg-gradient-to-r from-slate-500 to-gray-500";
   }
 
   return (

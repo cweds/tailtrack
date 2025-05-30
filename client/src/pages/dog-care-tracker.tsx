@@ -4,6 +4,7 @@ import { UserSelector } from "@/components/user-selector";
 import { DogSelector } from "@/components/dog-selector";
 import { ActionButtons } from "@/components/action-buttons";
 import { ActivityLog } from "@/components/activity-log";
+import { DogStatusOverview } from "@/components/dog-status-overview";
 
 export default function DogCareTracker() {
   const {
@@ -15,6 +16,7 @@ export default function DogCareTracker() {
     handleDogToggle,
     handleSelectBothDogs,
     handleAction,
+    handleQuickAction,
     getStatusToday,
   } = useDogCare();
 
