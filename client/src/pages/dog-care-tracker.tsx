@@ -58,6 +58,7 @@ export default function DogCareTracker() {
           onDogToggle={handleDogToggle}
           onSelectBothDogs={handleSelectBothDogs}
           dogs={DOGS}
+          selectedUser={selectedUser}
         />
 
         {/* Action Buttons */}
