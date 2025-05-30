@@ -79,17 +79,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/activities/:userId/today", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const user = await storage.getUser(userId);
-      
-      if (!user || !user.householdId) {
-        return res.status(404).json({ error: "User or household not found" });
-      }
-      
-      const activities = await storage.getTodayActivitiesByHousehold(user.householdId);
+      const activities = await storage.getTodayActivitiesByUser(userId);
       res.json({ activities });
     } catch (error) {
       console.error(`Get today activities error: ${error}`);
       res.status(400).json({ error: "Failed to get today's activities" });
+    }
+  });
+
+  // Shared activities endpoint for household sharing
+  app.get("/api/activities/shared/today", async (req, res) => {
+    try {
+      const activities = await (storage as any).getAllTodayActivitiesWithUsernames();
+      res.json({ activities });
+    } catch (error) {
+      console.error(`Get shared activities error: ${error}`);
+      res.status(400).json({ error: "Failed to get shared activities" });
     }
   });
 

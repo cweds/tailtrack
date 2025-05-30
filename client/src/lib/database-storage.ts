@@ -91,10 +91,21 @@ export class DatabaseStorage {
   }
 
   static async getTodayActivitiesByUser(userId: number): Promise<DatabaseActivity[]> {
-    const response = await fetch(`/api/activities/${userId}/today`);
+    // For now, get all activities from all users to enable household sharing
+    // This is a temporary solution until we can properly set up the household schema
+    const response = await fetch(`/api/activities/shared/today`);
     
     if (!response.ok) {
-      throw new Error('Failed to get today\'s activities');
+      // Fallback to user-specific activities if shared endpoint doesn't exist yet
+      const fallbackResponse = await fetch(`/api/activities/${userId}/today`);
+      if (!fallbackResponse.ok) {
+        throw new Error('Failed to get today\'s activities');
+      }
+      const result = await fallbackResponse.json();
+      return result.activities.map((activity: Activity) => ({
+        ...activity,
+        timestamp: new Date(activity.timestamp),
+      }));
     }
 
     const result = await response.json();

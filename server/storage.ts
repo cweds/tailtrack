@@ -4,7 +4,7 @@ import postgres from "postgres";
 import { eq, desc, and, gte, inArray } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
-const sql = postgres(process.env.DATABASE_URL!);
+const sql = postgres("postgresql://postgres.azylofzqvhsodbhtipda:Wedekindlax174!@aws-0-us-east-1.pooler.supabase.com:6543/postgres");
 const db = drizzle(sql);
 
 export interface IStorage {
@@ -105,6 +105,26 @@ export class DatabaseStorage implements IStorage {
         gte(activities.timestamp, today)
       ))
       .orderBy(desc(activities.timestamp));
+  }
+
+  async getAllTodayActivitiesWithUsernames(): Promise<(Activity & { username: string })[]> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const activitiesWithUsers = await db.select({
+      id: activities.id,
+      userId: activities.userId,
+      dogs: activities.dogs,
+      action: activities.action,
+      timestamp: activities.timestamp,
+      username: users.username,
+    })
+    .from(activities)
+    .innerJoin(users, eq(activities.userId, users.id))
+    .where(gte(activities.timestamp, today))
+    .orderBy(desc(activities.timestamp));
+    
+    return activitiesWithUsers;
   }
 
   async getActivitiesByHousehold(householdId: number): Promise<(Activity & { username: string })[]> {
