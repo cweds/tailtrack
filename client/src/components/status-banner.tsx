@@ -45,10 +45,10 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
       )}
       style={
         !allComplete ? {
-          backgroundColor: '#9ca3af',
+          backgroundColor: '#e5e7eb',
           borderWidth: '2px',
           borderStyle: 'solid',
-          borderColor: '#374151'
+          borderColor: '#6b7280'
         } : undefined
       }
     >
