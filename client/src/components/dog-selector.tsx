@@ -52,16 +52,15 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
       </div>
       <div
         onClick={onSelectBothDogs}
-        className={cn(
-          "w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center",
-          selectedDogs.size === 2
-            ? "text-gray-800 bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300 active:opacity-80"
-            : "text-pink-500 bg-white border-pink-300 active:bg-pink-100 hover:bg-pink-50"
-        )}
+        className="w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center"
         style={{ 
           WebkitTapHighlightColor: 'transparent',
           touchAction: 'manipulation',
-          userSelect: 'none'
+          userSelect: 'none',
+          backgroundColor: selectedDogs.size === 2 ? '#fef3c7' : '#ffffff',
+          borderColor: selectedDogs.size === 2 ? '#f59e0b' : '#ec4899',
+          color: selectedDogs.size === 2 ? '#374151' : '#ec4899',
+          backgroundImage: selectedDogs.size === 2 ? 'linear-gradient(to right, #fef3c7, #fed7aa)' : 'none'
         }}
       >
         {selectedDogs.size === 2 ? "Deselect All" : "Select Both Dogs"}
