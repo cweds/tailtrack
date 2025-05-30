@@ -18,7 +18,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-lg border border-orange-200">
+    <div className="bg-white p-4 rounded-xl paw-shadow border border-pink-200">
       <label className="block text-sm font-medium text-gray-700 mb-3">
         🐶 Which pup(s) need care?
       </label>
@@ -30,10 +30,10 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
             onClick={() => onDogToggle(dog)}
             variant="outline"
             className={cn(
-              "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto",
+              "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto playful-bounce",
               selectedDogs.has(dog)
-                ? "border-orange-500 bg-orange-500 text-white hover:bg-orange-600"
-                : "border-gray-200 text-gray-700 hover:border-orange-500 hover:bg-orange-50"
+                ? "border-pink-300 pup-pink-gradient text-gray-800 hover:opacity-90"
+                : "border-amber-200 text-gray-700 hover:border-pink-300 hover:bg-pink-50"
             )}
           >
             <div className="mb-1">
@@ -54,10 +54,10 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
         onClick={onSelectBothDogs}
         variant="outline"
         className={cn(
-          "w-full mt-3 p-2 text-sm font-medium rounded-lg transition-all duration-200",
+          "w-full mt-3 p-2 text-sm font-medium rounded-lg transition-all duration-200 playful-bounce",
           selectedDogs.size === 2
-            ? "text-white bg-orange-500 border-orange-500 hover:bg-orange-600"
-            : "text-orange-500 border-orange-500 hover:bg-orange-500 hover:text-white"
+            ? "text-gray-800 golden-tan-gradient border-amber-300 hover:opacity-90"
+            : "text-pink-500 border-pink-300 hover:pup-pink-gradient hover:text-gray-800"
         )}
       >
         {selectedDogs.size === 2 ? "Deselect All" : "Select Both Dogs"}
