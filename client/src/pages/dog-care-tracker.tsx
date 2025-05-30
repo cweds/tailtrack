@@ -5,22 +5,20 @@ import { DogSelector } from "@/components/dog-selector";
 import { ActionButtons } from "@/components/action-buttons";
 import { ActivityLog } from "@/components/activity-log";
 import { Button } from "@/components/ui/button";
-import { DogCareStorage } from "@/lib/dog-care-storage";
 
 export default function DogCareTracker() {
+  const { user, logout } = useAuth();
   const {
-    selectedUser,
     selectedDogs,
     activities,
     canTakeAction,
-    handleUserSelect,
     handleDogToggle,
     handleSelectBothDogs,
     handleAction,
     handleQuickAction,
     getStatusToday,
     handleClearData,
-  } = useDogCare();
+  } = useDogCare(user?.username || "");
 
   const { bothFed, bothLetOut, allComplete } = getStatusToday();
 
@@ -30,12 +28,23 @@ export default function DogCareTracker() {
       <header className="warm-gradient text-white p-4 text-center relative">
         <h1 className="text-2xl font-bold">🐕 Dog Care Tracker</h1>
         <p className="text-orange-100 text-sm mt-1">Keep Natty & Murphy happy!</p>
-        <button
-          onClick={handleClearData}
-          className="absolute top-4 right-4 text-xs bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-white transition-colors"
-        >
-          Clear Data
-        </button>
+        <div className="absolute top-4 right-4 flex gap-2">
+          <span className="text-xs bg-white/20 px-2 py-1 rounded text-white">
+            Welcome, {user?.username}!
+          </span>
+          <button
+            onClick={logout}
+            className="text-xs bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-white transition-colors"
+          >
+            Logout
+          </button>
+          <button
+            onClick={handleClearData}
+            className="text-xs bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-white transition-colors"
+          >
+            Clear Data
+          </button>
+        </div>
       </header>
 
       {/* Status Banner */}
@@ -47,20 +56,12 @@ export default function DogCareTracker() {
 
       {/* Main Content */}
       <div className="p-4 space-y-6">
-        {/* User Selection */}
-        <UserSelector
-          selectedUser={selectedUser}
-          onUserSelect={handleUserSelect}
-          users={USERS}
-        />
-
         {/* Dog Selection */}
         <DogSelector
           selectedDogs={selectedDogs}
           onDogToggle={handleDogToggle}
           onSelectBothDogs={handleSelectBothDogs}
           dogs={DOGS}
-          selectedUser={selectedUser}
         />
 
         {/* Action Buttons */}
@@ -68,7 +69,6 @@ export default function DogCareTracker() {
           canTakeAction={canTakeAction}
           onAction={handleAction}
           onQuickAction={handleQuickAction}
-          selectedUser={selectedUser}
           selectedDogs={selectedDogs}
         />
 

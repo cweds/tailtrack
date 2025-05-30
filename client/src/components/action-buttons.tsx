@@ -1,18 +1,17 @@
 import { Button } from "@/components/ui/button";
-import type { Action, User, Dog } from "@/hooks/use-dog-care";
+import type { Action, Dog } from "@/hooks/use-dog-care";
 import { DogCareStorage } from "@/lib/dog-care-storage";
 
 interface ActionButtonsProps {
   canTakeAction: boolean;
   onAction: (action: Action) => void;
   onQuickAction: (action: Action) => void;
-  selectedUser: User | null;
   selectedDogs: Set<Dog>;
 }
 
-export function ActionButtons({ canTakeAction, onAction, onQuickAction, selectedUser, selectedDogs }: ActionButtonsProps) {
-  // Only show buttons when dogs are selected and user is selected
-  if (!selectedUser || selectedDogs.size === 0) {
+export function ActionButtons({ canTakeAction, onAction, onQuickAction, selectedDogs }: ActionButtonsProps) {
+  // Only show buttons when dogs are selected
+  if (selectedDogs.size === 0) {
     return null;
   }
 
