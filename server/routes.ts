@@ -70,6 +70,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Shared activities endpoint for household sharing - must come before the parameterized route
+  app.get("/api/activities/shared/today", async (req, res) => {
+    try {
+      const activities = await (storage as any).getAllTodayActivitiesWithUsernames();
+      res.json({ activities });
+    } catch (error) {
+      console.error(`Get shared activities error: ${error}`);
+      res.status(400).json({ error: "Failed to get shared activities" });
+    }
+  });
+
   app.get("/api/activities/:userId/today", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
@@ -78,17 +89,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error(`Get today activities error: ${error}`);
       res.status(400).json({ error: "Failed to get today's activities" });
-    }
-  });
-
-  // Shared activities endpoint for household sharing
-  app.get("/api/activities/shared/today", async (req, res) => {
-    try {
-      const activities = await (storage as any).getAllTodayActivitiesWithUsernames();
-      res.json({ activities });
-    } catch (error) {
-      console.error(`Get shared activities error: ${error}`);
-      res.status(400).json({ error: "Failed to get shared activities" });
     }
   });
 
