@@ -142,13 +142,29 @@ export function useDogCare(username: string) {
   };
 
   const getStatusToday = async () => {
-    if (!user?.id) return { bothFed: false, bothLetOut: false, allComplete: false };
+    if (!user?.id) return { 
+      bothFed: false, 
+      bothLetOut: false, 
+      allComplete: false,
+      nattyFed: false,
+      nattyLetOut: false,
+      murphyFed: false,
+      murphyLetOut: false
+    };
     
     try {
       return await DatabaseStorage.getAllDogsStatusToday(user.id);
     } catch (error) {
       console.error('Failed to get status:', error);
-      return { bothFed: false, bothLetOut: false, allComplete: false };
+      return { 
+        bothFed: false, 
+        bothLetOut: false, 
+        allComplete: false,
+        nattyFed: false,
+        nattyLetOut: false,
+        murphyFed: false,
+        murphyLetOut: false
+      };
     }
   };
 

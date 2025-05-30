@@ -158,7 +158,15 @@ export class DatabaseStorage {
     return { fed, letOut };
   }
 
-  static async getAllDogsStatusToday(userId: number): Promise<{ bothFed: boolean; bothLetOut: boolean; allComplete: boolean }> {
+  static async getAllDogsStatusToday(userId: number): Promise<{ 
+    bothFed: boolean; 
+    bothLetOut: boolean; 
+    allComplete: boolean;
+    nattyFed: boolean;
+    nattyLetOut: boolean;
+    murphyFed: boolean;
+    murphyLetOut: boolean;
+  }> {
     const nattyStatus = await this.getDogStatusToday(userId, 'Natty');
     const murphyStatus = await this.getDogStatusToday(userId, 'Murphy');
 
@@ -166,7 +174,15 @@ export class DatabaseStorage {
     const bothLetOut = nattyStatus.letOut && murphyStatus.letOut;
     const allComplete = bothFed && bothLetOut;
 
-    return { bothFed, bothLetOut, allComplete };
+    return { 
+      bothFed, 
+      bothLetOut, 
+      allComplete,
+      nattyFed: nattyStatus.fed,
+      nattyLetOut: nattyStatus.letOut,
+      murphyFed: murphyStatus.fed,
+      murphyLetOut: murphyStatus.letOut
+    };
   }
 
   static async canPerformAction(userId: number, dogName: string, action: 'Fed' | 'Let Out'): Promise<boolean> {

@@ -4,9 +4,13 @@ interface StatusBannerProps {
   bothFed: boolean;
   bothLetOut: boolean;
   allComplete: boolean;
+  nattyFed: boolean;
+  nattyLetOut: boolean;
+  murphyFed: boolean;
+  murphyLetOut: boolean;
 }
 
-export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerProps) {
+export function StatusBanner({ bothFed, bothLetOut, allComplete, nattyFed, nattyLetOut, murphyFed, murphyLetOut }: StatusBannerProps) {
   const currentHour = new Date().getHours();
   const isEvening = currentHour >= 16; // 4 PM and later
   
@@ -23,12 +27,30 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
   } else {
     const timeContext = isEvening ? "evening" : "morning";
     
-    if (!bothFed && !bothLetOut) {
+    // Check individual dog completion status
+    const nattyComplete = nattyFed && nattyLetOut;
+    const murphyComplete = murphyFed && murphyLetOut;
+    
+    if (!nattyComplete && !murphyComplete) {
       message = `Both dogs still need care this ${timeContext}.`;
-    } else if (!bothFed) {
-      message = `Dogs still need to be fed this ${timeContext}.`;
-    } else if (!bothLetOut) {
-      message = `Dogs still need to be let out this ${timeContext}.`;
+    } else if (!nattyComplete && murphyComplete) {
+      // Only Natty needs care
+      if (!nattyFed && !nattyLetOut) {
+        message = `Natty still needs care this ${timeContext}.`;
+      } else if (!nattyFed) {
+        message = `Natty still needs to be fed this ${timeContext}.`;
+      } else {
+        message = `Natty still needs to be let out this ${timeContext}.`;
+      }
+    } else if (nattyComplete && !murphyComplete) {
+      // Only Murphy needs care
+      if (!murphyFed && !murphyLetOut) {
+        message = `Murphy still needs care this ${timeContext}.`;
+      } else if (!murphyFed) {
+        message = `Murphy still needs to be fed this ${timeContext}.`;
+      } else {
+        message = `Murphy still needs to be let out this ${timeContext}.`;
+      }
     } else {
       message = `Dogs need care this ${timeContext}.`;
     }

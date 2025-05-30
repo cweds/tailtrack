@@ -21,7 +21,15 @@ export default function DogCareTracker() {
     getStatusToday,
   } = useDogCare(user?.username || "");
 
-  const [statusToday, setStatusToday] = useState({ bothFed: false, bothLetOut: false, allComplete: false });
+  const [statusToday, setStatusToday] = useState({ 
+    bothFed: false, 
+    bothLetOut: false, 
+    allComplete: false,
+    nattyFed: false,
+    nattyLetOut: false,
+    murphyFed: false,
+    murphyLetOut: false
+  });
 
   useEffect(() => {
     const loadStatus = async () => {
@@ -59,7 +67,11 @@ export default function DogCareTracker() {
       <StatusBanner 
         bothFed={statusToday.bothFed} 
         bothLetOut={statusToday.bothLetOut} 
-        allComplete={statusToday.allComplete} 
+        allComplete={statusToday.allComplete}
+        nattyFed={statusToday.nattyFed}
+        nattyLetOut={statusToday.nattyLetOut}
+        murphyFed={statusToday.murphyFed}
+        murphyLetOut={statusToday.murphyLetOut}
       />
 
       {/* Main Content */}
