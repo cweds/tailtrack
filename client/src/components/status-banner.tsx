@@ -49,7 +49,7 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     }
     
     emoji = "⚠️";
-    bgClass = "bg-gray-300 border-2 border-gray-600";
+    bgClass = "bg-gray-400 border-2 border-gray-700";
   }
 
   return (
