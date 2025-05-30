@@ -57,12 +57,21 @@ export class DogCareStorage {
 
   static getDogStatusToday(dogName: string): { fed: boolean; letOut: boolean } {
     const todayActivities = this.getTodayActivities();
+    const currentHour = new Date().getHours();
+    const isEvening = currentHour >= 16; // 4 PM and later
     
-    const fed = todayActivities.some(activity => 
+    // Filter activities based on morning/evening context
+    const contextActivities = todayActivities.filter(activity => {
+      const activityHour = new Date(activity.timestamp).getHours();
+      const activityIsEvening = activityHour >= 16;
+      return isEvening ? activityIsEvening : !activityIsEvening;
+    });
+    
+    const fed = contextActivities.some(activity => 
       activity.dogs.includes(dogName) && activity.action === 'Fed'
     );
     
-    const letOut = todayActivities.some(activity => 
+    const letOut = contextActivities.some(activity => 
       activity.dogs.includes(dogName) && activity.action === 'Let Out'
     );
 

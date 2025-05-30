@@ -44,6 +44,8 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
       message = `Natty still needs care this ${timeContext}.`;
     } else if (!murphyComplete) {
       message = `Murphy still needs care this ${timeContext}.`;
+    } else {
+      message = `Dogs need care this ${timeContext}.`;
     }
     
     emoji = "⚠️";
