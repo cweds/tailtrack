@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { DogCareStorage } from "@/lib/dog-care-storage";
 
 interface StatusBannerProps {
   bothFed: boolean;
@@ -9,6 +10,10 @@ interface StatusBannerProps {
 export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerProps) {
   const currentHour = new Date().getHours();
   const isEvening = currentHour >= 16; // 4 PM and later
+  
+  // Get individual dog statuses
+  const nattyStatus = DogCareStorage.getDogStatusToday('Natty');
+  const murphyStatus = DogCareStorage.getDogStatusToday('Murphy');
   
   let message: string;
   let emoji: string;
@@ -33,9 +38,22 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     emoji = "🚪";
     bgClass = "info-gradient";
   } else {
+    // Determine which dogs need care
+    const nattyComplete = nattyStatus.fed && nattyStatus.letOut;
+    const murphyComplete = murphyStatus.fed && murphyStatus.letOut;
+    
+    let dogsNeedingCare: string;
+    if (!nattyComplete && !murphyComplete) {
+      dogsNeedingCare = "both pups";
+    } else if (!nattyComplete) {
+      dogsNeedingCare = "Natty";
+    } else {
+      dogsNeedingCare = "Murphy";
+    }
+    
     message = isEvening
-      ? "Still need evening care for one or both pups…"
-      : "Still need morning care for one or both pups…";
+      ? `Still need evening care for ${dogsNeedingCare}…`
+      : `Still need morning care for ${dogsNeedingCare}…`;
     emoji = "👀";
     bgClass = "bg-gradient-to-r from-slate-500 to-gray-500";
   }
