@@ -29,15 +29,16 @@ function formatFullTimestamp(timestamp: Date): string {
 }
 
 export function ActivityLog({ activities }: ActivityLogProps) {
+  const { user } = useAuth();
   const [showAllDays, setShowAllDays] = useState(false);
   
   // Separate today's activities from previous days
   const today = new Date().toDateString();
   const todayActivities = activities.filter(activity => 
-    new Date(activity.timestamp).toDateString() === today
+    activity.timestamp.toDateString() === today
   );
   const previousActivities = activities.filter(activity => 
-    new Date(activity.timestamp).toDateString() !== today
+    activity.timestamp.toDateString() !== today
   );
 
   const displayActivities = showAllDays ? activities : todayActivities;
@@ -87,7 +88,7 @@ export function ActivityLog({ activities }: ActivityLogProps) {
                       {dogsList}
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
-                      by {activity.user} • {timeAgo}
+                      by {activity.username || user?.username} • {timeAgo}
                     </div>
                   </div>
                 </div>

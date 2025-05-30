@@ -6,6 +6,7 @@ export interface DatabaseActivity {
   dogs: string[];
   action: 'Fed' | 'Let Out';
   timestamp: Date;
+  username?: string;
 }
 
 export class DatabaseStorage {
