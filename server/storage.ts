@@ -4,7 +4,7 @@ import postgres from "postgres";
 import { eq, desc, and, gte, inArray } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 
-const sql = postgres("postgresql://postgres.azylofzqvhsodbhtipda:Wedekindlax174!@aws-0-us-east-1.pooler.supabase.com:6543/postgres");
+const sql = postgres(process.env.DATABASE_URL!);
 const db = drizzle(sql);
 
 export interface IStorage {
@@ -105,6 +105,58 @@ export class DatabaseStorage implements IStorage {
         gte(activities.timestamp, today)
       ))
       .orderBy(desc(activities.timestamp));
+  }
+
+  async getActivitiesByHousehold(householdId: number): Promise<(Activity & { username: string })[]> {
+    // Get all users in the household
+    const householdUsers = await db.select().from(users).where(eq(users.householdId, householdId));
+    const userIds = householdUsers.map(user => user.id);
+    
+    if (userIds.length === 0) return [];
+    
+    const activitiesWithUsers = await db.select({
+      id: activities.id,
+      userId: activities.userId,
+      dogs: activities.dogs,
+      action: activities.action,
+      timestamp: activities.timestamp,
+      username: users.username,
+    })
+    .from(activities)
+    .innerJoin(users, eq(activities.userId, users.id))
+    .where(inArray(activities.userId, userIds))
+    .orderBy(desc(activities.timestamp));
+    
+    return activitiesWithUsers;
+  }
+
+  async getTodayActivitiesByHousehold(householdId: number): Promise<(Activity & { username: string })[]> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Get all users in the household
+    const householdUsers = await db.select().from(users).where(eq(users.householdId, householdId));
+    const userIds = householdUsers.map(user => user.id);
+    
+    if (userIds.length === 0) return [];
+    
+    const activitiesWithUsers = await db.select({
+      id: activities.id,
+      userId: activities.userId,
+      dogs: activities.dogs,
+      action: activities.action,
+      timestamp: activities.timestamp,
+      username: users.username,
+    })
+    .from(activities)
+    .innerJoin(users, eq(activities.userId, users.id))
+    .where(and(
+      inArray(activities.userId, userIds),
+      gte(activities.timestamp, today)
+    ))
+    .orderBy(desc(activities.timestamp));
+    
+    return activitiesWithUsers;
   }
 }
 

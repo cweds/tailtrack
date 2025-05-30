@@ -62,7 +62,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/activities/:userId", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const activities = await storage.getActivitiesByUser(userId);
+      const user = await storage.getUser(userId);
+      
+      if (!user || !user.householdId) {
+        return res.status(404).json({ error: "User or household not found" });
+      }
+      
+      const activities = await storage.getActivitiesByHousehold(user.householdId);
       res.json({ activities });
     } catch (error) {
       console.error(`Get activities error: ${error}`);
@@ -73,7 +79,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/activities/:userId/today", async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
-      const activities = await storage.getTodayActivitiesByUser(userId);
+      const user = await storage.getUser(userId);
+      
+      if (!user || !user.householdId) {
+        return res.status(404).json({ error: "User or household not found" });
+      }
+      
+      const activities = await storage.getTodayActivitiesByHousehold(user.householdId);
       res.json({ activities });
     } catch (error) {
       console.error(`Get today activities error: ${error}`);
