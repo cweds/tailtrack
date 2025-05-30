@@ -70,16 +70,29 @@
 }
 
 .pup-pink-gradient {
-  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%);
-  outline: none;
-  user-select: none;
+  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%) !important;
+  outline: none !important;
+  user-select: none !important;
+  pointer-events: none !important;
 }
 
+.pup-pink-gradient:hover,
 .pup-pink-gradient:focus,
 .pup-pink-gradient:active,
-.pup-pink-gradient * {
+.pup-pink-gradient:visited {
+  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%) !important;
   outline: none !important;
   box-shadow: none !important;
+  border: none !important;
+}
+
+.pup-pink-gradient *,
+.pup-pink-gradient *:hover,
+.pup-pink-gradient *:focus,
+.pup-pink-gradient *:active {
+  outline: none !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
 }
 
 .pup-pink-gradient.interactive {
