@@ -89,6 +89,24 @@ export class DogCareStorage {
     return { bothFed, bothLetOut, allComplete };
   }
 
+  static canPerformAction(dogName: string, action: 'Fed' | 'Let Out'): boolean {
+    const activities = this.getActivities();
+    const now = new Date();
+    
+    // Get the cooldown period based on action
+    const cooldownMinutes = action === 'Fed' ? 60 : 15;
+    const cooldownMs = cooldownMinutes * 60 * 1000;
+    
+    // Find the most recent activity for this dog and action
+    const lastActivity = activities.find(activity => 
+      activity.dogs.includes(dogName) && 
+      activity.action === action &&
+      now.getTime() - new Date(activity.timestamp).getTime() < cooldownMs
+    );
+    
+    return !lastActivity;
+  }
+
   static clearAllData(): void {
     try {
       localStorage.removeItem(STORAGE_KEY);

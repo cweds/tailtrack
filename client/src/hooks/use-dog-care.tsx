@@ -52,6 +52,19 @@ export function useDogCare() {
 
     const dogsArray = Array.from(selectedDogs);
     
+    // Check cooldowns for all selected dogs
+    const canPerformAction = dogsArray.every(dog => DogCareStorage.canPerformAction(dog, action));
+    
+    if (!canPerformAction) {
+      const cooldownMinutes = action === 'Fed' ? 60 : 15;
+      toast({
+        title: `⏰ Cooldown active`,
+        description: `${action === 'Fed' ? 'Feeding' : 'Letting out'} is on cooldown for ${cooldownMinutes} minutes`,
+        variant: "destructive",
+      });
+      return;
+    }
+    
     DogCareStorage.addActivity({
       dogs: dogsArray,
       action,
@@ -64,7 +77,7 @@ export function useDogCare() {
 
     // Show success toast
     const dogsText = dogsArray.length === 2 ? 'both dogs' : dogsArray[0];
-    const emoji = action === 'Fed' ? '✅' : '🚪';
+    const emoji = action === 'Fed' ? '🍖' : '🚪';
     
     toast({
       title: `${emoji} ${action} ${dogsText}!`,
