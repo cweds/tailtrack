@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import type { DatabaseActivity } from "@/lib/database-storage";
 import { useAuth } from "@/contexts/auth-context";
+import { PawIcon } from "./paw-icon";
 
 interface ActivityLogProps {
   activities: DatabaseActivity[];
@@ -50,7 +51,9 @@ export function ActivityLog({ activities }: ActivityLogProps) {
           📋 Today's Activity
         </h3>
         <div className="text-center text-gray-500 py-8">
-          <div className="text-4xl mb-2">🐾</div>
+          <div className="mb-2">
+            <PawIcon className="text-white mx-auto" size={48} />
+          </div>
           <p>No activities yet. Start caring for your pups!</p>
         </div>
       </div>
@@ -65,7 +68,9 @@ export function ActivityLog({ activities }: ActivityLogProps) {
       
       {displayActivities.length === 0 && !showAllDays ? (
         <div className="text-center text-gray-500 py-8">
-          <div className="text-4xl mb-2">🐾</div>
+          <div className="mb-2">
+            <PawIcon className="text-white mx-auto" size={48} />
+          </div>
           <p>No activities today yet. Start caring for your pups!</p>
         </div>
       ) : (
