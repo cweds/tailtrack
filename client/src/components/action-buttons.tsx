@@ -13,8 +13,8 @@ interface ActionButtonsProps {
 
 export function ActionButtons({ canTakeAction, onAction, onQuickAction, selectedDogs }: ActionButtonsProps) {
   const { user } = useAuth();
-  const [canFeed, setCanFeed] = useState(true);
-  const [canLetOut, setCanLetOut] = useState(true);
+  const [canFeed, setCanFeed] = useState(false);
+  const [canLetOut, setCanLetOut] = useState(false);
 
   const selectedDogsArray = Array.from(selectedDogs);
   const isBothDogs = selectedDogsArray.length === 2;
@@ -37,14 +37,18 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
         setCanLetOut(letOutChecks.every(can => can));
       } catch (error) {
         console.error('Error checking cooldowns:', error);
-        // Default to allowing actions if check fails
         setCanFeed(true);
         setCanLetOut(true);
       }
     };
 
-    checkCooldowns();
-  }, [user?.id, selectedDogsArray.join(',')]); // Re-check when selection changes
+    if (selectedDogsArray.length > 0) {
+      checkCooldowns();
+    } else {
+      setCanFeed(false);
+      setCanLetOut(false);
+    }
+  }, [user?.id, selectedDogsArray.join(',')]);
 
   // Only show buttons when dogs are selected
   if (selectedDogs.size === 0) {
