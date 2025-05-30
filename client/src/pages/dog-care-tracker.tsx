@@ -45,7 +45,16 @@ export default function DogCareTracker() {
   return (
     <div className="app-container">
       {/* Header */}
-      <header className="header-static p-4 text-center">
+      <header 
+        className="header-static p-4 text-center"
+        style={{ 
+          background: 'linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%)',
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+          MozUserSelect: 'none',
+          msUserSelect: 'none'
+        }}
+      >
         <h1 className="text-2xl font-bold text-gray-800">🐾 TailTrack 🐾</h1>
         <p className="text-gray-700 text-sm mt-1">Caring for your pet, made simple.</p>
       </header>
