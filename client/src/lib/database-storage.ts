@@ -91,7 +91,21 @@ export class DatabaseStorage {
   }
 
   static async getTodayActivitiesByUser(userId: number): Promise<DatabaseActivity[]> {
-    // Get user-specific activities (each user manages their own dogs)
+    // Use shared activities for household sharing - all users see all activities
+    try {
+      const response = await fetch(`/api/activities/shared/today`);
+      if (response.ok) {
+        const result = await response.json();
+        return result.activities.map((activity: Activity) => ({
+          ...activity,
+          timestamp: new Date(activity.timestamp),
+        }));
+      }
+    } catch (error) {
+      console.log('Shared activities not available, using user-specific activities');
+    }
+    
+    // Fallback to user-specific activities if shared endpoint fails
     const response = await fetch(`/api/activities/${userId}/today`);
     if (!response.ok) {
       throw new Error('Failed to get today\'s activities');
