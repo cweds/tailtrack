@@ -71,6 +71,15 @@
 
 .pup-pink-gradient {
   background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%);
+  outline: none;
+  user-select: none;
+}
+
+.pup-pink-gradient:focus,
+.pup-pink-gradient:active,
+.pup-pink-gradient * {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .pup-pink-gradient.interactive {
