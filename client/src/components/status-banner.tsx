@@ -34,27 +34,39 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     
     const timeContext = isEvening ? "evening" : "morning";
     
-    let warnings = [];
+    // Check if both dogs need the same things
+    const bothNeedFed = nattyNeedsFed && murphyNeedsFed;
+    const bothNeedOut = nattyNeedsOut && murphyNeedsOut;
+    const bothNeedBoth = (nattyNeedsFed && nattyNeedsOut) && (murphyNeedsFed && murphyNeedsOut);
     
-    if (nattyNeedsFed && nattyNeedsOut) {
-      warnings.push("Natty needs to be fed and let out");
-    } else if (nattyNeedsFed) {
-      warnings.push("Natty needs to be fed");
-    } else if (nattyNeedsOut) {
-      warnings.push("Natty needs to be let out");
-    }
-    
-    if (murphyNeedsFed && murphyNeedsOut) {
-      warnings.push("Murphy needs to be fed and let out");
-    } else if (murphyNeedsFed) {
-      warnings.push("Murphy needs to be fed");
-    } else if (murphyNeedsOut) {
-      warnings.push("Murphy needs to be let out");
-    }
-    
-    if (warnings.length === 1) {
-      message = `${warnings[0]} for ${timeContext}`;
+    if (bothNeedBoth) {
+      message = `Both Natty and Murphy need to be fed and let out for ${timeContext}`;
+    } else if (bothNeedFed && bothNeedOut) {
+      message = `Both Natty and Murphy need to be fed and let out for ${timeContext}`;
+    } else if (bothNeedFed) {
+      message = `Both Natty and Murphy need to be fed for ${timeContext}`;
+    } else if (bothNeedOut) {
+      message = `Both Natty and Murphy need to be let out for ${timeContext}`;
     } else {
+      // Individual dog needs
+      let warnings = [];
+      
+      if (nattyNeedsFed && nattyNeedsOut) {
+        warnings.push("Natty needs to be fed and let out");
+      } else if (nattyNeedsFed) {
+        warnings.push("Natty needs to be fed");
+      } else if (nattyNeedsOut) {
+        warnings.push("Natty needs to be let out");
+      }
+      
+      if (murphyNeedsFed && murphyNeedsOut) {
+        warnings.push("Murphy needs to be fed and let out");
+      } else if (murphyNeedsFed) {
+        warnings.push("Murphy needs to be fed");
+      } else if (murphyNeedsOut) {
+        warnings.push("Murphy needs to be let out");
+      }
+      
       message = `${warnings.join(" and ")} for ${timeContext}`;
     }
     
