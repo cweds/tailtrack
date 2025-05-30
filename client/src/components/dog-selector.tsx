@@ -50,24 +50,24 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
           </Button>
         ))}
       </div>
-      <Button
+      <button
         key={`select-button-${selectedDogs.size}`}
         onClick={onSelectBothDogs}
-        variant="outline"
         className={cn(
-          "w-full mt-3 p-2 text-sm font-medium rounded-lg transition-all duration-200 playful-bounce active:scale-95 focus:outline-none focus:ring-0 focus:border-pink-300",
+          "w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200",
           selectedDogs.size === 2
-            ? "text-gray-800 golden-tan-gradient border-amber-300 hover:opacity-90"
-            : "text-pink-500 border-pink-300 hover:pup-pink-gradient hover:text-gray-800 bg-white border-2"
+            ? "text-gray-800 bg-gradient-to-r from-amber-100 to-orange-100 border-amber-300"
+            : "text-pink-500 bg-white border-pink-300 hover:bg-pink-50"
         )}
         style={{ 
           WebkitTapHighlightColor: 'transparent',
+          outline: 'none',
           WebkitAppearance: 'none',
           touchAction: 'manipulation'
         }}
       >
         {selectedDogs.size === 2 ? "Deselect All" : "Select Both Dogs"}
-      </Button>
+      </button>
     </div>
   );
 }
