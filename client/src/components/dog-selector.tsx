@@ -52,7 +52,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
       </div>
       <div
         onClick={onSelectBothDogs}
-        className="w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center"
+        className="w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center playful-bounce hover:scale-105 active:scale-95"
         style={{ 
           WebkitTapHighlightColor: 'transparent',
           touchAction: 'manipulation',
@@ -61,6 +61,22 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
           borderColor: selectedDogs.size === 2 ? '#f59e0b' : '#ec4899',
           color: selectedDogs.size === 2 ? '#374151' : '#ec4899',
           backgroundImage: selectedDogs.size === 2 ? 'linear-gradient(to right, #fef3c7, #fed7aa)' : 'none'
+        }}
+        onMouseEnter={(e) => {
+          if (selectedDogs.size === 2) {
+            e.currentTarget.style.opacity = '0.9';
+          } else {
+            e.currentTarget.style.backgroundColor = '#fdf2f8';
+            e.currentTarget.style.borderColor = '#f472b6';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (selectedDogs.size === 2) {
+            e.currentTarget.style.opacity = '1';
+          } else {
+            e.currentTarget.style.backgroundColor = '#ffffff';
+            e.currentTarget.style.borderColor = '#ec4899';
+          }
         }}
       >
         {selectedDogs.size === 2 ? "Deselect All" : "Select Both Dogs"}
