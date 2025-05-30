@@ -32,7 +32,19 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete, nattyFed, natty
     const murphyComplete = murphyFed && murphyLetOut;
     
     if (!nattyComplete && !murphyComplete) {
-      message = `Both dogs still need care this ${timeContext}.`;
+      // Check what both dogs need
+      const bothNeedFeeding = !nattyFed && !murphyFed;
+      const bothNeedLetOut = !nattyLetOut && !murphyLetOut;
+      
+      if (bothNeedFeeding && bothNeedLetOut) {
+        message = `Both dogs still need care this ${timeContext}.`;
+      } else if (bothNeedFeeding) {
+        message = `Both dogs still need to be fed this ${timeContext}.`;
+      } else if (bothNeedLetOut) {
+        message = `Both dogs still need to be let out this ${timeContext}.`;
+      } else {
+        message = `Both dogs still need care this ${timeContext}.`;
+      }
     } else if (!nattyComplete && murphyComplete) {
       // Only Natty needs care
       if (!nattyFed && !nattyLetOut) {
