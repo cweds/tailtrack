@@ -27,16 +27,16 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     bgClass = "success-gradient";
   } else if (bothFed && !bothLetOut) {
     message = isEvening
-      ? "Both dogs have been fed for the evening!"
-      : "Both dogs have been fed this morning!";
+      ? "Both dogs have been fed for the evening — still need to let them out!"
+      : "Both dogs have been fed this morning — still need to let them out!";
     emoji = "✅";
-    bgClass = "success-gradient";
+    bgClass = "bg-gradient-to-r from-emerald-500 to-blue-400";
   } else if (!bothFed && bothLetOut) {
     message = isEvening
-      ? "Both dogs have been let out for the evening!"
-      : "Both dogs have been let out this morning!";
+      ? "Both dogs have been let out for the evening — still need to feed them!"
+      : "Both dogs have been let out this morning — still need to feed them!";
     emoji = "🚪";
-    bgClass = "info-gradient";
+    bgClass = "bg-gradient-to-r from-blue-500 to-emerald-400";
   } else {
     // Determine which dogs need care
     const nattyComplete = nattyStatus.fed && nattyStatus.letOut;
