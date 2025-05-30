@@ -52,11 +52,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
       </div>
       <Button
         key={`select-button-${selectedDogs.size}`}
-        onClick={(e) => {
-          onSelectBothDogs();
-          // Force blur and reset on mobile
-          setTimeout(() => e.currentTarget.blur(), 10);
-        }}
+        onClick={onSelectBothDogs}
         variant="outline"
         className={cn(
           "w-full mt-3 p-2 text-sm font-medium rounded-lg transition-all duration-200 playful-bounce active:scale-95 focus:outline-none focus:ring-0 focus:border-pink-300",
