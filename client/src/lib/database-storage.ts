@@ -12,7 +12,7 @@ export interface DatabaseActivity {
 // Simple cache for recent activities to reduce API calls
 class ActivityCache {
   private cache = new Map<number, { activities: DatabaseActivity[], timestamp: number }>();
-  private readonly CACHE_DURATION = 30000; // 30 seconds
+  private readonly CACHE_DURATION = 5000; // 5 seconds - shorter for data consistency
 
   get(userId: number): DatabaseActivity[] | null {
     const cached = this.cache.get(userId);
@@ -37,11 +37,19 @@ class ActivityCache {
   invalidate(userId: number): void {
     this.cache.delete(userId);
   }
+
+  clearAll(): void {
+    this.cache.clear();
+  }
 }
 
 const activityCache = new ActivityCache();
 
 export class DatabaseStorage {
+  // Method to clear cache manually when needed
+  static clearCache(): void {
+    activityCache.clearAll();
+  }
   static async createActivity(userId: number, dogs: string[], action: 'Fed' | 'Let Out'): Promise<DatabaseActivity> {
     const response = await fetch('/api/activities', {
       method: 'POST',
