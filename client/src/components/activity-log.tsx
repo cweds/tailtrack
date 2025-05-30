@@ -72,7 +72,7 @@ export function ActivityLog({ activities }: ActivityLogProps) {
         <ScrollArea className="max-h-80">
           <div className="space-y-3">
             {displayActivities.map((activity) => {
-              const actionEmoji = activity.action === 'Fed' ? '✅' : '🚪';
+              const actionEmoji = activity.action === 'Fed' ? '🍖' : '🚪';
               const dogsList = activity.dogs.length > 1 ? activity.dogs.join(' & ') : activity.dogs[0];
               const timeAgo = formatTime(activity.timestamp);
 
