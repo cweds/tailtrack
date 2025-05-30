@@ -71,11 +71,14 @@
 
 .pup-pink-gradient {
   background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%);
+}
+
+.pup-pink-gradient.interactive {
   border: 2px solid transparent;
   transition: all 0.2s ease-out;
 }
 
-.pup-pink-gradient:hover {
+.pup-pink-gradient.interactive:hover {
   background: linear-gradient(135deg, #FFC0CB 0%, #FFB6C1 100%);
   border-color: #FF9FAB;
 }
