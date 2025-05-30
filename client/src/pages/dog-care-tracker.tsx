@@ -38,7 +38,7 @@ export default function DogCareTracker() {
     <div className="app-container">
       {/* Header */}
       <header className="pup-pink-gradient p-4 text-center">
-        <h1 className="text-2xl font-bold text-gray-800">🐾 Pup Care Tracker 🐾</h1>
+        <h1 className="text-2xl font-bold text-gray-800">🐾 TailTrack 🐾</h1>
         <p className="text-gray-700 text-sm mt-1">Keeping Natty & Murphy happy & healthy!</p>
       </header>
 

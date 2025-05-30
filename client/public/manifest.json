@@ -1,6 +1,6 @@
 {
-  "name": "Pup Care Tracker",
-  "short_name": "PupCare",
+  "name": "TailTrack",
+  "short_name": "TailTrack",
   "description": "Keep track of Natty & Murphy's daily care - feeding and letting out",
   "start_url": "/",
   "display": "standalone",
