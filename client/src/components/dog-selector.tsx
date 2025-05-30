@@ -66,7 +66,10 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               <img 
                 src={dogAvatars[dog]} 
                 alt={dog}
-                className="w-12 h-12 rounded-full object-cover mx-auto"
+                className={cn(
+                  "w-12 h-12 rounded-full object-cover mx-auto",
+                  selectedDogs.has(dog) ? "border-2 border-white" : ""
+                )}
               />
             </div>
             <div className="font-medium text-sm">{dog}</div>
