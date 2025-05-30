@@ -192,7 +192,7 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
                     name="username"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Username</FormLabel>
+                        <FormLabel>Name</FormLabel>
                         <FormControl>
                           <Input
                             placeholder="Your name"
