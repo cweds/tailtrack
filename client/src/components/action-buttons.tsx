@@ -15,16 +15,24 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
   const { user } = useAuth();
   const [canFeed, setCanFeed] = useState(false);
   const [canLetOut, setCanLetOut] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
 
   const selectedDogsArray = Array.from(selectedDogs);
   const isBothDogs = selectedDogsArray.length === 2;
   const dogText = isBothDogs ? "Both" : selectedDogsArray[0];
   
-  // Check cooldowns when selection changes
+  // Check cooldowns when selection changes - but debounce it
   useEffect(() => {
-    const checkCooldowns = async () => {
-      if (!user?.id || selectedDogsArray.length === 0) return;
-      
+    if (!user?.id || selectedDogsArray.length === 0) {
+      setCanFeed(false);
+      setCanLetOut(false);
+      return;
+    }
+
+    setIsChecking(true);
+    
+    // Use a timeout to debounce rapid selection changes
+    const timeout = setTimeout(async () => {
       try {
         const feedChecks = await Promise.all(
           selectedDogsArray.map(dog => DatabaseStorage.canPerformAction(user.id, dog, 'Fed'))
@@ -39,15 +47,12 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
         console.error('Error checking cooldowns:', error);
         setCanFeed(true);
         setCanLetOut(true);
+      } finally {
+        setIsChecking(false);
       }
-    };
+    }, 100); // 100ms debounce
 
-    if (selectedDogsArray.length > 0) {
-      checkCooldowns();
-    } else {
-      setCanFeed(false);
-      setCanLetOut(false);
-    }
+    return () => clearTimeout(timeout);
   }, [user?.id, selectedDogsArray.join(',')]);
 
   // Only show buttons when dogs are selected

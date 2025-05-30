@@ -9,6 +9,38 @@ export interface DatabaseActivity {
   username?: string;
 }
 
+// Simple cache for recent activities to reduce API calls
+class ActivityCache {
+  private cache = new Map<number, { activities: DatabaseActivity[], timestamp: number }>();
+  private readonly CACHE_DURATION = 30000; // 30 seconds
+
+  get(userId: number): DatabaseActivity[] | null {
+    const cached = this.cache.get(userId);
+    if (!cached) return null;
+    
+    const now = Date.now();
+    if (now - cached.timestamp > this.CACHE_DURATION) {
+      this.cache.delete(userId);
+      return null;
+    }
+    
+    return cached.activities;
+  }
+
+  set(userId: number, activities: DatabaseActivity[]): void {
+    this.cache.set(userId, {
+      activities,
+      timestamp: Date.now()
+    });
+  }
+
+  invalidate(userId: number): void {
+    this.cache.delete(userId);
+  }
+}
+
+const activityCache = new ActivityCache();
+
 export class DatabaseStorage {
   static async createActivity(userId: number, dogs: string[], action: 'Fed' | 'Let Out'): Promise<DatabaseActivity> {
     const response = await fetch('/api/activities', {
@@ -26,6 +58,10 @@ export class DatabaseStorage {
     }
 
     const result = await response.json();
+    
+    // Invalidate cache when new activity is created
+    activityCache.invalidate(userId);
+    
     return {
       ...result.activity,
       timestamp: new Date(result.activity.timestamp),
