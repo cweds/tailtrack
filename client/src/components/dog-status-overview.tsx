@@ -1,5 +1,7 @@
 import { DogCareStorage } from "@/lib/dog-care-storage";
 import { cn } from "@/lib/utils";
+import nattyImage from "@assets/image0.png";
+import murphyImage from "@assets/image1.png";
 
 export function DogStatusOverview() {
   const nattyStatus = DogCareStorage.getDogStatusToday('Natty');
@@ -7,18 +9,22 @@ export function DogStatusOverview() {
 
   const DogStatusCard = ({ 
     name, 
-    emoji, 
+    avatar, 
     fed, 
     letOut 
   }: { 
     name: string; 
-    emoji: string; 
+    avatar: string; 
     fed: boolean; 
     letOut: boolean; 
   }) => (
     <div className="bg-white p-3 rounded-lg border border-gray-200 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <span className="text-lg">{emoji}</span>
+        <img 
+          src={avatar} 
+          alt={name}
+          className="w-8 h-8 rounded-full object-cover"
+        />
         <span className="font-medium text-gray-800">{name}</span>
       </div>
       <div className="flex gap-2">
@@ -44,13 +50,13 @@ export function DogStatusOverview() {
       <div className="space-y-2">
         <DogStatusCard 
           name="Natty" 
-          emoji="🩶" 
+          avatar={nattyImage} 
           fed={nattyStatus.fed} 
           letOut={nattyStatus.letOut} 
         />
         <DogStatusCard 
           name="Murphy" 
-          emoji="🐕‍🦺" 
+          avatar={murphyImage} 
           fed={murphyStatus.fed} 
           letOut={murphyStatus.letOut} 
         />

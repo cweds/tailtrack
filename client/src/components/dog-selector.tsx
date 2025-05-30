@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { Dog, User } from "@/hooks/use-dog-care";
+import nattyImage from "@assets/image0.png";
+import murphyImage from "@assets/image1.png";
 
 interface DogSelectorProps {
   selectedDogs: Set<Dog>;
@@ -11,9 +13,9 @@ interface DogSelectorProps {
 }
 
 export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs, selectedUser }: DogSelectorProps) {
-  const dogEmojis: Record<Dog, string> = {
-    Natty: "🐕", // Grey dog
-    Murphy: "🦮", // Black dog
+  const dogAvatars: Record<Dog, string> = {
+    Natty: nattyImage,
+    Murphy: murphyImage,
   };
 
   const handleDogClick = (dog: Dog) => {
@@ -60,7 +62,13 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 : "border-gray-200 text-gray-700 hover:border-orange-500 hover:bg-orange-50"
             )}
           >
-            <div className="text-2xl mb-1">{dogEmojis[dog]}</div>
+            <div className="mb-1">
+              <img 
+                src={dogAvatars[dog]} 
+                alt={dog}
+                className="w-12 h-12 rounded-full object-cover mx-auto"
+              />
+            </div>
             <div className="font-medium text-sm">{dog}</div>
           </Button>
         ))}
