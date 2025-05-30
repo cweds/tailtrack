@@ -40,13 +40,13 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     const bothNeedBoth = (nattyNeedsFed && nattyNeedsOut) && (murphyNeedsFed && murphyNeedsOut);
     
     if (bothNeedBoth) {
-      message = `Both Natty and Murphy need to be fed and let out for ${timeContext}`;
+      message = `Both Natty and Murphy need to be fed and let out for ${timeContext}.`;
     } else if (bothNeedFed && bothNeedOut) {
-      message = `Both Natty and Murphy need to be fed and let out for ${timeContext}`;
+      message = `Both Natty and Murphy need to be fed and let out for ${timeContext}.`;
     } else if (bothNeedFed) {
-      message = `Both Natty and Murphy need to be fed for ${timeContext}`;
+      message = `Both Natty and Murphy need to be fed for ${timeContext}.`;
     } else if (bothNeedOut) {
-      message = `Both Natty and Murphy need to be let out for ${timeContext}`;
+      message = `Both Natty and Murphy need to be let out for ${timeContext}.`;
     } else {
       // Individual dog needs
       let warnings = [];
@@ -67,11 +67,11 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
         warnings.push("Murphy needs to be let out");
       }
       
-      message = `${warnings.join(" and ")} for ${timeContext}`;
+      message = `${warnings.join(" and ")} for ${timeContext}.`;
     }
     
     emoji = "⚠️";
-    bgClass = "bg-gradient-to-r from-amber-500 to-orange-500";
+    bgClass = "bg-gradient-to-r from-slate-600 to-gray-600";
   }
 
   return (
