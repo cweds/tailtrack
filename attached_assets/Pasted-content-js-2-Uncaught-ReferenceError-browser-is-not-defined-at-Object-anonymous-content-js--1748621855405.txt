@@ -1,0 +1,132 @@
+content.js:2 Uncaught ReferenceError: browser is not defined
+    at Object.<anonymous> (content.js:2:84689)
+    at __webpack_require__ (content.js:2:128)
+    at Object.<anonymous> (content.js:2:79395)
+    at __webpack_require__ (content.js:2:128)
+    at Object.<anonymous> (content.js:199:16752)
+    at __webpack_require__ (content.js:2:128)
+    at Object.<anonymous> (content.js:199:11601)
+    at __webpack_require__ (content.js:2:128)
+    at Object.<anonymous> (content.js:2:73300)
+    at __webpack_require__ (content.js:2:128)
+(anonymous) @ content.js:2
+__webpack_require__ @ content.js:2
+(anonymous) @ content.js:2
+__webpack_require__ @ content.js:2
+(anonymous) @ content.js:199
+__webpack_require__ @ content.js:2
+(anonymous) @ content.js:199
+__webpack_require__ @ content.js:2
+(anonymous) @ content.js:2
+__webpack_require__ @ content.js:2
+(anonymous) @ content.js:1542
+__webpack_require__ @ content.js:2
+(anonymous) @ content.js:2
+(anonymous) @ content.js:2
+cookieCrumbler.js:1 Uncaught ReferenceError: browser is not defined
+    at 7 (cookieCrumbler.js:1:92117)
+    at __webpack_require__ (cookieCrumbler.js:1:128)
+    at 5 (cookieCrumbler.js:1:85905)
+    at __webpack_require__ (cookieCrumbler.js:1:128)
+    at 38 (cookieCrumbler.js:1:75120)
+    at __webpack_require__ (cookieCrumbler.js:1:128)
+    at 31 (cookieCrumbler.js:1:70250)
+    at __webpack_require__ (cookieCrumbler.js:1:128)
+    at 6 (cookieCrumbler.js:1:89071)
+    at __webpack_require__ (cookieCrumbler.js:1:128)
+7 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+5 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+38 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+31 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+6 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+20 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+15 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+34 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+397 @ cookieCrumbler.js:1
+__webpack_require__ @ cookieCrumbler.js:1
+(anonymous) @ cookieCrumbler.js:1
+(anonymous) @ cookieCrumbler.js:1
+adsContent.js:187 Uncaught ReferenceError: browser is not defined
+    at 7 (adsContent.js:187:78660)
+    at __webpack_require__ (adsContent.js:2:128)
+    at 5 (adsContent.js:187:57680)
+    at __webpack_require__ (adsContent.js:2:128)
+    at 38 (adsContent.js:187:45960)
+    at __webpack_require__ (adsContent.js:2:128)
+    at 31 (adsContent.js:187:38940)
+    at __webpack_require__ (adsContent.js:2:128)
+    at 6 (adsContent.js:187:64539)
+    at __webpack_require__ (adsContent.js:2:128)
+7 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+5 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+38 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+31 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+6 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+20 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+15 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+387 @ adsContent.js:187
+__webpack_require__ @ adsContent.js:2
+(anonymous) @ adsContent.js:2
+(anonymous) @ adsContent.js:2
+hooksManager.js:242 Uncaught ReferenceError: browser is not defined
+    at 7 (hooksManager.js:242:28616)
+    at __webpack_require__ (hooksManager.js:2:128)
+    at 5 (hooksManager.js:242:7313)
+    at __webpack_require__ (hooksManager.js:2:128)
+    at 38 (hooksManager.js:9:24734)
+    at __webpack_require__ (hooksManager.js:2:128)
+    at 31 (hooksManager.js:9:22383)
+    at __webpack_require__ (hooksManager.js:2:128)
+    at 6 (hooksManager.js:242:14772)
+    at __webpack_require__ (hooksManager.js:2:128)
+7 @ hooksManager.js:242
+__webpack_require__ @ hooksManager.js:2
+5 @ hooksManager.js:242
+__webpack_require__ @ hooksManager.js:2
+38 @ hooksManager.js:9
+__webpack_require__ @ hooksManager.js:2
+31 @ hooksManager.js:9
+__webpack_require__ @ hooksManager.js:2
+6 @ hooksManager.js:242
+__webpack_require__ @ hooksManager.js:2
+394 @ hooksManager.js:9
+__webpack_require__ @ hooksManager.js:2
+(anonymous) @ hooksManager.js:2
+(anonymous) @ hooksManager.js:2
+main.tsx:11 SW registered:  ServiceWorkerRegistration {installing: null, waiting: null, active: ServiceWorker, navigationPreload: NavigationPreloadManager, scope: 'https://aca12213-73be-4cca-97d4-a9c1fdfeab6c-00-4rx1jkgs1x3j.kirk.replit.dev/', …}
+aca12213-73be-4cca-97d4-a9c1fdfeab6c-00-4rx1jkgs1x3j.kirk.replit.dev/:1 <meta name="apple-mobile-web-app-capable" content="yes"> is deprecated. Please include <meta name="mobile-web-app-capable" content="yes">
+database-storage.ts:111 User 3 household info: {id: 3, email: 'test@test.com', username: 'chaseTest', householdId: 1, createdAt: '2025-05-30T15:59:39.748Z'}createdAt: "2025-05-30T15:59:39.748Z"email: "test@test.com"householdId: 1id: 3username: "chaseTest"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+database-storage.ts:115 Fetching household 1 activities for user 3
+database-storage.ts:111 User 3 household info: {id: 3, email: 'test@test.com', username: 'chaseTest', householdId: 1, createdAt: '2025-05-30T15:59:39.748Z'}
+database-storage.ts:115 Fetching household 1 activities for user 3
+database-storage.ts:119 Household activities received for user 3: [{…}]0: {id: 19, userId: 1, householdId: 1, dogs: Array(2), action: 'Fed', …}length: 1[[Prototype]]: Array(0)
+database-storage.ts:124 Processed household activities for user 3: [{…}]
+database-storage.ts:125 Returning 1 activities for display
+database-storage.ts:119 Household activities received for user 3: [{…}]
+database-storage.ts:124 Processed household activities for user 3: [{…}]
+database-storage.ts:125 Returning 1 activities for display
+database-storage.ts:111 User 3 household info: {id: 3, email: 'test@test.com', username: 'chaseTest', householdId: 1, createdAt: '2025-05-30T15:59:39.748Z'}
+database-storage.ts:115 Fetching household 1 activities for user 3
+database-storage.ts:111 User 3 household info: {id: 3, email: 'test@test.com', username: 'chaseTest', householdId: 1, createdAt: '2025-05-30T15:59:39.748Z'}
+database-storage.ts:115 Fetching household 1 activities for user 3
+database-storage.ts:119 Household activities received for user 3: [{…}]
+database-storage.ts:124 Processed household activities for user 3: [{…}]
+database-storage.ts:125 Returning 1 activities for display
+database-storage.ts:119 Household activities received for user 3: [{…}]
+database-storage.ts:124 Processed household activities for user 3: [{…}]
+database-storage.ts:125 Returning 1 activities for display

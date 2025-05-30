@@ -26,8 +26,8 @@ export function useDogCare(username: string) {
     if (!user?.id) return;
     try {
       setIsLoading(true);
-      const userActivities = await DatabaseStorage.getActivitiesByUser(user.id);
-      setActivities(userActivities);
+      const todayActivities = await DatabaseStorage.getTodayActivitiesByUser(user.id);
+      setActivities(todayActivities);
     } catch (error) {
       console.error('Failed to load activities:', error);
       toast({
