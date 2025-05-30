@@ -55,10 +55,9 @@ export default function DogCareTracker() {
           msUserSelect: 'none'
         }}
       >
-        <div className="flex items-center justify-center gap-2">
-          <img src="/icon-192.png" alt="TailTrack" className="w-8 h-8" />
+        <div className="flex items-center justify-center gap-3">
+          <img src="/icon-192.png" alt="TailTrack" className="w-12 h-12 rounded-lg shadow-md border-2 border-white" />
           <h1 className="text-2xl font-bold text-gray-800">TailTrack</h1>
-          <img src="/icon-192.png" alt="TailTrack" className="w-8 h-8" />
         </div>
         <p className="text-gray-700 text-sm mt-1">Caring for your pet, made simple.</p>
       </header>
