@@ -71,7 +71,7 @@ export function StatusBanner({ bothFed, bothLetOut, allComplete }: StatusBannerP
     }
     
     emoji = "⚠️";
-    bgClass = "bg-gradient-to-r from-slate-600 to-gray-600";
+    bgClass = "bg-gradient-to-r from-slate-600 to-gray-600 border-2 border-red-400";
   }
 
   return (
