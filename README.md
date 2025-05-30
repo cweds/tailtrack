@@ -1,16 +1,19 @@
-# TailTrack 🐾
+# TailTrack
 
-A modern React application for tracking household dog care activities across multiple users. Built with performance, accessibility, and mobile-first design principles.
+A comprehensive dog care management application designed to support pet owners in tracking, monitoring, and coordinating their dogs' health and daily activities through an intuitive, collaborative platform.
+
+**Caring for your pet, made simple.**
 
 ## ✨ Features
 
-- **Multi-user authentication** - Secure registration and login system
-- **Real-time activity tracking** - Track feeding and letting out activities for multiple dogs
-- **Smart cooldown system** - Prevents duplicate activities with configurable time restrictions
-- **Activity history** - Complete log of all care activities with timestamps
+- **Household-based coordination** - Multiple family members can track shared pet care responsibilities
+- **Multi-user authentication** - Secure registration and login system with household sharing
+- **Real-time activity tracking** - Track feeding and letting out activities for multiple dogs (Natty & Murphy)
+- **Smart status system** - Intelligent status messages showing exactly what care is needed
+- **Activity history** - Complete log of all care activities with timestamps and user attribution
 - **Responsive design** - Mobile-optimized interface with touch-friendly controls
 - **Progressive Web App** - Installable on mobile devices with offline support
-- **Data persistence** - Activities stored in Supabase PostgreSQL database
+- **Data persistence** - Activities stored in Supabase PostgreSQL database with household sharing
 - **Performance optimized** - Client-side caching and efficient state management
 
 ## 🛠 Tech Stack
@@ -98,18 +101,29 @@ TailTrack is designed as a Progressive Web App with:
 
 ### Database Schema
 ```typescript
+// Households table
+households {
+  id: serial primary key
+  name: varchar
+  inviteCode: varchar unique
+  createdAt: timestamp
+}
+
 // Users table
 users {
   id: serial primary key
   username: varchar unique
   email: varchar unique  
   password: varchar (hashed)
+  householdId: integer (foreign key)
+  createdAt: timestamp
 }
 
 // Activities table
 activities {
   id: serial primary key
   userId: integer (foreign key)
+  householdId: integer (foreign key)
   dogs: text[] (array of dog names)
   action: varchar ('Fed' | 'Let Out')
   timestamp: timestamp
@@ -121,6 +135,7 @@ activities {
 - **React Context** for authentication state
 - **Local state** for UI interactions and form handling
 - **Client-side caching** with 5-second expiration for performance
+- **Household-based data sharing** - Activities shared across family members in same household
 
 ### Performance Optimizations
 - **Debounced API calls** to prevent rate limiting
@@ -133,12 +148,18 @@ activities {
 
 ### Color Palette
 ```css
---pup-pink: #FFD5DC     /* Primary brand color */
---golden-tan: #F5E1C0   /* Secondary accent */
---soft-blue: #D4EAF7    /* Info states */
---dog-brown: #B48A78    /* Text and borders */
---pup-green: #C8EBC5    /* Success states */
+--pup-pink: #FFD5DC to #FFC0CB     /* Primary gradient - header and action buttons */
+--golden-tan: #F5E1C0 to #E6D2A0   /* Secondary gradient - user info bar */
+--soft-blue: #D4EAF7 to #B3D9F2    /* Action button - "Let Out" activities */
+--pup-green: #C8EBC5 to #B5E3B1    /* Success states */
+--warning-gray: #e5e7eb             /* Status banner warning background */
 ```
+
+### Visual Identity
+- **App icon integration** - Custom TailTrack logo used throughout interface
+- **Non-interactive header** - Clean, professional header with app branding
+- **Status-driven UI** - Color-coded status messages with specific care instructions
+- **Mobile-first design** - Touch-optimized with proper spacing and visual hierarchy
 
 ### Component Architecture
 - **Atomic design principles** with reusable components
