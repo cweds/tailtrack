@@ -26,7 +26,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
         className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-medium py-4 px-6 rounded-xl shadow-lg transition-all duration-200 transform hover:scale-105 h-auto"
       >
         <span className="flex items-center justify-center gap-2">
-          <span className="text-lg">✅</span>
+          <span className="text-lg">🍖</span>
           <span>Fed {dogText}</span>
         </span>
       </Button>

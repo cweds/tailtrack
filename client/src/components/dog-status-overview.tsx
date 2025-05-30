@@ -26,7 +26,7 @@ export function DogStatusOverview() {
           "w-6 h-6 rounded-full flex items-center justify-center text-xs",
           fed ? "bg-emerald-100 text-emerald-700" : "bg-gray-100 text-gray-400"
         )}>
-          ✅
+          🍖
         </div>
         <div className={cn(
           "w-6 h-6 rounded-full flex items-center justify-center text-xs",
