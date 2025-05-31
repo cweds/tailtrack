@@ -53,7 +53,6 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
       
       toast({
         title: `Welcome back, ${result.user.username}!`,
-        description: "Ready to take care of your pups?",
         duration: 2000,
       });
       
@@ -86,7 +85,6 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
       
       toast({
         title: `Welcome, ${result.user.username}!`,
-        description: "Your TailTrack account is ready. Let's start caring for your pups!",
         duration: 2000,
       });
       
