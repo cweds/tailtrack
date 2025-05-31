@@ -5,6 +5,7 @@ import { StatusBanner } from "@/components/status-banner";
 import { DogSelector } from "@/components/dog-selector";
 import { ActionButtons } from "@/components/action-buttons";
 import { ActivityLog } from "@/components/activity-log";
+import { TimelineBar } from "@/components/timeline-bar";
 import { Button } from "@/components/ui/button";
 
 export default function DogCareTracker() {
@@ -103,6 +104,9 @@ export default function DogCareTracker() {
           onQuickAction={handleQuickAction}
           selectedDogs={selectedDogs}
         />
+
+        {/* Timeline Bar */}
+        <TimelineBar activities={activities} />
 
         {/* Activity Log */}
         <ActivityLog activities={activities} />
