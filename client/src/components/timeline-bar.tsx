@@ -5,8 +5,8 @@ interface TimelineBarProps {
 }
 
 export function TimelineBar({ activities }: TimelineBarProps) {
-  // Create 12-hour timeline from 6am to 6pm
-  const hours = Array.from({ length: 13 }, (_, i) => 6 + i); // 6, 7, 8, ..., 18
+  // Create 12-hour timeline from 12am to 12pm
+  const hours = Array.from({ length: 13 }, (_, i) => i); // 0, 1, 2, ..., 12
 
   const getActivitiesForHour = (hour: number) => {
     return activities.filter(activity => {
@@ -19,6 +19,7 @@ export function TimelineBar({ activities }: TimelineBarProps) {
   };
 
   const formatHour = (hour: number) => {
+    if (hour === 0) return '12AM';
     if (hour === 12) return '12PM';
     if (hour < 12) return `${hour}AM`;
     return `${hour - 12}PM`;
@@ -40,7 +41,7 @@ export function TimelineBar({ activities }: TimelineBarProps) {
         <div className="flex justify-between text-xs text-gray-500 mb-2">
           {hours.map(hour => (
             <div key={hour} className="text-center" style={{ width: '7.69%' }}>
-              {hour === 6 || hour === 12 || hour === 18 ? formatHour(hour) : ''}
+              {hour === 0 || hour === 6 || hour === 12 ? formatHour(hour) : ''}
             </div>
           ))}
         </div>
@@ -85,11 +86,11 @@ export function TimelineBar({ activities }: TimelineBarProps) {
             const currentHour = now.getHours();
             const currentMinute = now.getMinutes();
             
-            // Only show indicator if current time is within 6am-6pm range
-            if (currentHour >= 6 && currentHour < 18) {
-              const hoursSince6am = currentHour - 6;
+            // Only show indicator if current time is within 12am-12pm range
+            if (currentHour >= 0 && currentHour <= 12) {
+              const hoursSince12am = currentHour;
               const minuteProgress = currentMinute / 60;
-              const totalProgress = (hoursSince6am + minuteProgress) / 12;
+              const totalProgress = (hoursSince12am + minuteProgress) / 12;
               
               return (
                 <div
