@@ -110,7 +110,7 @@
 }
 
 .golden-tan-gradient {
-  background: linear-gradient(135deg, #F5E1C0 0%, #E6D2A0 100%);
+  background: linear-gradient(135deg, #FDF4E7 0%, #F5E8D3 100%);
 }
 
 .soft-blue-gradient {
@@ -160,7 +160,7 @@
 @media (hover: hover) {
   .mobile-touch-button.golden-tan-gradient:hover {
     border-color: rgb(249 168 212) !important;
-    background: linear-gradient(135deg, #F5E1C0 0%, #E6D2A0 100%) !important;
+    background: linear-gradient(135deg, #FDF4E7 0%, #F5E8D3 100%) !important;
   }
 }
 
