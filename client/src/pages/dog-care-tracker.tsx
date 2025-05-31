@@ -48,7 +48,7 @@ export default function DogCareTracker() {
       <header 
         className="header-static p-4 text-center"
         style={{ 
-          background: 'linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%)',
+          background: '#FFD5DC',
           userSelect: 'none',
           WebkitUserSelect: 'none',
           MozUserSelect: 'none',
