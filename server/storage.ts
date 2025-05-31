@@ -105,7 +105,7 @@ export class DatabaseStorage implements IStorage {
       userId: activity.userId,
       dogs: activity.dogs,
       action: activity.action,
-      householdId: user?.householdId || 1 // Default to household 1 if no household
+      householdId: user?.householdId // Don't default to household 1 if no household
     }).returning();
     
     return result[0];

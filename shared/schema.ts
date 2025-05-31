@@ -21,7 +21,7 @@ export const users = pgTable("users", {
 export const activities = pgTable("activities", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
-  householdId: integer("household_id").notNull().references(() => households.id),
+  householdId: integer("household_id").references(() => households.id),
   dogs: text("dogs").array().notNull(),
   action: text("action").notNull(),
   timestamp: timestamp("timestamp").defaultNow().notNull(),
