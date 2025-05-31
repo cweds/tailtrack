@@ -32,8 +32,8 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
             className={cn(
               "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto playful-bounce",
               selectedDogs.has(dog)
-                ? "border-pink-300 pup-pink-gradient text-gray-800"
-                : "border-amber-200 golden-tan-gradient text-gray-700 hover:border-pink-300 hover:bg-pink-50"
+                ? "border-pink-300 pup-pink-gradient text-gray-800 hover:opacity-90"
+                : "border-amber-200 text-gray-700 hover:border-pink-300 hover:bg-pink-50"
             )}
           >
             <div className="mb-1">
