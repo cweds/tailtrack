@@ -30,11 +30,17 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
             onClick={() => onDogToggle(dog)}
             variant="outline"
             className={cn(
-              "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto playful-bounce",
+              "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto",
               selectedDogs.has(dog)
-                ? "border-pink-300 pup-pink-gradient text-gray-800 hover:opacity-90"
+                ? "border-pink-300 pup-pink-gradient text-gray-800"
                 : "border-amber-200 text-gray-700 hover:border-pink-300 hover:bg-pink-50"
             )}
+            style={{
+              // Disable hover effects on touch devices
+              '@media (hover: none)': {
+                ':hover': 'none'
+              }
+            }}
           >
             <div className="mb-1">
               <img 
