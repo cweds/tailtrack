@@ -27,6 +27,7 @@ export interface IStorage {
   createActivity(activity: InsertActivity): Promise<Activity>;
   getActivitiesByUser(userId: number): Promise<Activity[]>;
   getTodayActivitiesByUser(userId: number): Promise<Activity[]>;
+  getHouseholdAllActivities(householdId: number): Promise<(Activity & { username: string })[]>;
   getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]>;
 }
 
@@ -125,6 +126,24 @@ export class DatabaseStorage implements IStorage {
         gte(activities.timestamp, twentyFourHoursAgo)
       ))
       .orderBy(desc(activities.timestamp));
+  }
+
+  async getHouseholdAllActivities(householdId: number): Promise<(Activity & { username: string })[]> {
+    const activitiesWithUsers = await db.select({
+      id: activities.id,
+      userId: activities.userId,
+      householdId: activities.householdId,
+      dogs: activities.dogs,
+      action: activities.action,
+      timestamp: activities.timestamp,
+      username: users.username,
+    })
+    .from(activities)
+    .innerJoin(users, eq(activities.userId, users.id))
+    .where(eq(activities.householdId, householdId))
+    .orderBy(desc(activities.timestamp));
+    
+    return activitiesWithUsers;
   }
 
   async getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]> {

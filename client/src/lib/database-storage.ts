@@ -87,8 +87,31 @@ export class DatabaseStorage {
   }
 
   static async getActivitiesByUser(userId: number): Promise<DatabaseActivity[]> {
-    const response = await fetch(`/api/activities/${userId}`);
+    // Always get user info to find their household first
+    const userResponse = await fetch(`/api/users/${userId}`);
+    if (!userResponse.ok) {
+      throw new Error('Failed to get user info');
+    }
     
+    const userData = await userResponse.json();
+    console.log(`User ${userId} household info:`, userData.user);
+    
+    if (userData.user.householdId) {
+      // Always use household activities if user is part of a household
+      console.log(`Fetching all household ${userData.user.householdId} activities for user ${userId}`);
+      const householdResponse = await fetch(`/api/activities/household/${userData.user.householdId}`);
+      if (householdResponse.ok) {
+        const result = await householdResponse.json();
+        console.log(`All household activities received for user ${userId}:`, result.activities);
+        return result.activities.map((activity: Activity & { username: string }) => ({
+          ...activity,
+          timestamp: new Date(activity.timestamp),
+        }));
+      }
+    }
+    
+    // Fallback to individual user activities if no household
+    const response = await fetch(`/api/activities/${userId}`);
     if (!response.ok) {
       throw new Error('Failed to get activities');
     }

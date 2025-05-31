@@ -86,7 +86,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Household activities endpoint - must come before the parameterized route
+  // All household activities endpoint
+  app.get("/api/activities/household/:householdId", async (req, res) => {
+    try {
+      const householdId = parseInt(req.params.householdId);
+      const activities = await storage.getHouseholdAllActivities(householdId);
+      res.json({ activities });
+    } catch (error) {
+      console.error(`Get all household activities error: ${error}`);
+      res.status(400).json({ error: "Failed to get household activities" });
+    }
+  });
+
+  // Today's household activities endpoint - must come after the general household route
   app.get("/api/activities/household/:householdId/today", async (req, res) => {
     try {
       const householdId = parseInt(req.params.householdId);
