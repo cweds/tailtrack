@@ -113,9 +113,11 @@
   background: linear-gradient(135deg, #FDF4E7 0%, #F5E8D3 100%);
 }
 
-.golden-tan-gradient:hover {
-  background: rgb(253 242 248) !important;
-  border-color: rgb(249 168 212) !important;
+@media (hover: hover) and (pointer: fine) {
+  .golden-tan-gradient:hover {
+    background: rgb(253 242 248) !important;
+    border-color: rgb(249 168 212) !important;
+  }
 }
 
 .soft-blue-gradient {
