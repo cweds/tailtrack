@@ -10,8 +10,11 @@ export function TimelineBar({ activities }: TimelineBarProps) {
 
   const getActivitiesForHour = (hour: number) => {
     return activities.filter(activity => {
-      const activityHour = new Date(activity.timestamp).getHours();
-      return activityHour === hour;
+      const activityDate = new Date(activity.timestamp);
+      const activityHour = activityDate.getHours();
+      const today = new Date();
+      const isToday = activityDate.toDateString() === today.toDateString();
+      return activityHour === hour && isToday;
     });
   };
 

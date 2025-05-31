@@ -106,7 +106,7 @@ export default function DogCareTracker() {
         />
 
         {/* Timeline Bar */}
-        <TimelineBar activities={activities} />
+        <TimelineBar activities={todayActivities} />
 
         {/* Activity Log */}
         <ActivityLog activities={activities} />
