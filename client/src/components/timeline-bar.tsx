@@ -56,7 +56,7 @@ export function TimelineBar({ activities }: TimelineBarProps) {
             return (
               <div
                 key={hour}
-                className={`absolute top-0 h-full border-r border-gray-300 flex flex-col items-center justify-center ${
+                className={`absolute top-0 h-full border-r border-gray-400 flex flex-col items-center justify-center ${
                   isCurrentHour ? 'bg-green-200' : ''
                 }`}
                 style={{
@@ -76,9 +76,16 @@ export function TimelineBar({ activities }: TimelineBarProps) {
                     </div>
                   ))}
                 </div>
+                
+                {/* Hour notches */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gray-400"></div>
+                <div className="absolute bottom-0 left-0 w-0.5 h-3 bg-gray-600"></div>
               </div>
             );
           })}
+          
+          {/* Final notch at the end */}
+          <div className="absolute bottom-0 right-0 w-0.5 h-3 bg-gray-600"></div>
         </div>
 
         {/* Legend */}
