@@ -32,19 +32,21 @@ export function ActivityLog({ activities }: ActivityLogProps) {
   const { user } = useAuth();
   const [showAllDays, setShowAllDays] = useState(false);
   
-  // Separate today's activities from previous days
+  // Separate recent activities from older ones (last 24 hours vs older)
   const now = new Date();
-  const today = now.toDateString();
-  const todayActivities = activities.filter(activity => {
+  const twentyFourHoursAgo = new Date();
+  twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+  
+  const recentActivities = activities.filter(activity => {
     const activityDate = new Date(activity.timestamp);
-    return activityDate.toDateString() === today;
+    return activityDate >= twentyFourHoursAgo;
   });
-  const previousActivities = activities.filter(activity => {
+  const olderActivities = activities.filter(activity => {
     const activityDate = new Date(activity.timestamp);
-    return activityDate.toDateString() !== today;
+    return activityDate < twentyFourHoursAgo;
   });
 
-  const displayActivities = showAllDays ? activities : todayActivities;
+  const displayActivities = showAllDays ? activities : recentActivities;
 
   if (activities.length === 0) {
     return (
@@ -74,7 +76,7 @@ export function ActivityLog({ activities }: ActivityLogProps) {
       ) : (
         <ScrollArea className="h-80 w-full">
           <div className="space-y-3 pr-4">
-            {displayActivities.map((activity) => {
+            {displayActivities.map((activity: DatabaseActivity) => {
               const actionEmoji = activity.action === 'Fed' ? '🍖' : '🚪';
               const dogsList = activity.dogs.length > 1 ? activity.dogs.join(' & ') : activity.dogs[0];
               const timeAgo = formatTime(activity.timestamp);
@@ -101,8 +103,8 @@ export function ActivityLog({ activities }: ActivityLogProps) {
         </ScrollArea>
       )}
       
-      {/* Show expand/collapse button only if there are previous activities */}
-      {previousActivities.length > 0 && (
+      {/* Show expand/collapse button only if there are older activities */}
+      {olderActivities.length > 0 && (
         <div className="mt-4 pt-3 border-t border-gray-200">
           <Button
             variant="ghost"
@@ -110,7 +112,7 @@ export function ActivityLog({ activities }: ActivityLogProps) {
             onClick={() => setShowAllDays(!showAllDays)}
             className="w-full text-orange-600 hover:text-orange-700 hover:bg-orange-50"
           >
-            {showAllDays ? 'Show Today Only' : `More Activity (${previousActivities.length} previous)`}
+            {showAllDays ? 'Show Recent Only' : `More Activity (${olderActivities.length} older)`}
           </Button>
         </div>
       )}

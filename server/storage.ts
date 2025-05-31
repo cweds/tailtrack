@@ -115,20 +115,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTodayActivitiesByUser(userId: number): Promise<Activity[]> {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Get last 24 hours instead of calendar day to avoid timezone issues
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
     
     return await db.select().from(activities)
       .where(and(
         eq(activities.userId, userId),
-        gte(activities.timestamp, today)
+        gte(activities.timestamp, twentyFourHoursAgo)
       ))
       .orderBy(desc(activities.timestamp));
   }
 
   async getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]> {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    // Get last 24 hours instead of calendar day to avoid timezone issues
+    const twentyFourHoursAgo = new Date();
+    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
     
     const activitiesWithUsers = await db.select({
       id: activities.id,
@@ -143,7 +145,7 @@ export class DatabaseStorage implements IStorage {
     .innerJoin(users, eq(activities.userId, users.id))
     .where(and(
       eq(activities.householdId, householdId),
-      gte(activities.timestamp, today)
+      gte(activities.timestamp, twentyFourHoursAgo)
     ))
     .orderBy(desc(activities.timestamp));
     
