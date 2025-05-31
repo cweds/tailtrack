@@ -11,7 +11,9 @@ interface StatusBannerProps {
 }
 
 export function StatusBanner({ bothFed, bothLetOut, allComplete, nattyFed, nattyLetOut, murphyFed, murphyLetOut }: StatusBannerProps) {
-  const currentHour = new Date().getHours();
+  // Get current time in user's local timezone
+  const now = new Date();
+  const currentHour = now.getHours();
   const isEvening = currentHour >= 16; // 4 PM and later
   
   let message: string;

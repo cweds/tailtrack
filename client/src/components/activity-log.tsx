@@ -33,13 +33,16 @@ export function ActivityLog({ activities }: ActivityLogProps) {
   const [showAllDays, setShowAllDays] = useState(false);
   
   // Separate today's activities from previous days
-  const today = new Date().toDateString();
-  const todayActivities = activities.filter(activity => 
-    activity.timestamp.toDateString() === today
-  );
-  const previousActivities = activities.filter(activity => 
-    activity.timestamp.toDateString() !== today
-  );
+  const now = new Date();
+  const today = now.toDateString();
+  const todayActivities = activities.filter(activity => {
+    const activityDate = new Date(activity.timestamp);
+    return activityDate.toDateString() === today;
+  });
+  const previousActivities = activities.filter(activity => {
+    const activityDate = new Date(activity.timestamp);
+    return activityDate.toDateString() !== today;
+  });
 
   const displayActivities = showAllDays ? activities : todayActivities;
 
@@ -69,8 +72,8 @@ export function ActivityLog({ activities }: ActivityLogProps) {
           <p>No activities today yet. Start caring for your pups!</p>
         </div>
       ) : (
-        <ScrollArea className="max-h-80">
-          <div className="space-y-3">
+        <ScrollArea className="h-80 w-full">
+          <div className="space-y-3 pr-4">
             {displayActivities.map((activity) => {
               const actionEmoji = activity.action === 'Fed' ? '🍖' : '🚪';
               const dogsList = activity.dogs.length > 1 ? activity.dogs.join(' & ') : activity.dogs[0];
