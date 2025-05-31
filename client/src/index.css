@@ -152,6 +152,25 @@
   }
 }
 
+/* Mobile touch button - disable hover states on touch devices */
+.mobile-touch-button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) {
+  .mobile-touch-button:not(.border-pink-300):hover {
+    border-color: rgb(249 168 212) !important;
+    background-color: rgb(253 242 248) !important;
+  }
+}
+
+@media (hover: none) {
+  .mobile-touch-button:hover {
+    border-color: inherit !important;
+    background-color: inherit !important;
+  }
+}
+
 .paw-shadow {
   box-shadow: 0 4px 20px rgba(255, 213, 220, 0.3);
 }
