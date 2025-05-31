@@ -101,9 +101,8 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4" style={{ 
-      minHeight: '100dvh',
-      background: 'linear-gradient(to bottom, #FFD5DC 0%, #FFD5DC 80px, #FEF7E7 80px, #F5E8D3 100%)'
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 p-4" style={{ 
+      minHeight: '100dvh'
     }}>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
