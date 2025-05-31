@@ -38,7 +38,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
             style={selectedDogs.has(dog) ? {
               background: 'linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%)'
             } : {
-              background: 'linear-gradient(135deg, #F5E1C0 0%, #E6D2A0 100%)'
+              background: '#ffffff'
             }}
           >
             <div className="mb-1">
