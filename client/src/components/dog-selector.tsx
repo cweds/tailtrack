@@ -33,7 +33,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs 
               "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button",
               selectedDogs.has(dog)
                 ? "border-pink-300 pup-pink-gradient text-gray-800"
-                : "border-amber-200 text-gray-700"
+                : "border-amber-200 text-gray-700 golden-tan-gradient"
             )}
           >
             <div className="mb-1">

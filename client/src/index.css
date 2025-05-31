@@ -158,16 +158,15 @@
 }
 
 @media (hover: hover) {
-  .mobile-touch-button:not(.pup-pink-gradient):hover {
+  .mobile-touch-button.golden-tan-gradient:hover {
     border-color: rgb(249 168 212) !important;
-    background-color: rgb(253 242 248) !important;
+    background: linear-gradient(135deg, #F0D6A5 0%, #E1C795 100%) !important;
   }
 }
 
 @media (hover: none) {
-  .mobile-touch-button:not(.pup-pink-gradient):hover {
-    border-color: inherit !important;
-    background-color: inherit !important;
+  .mobile-touch-button:hover {
+    /* Prevent hover styles from sticking on touch devices */
   }
 }
 
