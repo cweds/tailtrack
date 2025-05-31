@@ -104,9 +104,11 @@
   transition: all 0.2s ease-out;
 }
 
-.pup-pink-gradient:hover {
-  background: linear-gradient(135deg, #FFC0CB 0%, #FFB6C1 100%);
-  border-color: #FF9FAB;
+@media (hover: hover) and (pointer: fine) {
+  .pup-pink-gradient:hover {
+    background: linear-gradient(135deg, #FFC0CB 0%, #FFB6C1 100%);
+    border-color: #FF9FAB;
+  }
 }
 
 .golden-tan-gradient {
