@@ -37,46 +37,44 @@ export function TimelineBar({ activities }: TimelineBarProps) {
       
       {/* Timeline container */}
       <div className="relative">
-        {/* Timeline blocks */}
-        <div className="grid grid-cols-7 gap-1">
-          {hours.map(hour => {
+        {/* Hour labels */}
+        <div className="flex justify-between text-xs text-gray-500 mb-2">
+          {hours.map(hour => (
+            <div key={hour} className="text-center flex-1">
+              {formatHour(hour)}
+            </div>
+          ))}
+        </div>
+
+        {/* Timeline bar */}
+        <div className="relative bg-gray-200 h-16 rounded-lg overflow-hidden">
+          {/* Hour segments */}
+          {hours.map((hour, index) => {
             const hourActivities = getActivitiesForHour(hour);
             const isCurrentHour = new Date().getHours() === hour;
-            const fedActivity = hourActivities.find(a => a.action === 'Fed');
-            const letOutActivity = hourActivities.find(a => a.action === 'Let Out');
             
             return (
               <div
                 key={hour}
-                className={`relative p-2 rounded-lg border-2 h-20 flex flex-col items-center justify-center ${
-                  isCurrentHour 
-                    ? 'bg-green-100 border-green-300' 
-                    : 'bg-gray-50 border-gray-200'
+                className={`absolute top-0 h-full border-r border-gray-300 flex flex-col items-center justify-center ${
+                  isCurrentHour ? 'bg-green-200' : ''
                 }`}
+                style={{
+                  left: `${(index / hours.length) * 100}%`,
+                  width: `${100 / hours.length}%`
+                }}
               >
-                {/* Hour label */}
-                <div className="text-xs font-medium text-gray-600 mb-1">
-                  {formatHour(hour)}
-                </div>
-                
                 {/* Activity emojis stacked */}
-                <div className="flex flex-col items-center gap-1">
-                  {fedActivity && (
-                    <div 
+                <div className="flex flex-col items-center gap-0.5">
+                  {hourActivities.map((activity, actIndex) => (
+                    <div
+                      key={`${activity.id}-${actIndex}`}
                       className="text-lg"
-                      title={`${fedActivity.dogs.join(', ')} - Fed at ${new Date(fedActivity.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`}
+                      title={`${activity.dogs.join(', ')} - ${activity.action} at ${new Date(activity.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`}
                     >
-                      🍽️
+                      {getActivityEmoji(activity)}
                     </div>
-                  )}
-                  {letOutActivity && (
-                    <div 
-                      className="text-lg"
-                      title={`${letOutActivity.dogs.join(', ')} - Let Out at ${new Date(letOutActivity.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`}
-                    >
-                      🚪
-                    </div>
-                  )}
+                  ))}
                 </div>
               </div>
             );
