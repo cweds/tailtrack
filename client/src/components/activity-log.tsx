@@ -32,21 +32,20 @@ export function ActivityLog({ activities }: ActivityLogProps) {
   const { user } = useAuth();
   const [showAllDays, setShowAllDays] = useState(false);
   
-  // Separate recent activities from older ones (last 24 hours vs older)
+  // Separate today's activities from previous days using local timezone
   const now = new Date();
-  const twentyFourHoursAgo = new Date();
-  twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+  const today = now.toDateString(); // Gets today in user's local timezone
   
-  const recentActivities = activities.filter(activity => {
+  const todayActivities = activities.filter(activity => {
     const activityDate = new Date(activity.timestamp);
-    return activityDate >= twentyFourHoursAgo;
+    return activityDate.toDateString() === today;
   });
-  const olderActivities = activities.filter(activity => {
+  const previousActivities = activities.filter(activity => {
     const activityDate = new Date(activity.timestamp);
-    return activityDate < twentyFourHoursAgo;
+    return activityDate.toDateString() !== today;
   });
 
-  const displayActivities = showAllDays ? activities : recentActivities;
+  const displayActivities = showAllDays ? activities : todayActivities;
 
   if (activities.length === 0) {
     return (
@@ -103,8 +102,8 @@ export function ActivityLog({ activities }: ActivityLogProps) {
         </ScrollArea>
       )}
       
-      {/* Show expand/collapse button only if there are older activities */}
-      {olderActivities.length > 0 && (
+      {/* Show expand/collapse button only if there are previous day activities */}
+      {previousActivities.length > 0 && (
         <div className="mt-4 pt-3 border-t border-gray-200">
           <Button
             variant="ghost"
@@ -112,7 +111,7 @@ export function ActivityLog({ activities }: ActivityLogProps) {
             onClick={() => setShowAllDays(!showAllDays)}
             className="w-full text-orange-600 hover:text-orange-700 hover:bg-orange-50"
           >
-            {showAllDays ? 'Show Recent Only' : `More Activity (${olderActivities.length} older)`}
+            {showAllDays ? 'Show Today Only' : `View More (${previousActivities.length} previous)`}
           </Button>
         </div>
       )}
