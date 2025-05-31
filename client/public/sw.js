@@ -1,27 +1,34 @@
-const CACHE_NAME = 'pup-care-v1';
-const urlsToCache = [
-  '/',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
-  '/manifest.json'
-];
+// Service Worker to handle cache invalidation
+const CACHE_NAME = 'tailtrack-v1.2.0';
+const urlsToCache = [];
 
 self.addEventListener('install', function(event) {
+  // Force the waiting service worker to become the active service worker
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        return cache.addAll(urlsToCache);
-      })
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
+  // Take control of all pages immediately
+  return self.clients.claim();
 });
 
 self.addEventListener('fetch', function(event) {
+  // Don't cache, always fetch from network
   event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Return cached version or fetch from network
-        return response || fetch(event.request);
-      }
-    )
+    fetch(event.request).catch(function() {
+      // Only return cached version if network fails
+      return caches.match(event.request);
+    })
   );
 });
