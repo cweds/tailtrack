@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,6 +18,21 @@ interface AuthFormProps {
 export function AuthForm({ onAuthSuccess }: AuthFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+
+  // Update theme color for login screen
+  useEffect(() => {
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', '#FEF7E7'); // Cream color to match login background
+    }
+
+    // Cleanup: restore original theme color when component unmounts
+    return () => {
+      if (metaThemeColor) {
+        metaThemeColor.setAttribute('content', '#FFD5DC'); // Pink color for main app
+      }
+    };
+  }, []);
 
   const loginForm = useForm<LoginUser>({
     resolver: zodResolver(loginUserSchema),
