@@ -9,13 +9,31 @@ export function TimelineBar({ activities }: TimelineBarProps) {
   const hours = Array.from({ length: 13 }, (_, i) => i); // 0, 1, 2, ..., 12
 
   const getActivitiesForHour = (hour: number) => {
-    return activities.filter(activity => {
+    const filtered = activities.filter(activity => {
       const activityDate = new Date(activity.timestamp);
       const activityHour = activityDate.getHours();
       const today = new Date();
       const isToday = activityDate.toDateString() === today.toDateString();
       return activityHour === hour && isToday;
     });
+    
+    // Debug logging
+    if (hour === 1) { // Current hour for debugging
+      console.log('Timeline Debug:', {
+        hour,
+        totalActivities: activities.length,
+        filteredActivities: filtered.length,
+        activities: activities.map(a => ({
+          id: a.id,
+          timestamp: a.timestamp,
+          hour: new Date(a.timestamp).getHours(),
+          date: new Date(a.timestamp).toDateString(),
+          today: new Date().toDateString()
+        }))
+      });
+    }
+    
+    return filtered;
   };
 
   const formatHour = (hour: number) => {
