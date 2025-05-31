@@ -101,11 +101,16 @@ export function AuthForm({ onAuthSuccess }: AuthFormProps) {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 p-4">
+    <div className="flex items-center justify-center min-h-screen p-4" style={{ 
+      minHeight: '100dvh',
+      background: 'linear-gradient(to bottom, #FFD5DC 0%, #FFD5DC 80px, #FEF7E7 80px, #FDF0D7 100%)'
+    }}>
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <img src="/icon-192.png" alt="TailTrack" className="w-12 h-12 rounded-lg shadow-md border-2 border-gray-200" />
+            <div className="w-12 h-12 rounded-lg shadow-md border-2 border-white flex items-center justify-center" style={{ backgroundColor: '#FFC0CB' }}>
+              <img src="/icon-192.png" alt="TailTrack" className="w-10 h-10 rounded-md" />
+            </div>
             <CardTitle className="text-2xl font-bold text-gray-800">TailTrack</CardTitle>
           </div>
           <CardDescription>
