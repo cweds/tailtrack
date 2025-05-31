@@ -5,35 +5,17 @@ interface TimelineBarProps {
 }
 
 export function TimelineBar({ activities }: TimelineBarProps) {
-  // Create 12-hour timeline from 12am to 12pm
-  const hours = Array.from({ length: 13 }, (_, i) => i); // 0, 1, 2, ..., 12
+  // Create timeline from 6am to 12pm
+  const hours = Array.from({ length: 7 }, (_, i) => 6 + i); // 6, 7, 8, 9, 10, 11, 12
 
   const getActivitiesForHour = (hour: number) => {
-    const filtered = activities.filter(activity => {
+    return activities.filter(activity => {
       const activityDate = new Date(activity.timestamp);
       const activityHour = activityDate.getHours();
       const today = new Date();
       const isToday = activityDate.toDateString() === today.toDateString();
       return activityHour === hour && isToday;
     });
-    
-    // Debug logging
-    if (hour === 1) { // Current hour for debugging
-      console.log('Timeline Debug:', {
-        hour,
-        totalActivities: activities.length,
-        filteredActivities: filtered.length,
-        activities: activities.map(a => ({
-          id: a.id,
-          timestamp: a.timestamp,
-          hour: new Date(a.timestamp).getHours(),
-          date: new Date(a.timestamp).toDateString(),
-          today: new Date().toDateString()
-        }))
-      });
-    }
-    
-    return filtered;
   };
 
   const formatHour = (hour: number) => {
@@ -55,74 +37,50 @@ export function TimelineBar({ activities }: TimelineBarProps) {
       
       {/* Timeline container */}
       <div className="relative">
-        {/* Hour labels */}
-        <div className="flex justify-between text-xs text-gray-500 mb-2">
-          {hours.map(hour => (
-            <div key={hour} className="text-center" style={{ width: '7.69%' }}>
-              {hour === 0 || hour === 6 || hour === 12 ? formatHour(hour) : ''}
-            </div>
-          ))}
-        </div>
-
-        {/* Timeline bar */}
-        <div className="relative bg-gray-200 h-12 rounded-lg overflow-hidden">
-          {/* Hour segments */}
-          {hours.slice(0, -1).map((hour, index) => {
+        {/* Timeline blocks */}
+        <div className="grid grid-cols-7 gap-1">
+          {hours.map(hour => {
             const hourActivities = getActivitiesForHour(hour);
             const isCurrentHour = new Date().getHours() === hour;
+            const fedActivity = hourActivities.find(a => a.action === 'Fed');
+            const letOutActivity = hourActivities.find(a => a.action === 'Let Out');
             
             return (
               <div
                 key={hour}
-                className={`absolute top-0 h-full border-r border-gray-300 flex items-center justify-center ${
-                  isCurrentHour ? 'bg-blue-100' : ''
+                className={`relative p-2 rounded-lg border-2 h-20 flex flex-col items-center justify-center ${
+                  isCurrentHour 
+                    ? 'bg-green-100 border-green-300' 
+                    : 'bg-gray-50 border-gray-200'
                 }`}
-                style={{
-                  left: `${(index / 12) * 100}%`,
-                  width: `${100 / 12}%`
-                }}
               >
-                {/* Activity emojis */}
-                <div className="flex flex-col items-center justify-center h-full">
-                  {hourActivities.map((activity, actIndex) => (
-                    <div
-                      key={`${activity.id}-${actIndex}`}
-                      className="text-sm"
-                      title={`${activity.dogs.join(', ')} - ${activity.action} at ${new Date(activity.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`}
+                {/* Hour label */}
+                <div className="text-xs font-medium text-gray-600 mb-1">
+                  {formatHour(hour)}
+                </div>
+                
+                {/* Activity emojis stacked */}
+                <div className="flex flex-col items-center gap-1">
+                  {fedActivity && (
+                    <div 
+                      className="text-lg"
+                      title={`${fedActivity.dogs.join(', ')} - Fed at ${new Date(fedActivity.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`}
                     >
-                      {getActivityEmoji(activity)}
+                      🍽️
                     </div>
-                  ))}
+                  )}
+                  {letOutActivity && (
+                    <div 
+                      className="text-lg"
+                      title={`${letOutActivity.dogs.join(', ')} - Let Out at ${new Date(letOutActivity.timestamp).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`}
+                    >
+                      🚪
+                    </div>
+                  )}
                 </div>
               </div>
             );
           })}
-
-          {/* Current time indicator */}
-          {(() => {
-            const now = new Date();
-            const currentHour = now.getHours();
-            const currentMinute = now.getMinutes();
-            
-            // Only show indicator if current time is within 12am-12pm range
-            if (currentHour >= 0 && currentHour <= 12) {
-              const hoursSince12am = currentHour;
-              const minuteProgress = currentMinute / 60;
-              const totalProgress = (hoursSince12am + minuteProgress) / 12;
-              
-              return (
-                <div
-                  className="absolute top-0 h-full w-0.5 bg-red-500 z-10"
-                  style={{
-                    left: `${totalProgress * 100}%`
-                  }}
-                >
-                  <div className="absolute -top-1 -left-1 w-3 h-3 bg-red-500 rounded-full"></div>
-                </div>
-              );
-            }
-            return null;
-          })()}
         </div>
 
         {/* Legend */}
@@ -136,8 +94,8 @@ export function TimelineBar({ activities }: TimelineBarProps) {
             <span>Let Out</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-            <span>Now</span>
+            <div className="w-3 h-3 bg-green-200 border-2 border-green-300 rounded"></div>
+            <span>Current Hour</span>
           </div>
         </div>
       </div>
