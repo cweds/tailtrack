@@ -116,14 +116,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getTodayActivitiesByUser(userId: number): Promise<Activity[]> {
-    // Get last 24 hours instead of calendar day to avoid timezone issues
-    const twentyFourHoursAgo = new Date();
-    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+    // Get start of today in Eastern time
+    const now = new Date();
+    const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+    const startOfToday = new Date(easternTime);
+    startOfToday.setHours(0, 0, 0, 0);
+    
+    // Convert back to UTC for database query
+    const startOfTodayUTC = new Date(startOfToday.getTime() - (easternTime.getTimezoneOffset() * 60000));
     
     return await db.select().from(activities)
       .where(and(
         eq(activities.userId, userId),
-        gte(activities.timestamp, twentyFourHoursAgo)
+        gte(activities.timestamp, startOfTodayUTC)
       ))
       .orderBy(desc(activities.timestamp));
   }
@@ -147,9 +152,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]> {
-    // Get last 24 hours instead of calendar day to avoid timezone issues
-    const twentyFourHoursAgo = new Date();
-    twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
+    // Get start of today in Eastern time
+    const now = new Date();
+    const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+    const startOfToday = new Date(easternTime);
+    startOfToday.setHours(0, 0, 0, 0);
+    
+    // Convert back to UTC for database query
+    const startOfTodayUTC = new Date(startOfToday.getTime() - (easternTime.getTimezoneOffset() * 60000));
     
     const activitiesWithUsers = await db.select({
       id: activities.id,
@@ -164,7 +174,7 @@ export class DatabaseStorage implements IStorage {
     .innerJoin(users, eq(activities.userId, users.id))
     .where(and(
       eq(activities.householdId, householdId),
-      gte(activities.timestamp, twentyFourHoursAgo)
+      gte(activities.timestamp, startOfTodayUTC)
     ))
     .orderBy(desc(activities.timestamp));
     
