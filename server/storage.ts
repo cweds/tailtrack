@@ -5,7 +5,6 @@ import { eq, desc, and, gte, lt } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
-<<<<<<< HEAD
 // Lazy-load database connection to ensure environment variables are loaded
 let db: ReturnType<typeof drizzle>;
 let sql: ReturnType<typeof postgres>;
@@ -28,22 +27,6 @@ function initializeDatabase() {
   return db;
 }
 
-=======
-// Use DATABASE_URL from environment
-const databaseUrl = process.env.DATABASE_URL;
-
-if (!databaseUrl) {
-  const availableVars = Object.keys(process.env).filter(key => key.includes('DATABASE')).join(', ');
-  throw new Error(`DATABASE_URL environment variable is required. Available: ${availableVars}`);
-}
-
-// Log which database we're connecting to for safety
-console.log(`🔗 Connecting to database`);
-
-const sql = postgres(databaseUrl);
-const db = drizzle(sql);
-
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
@@ -89,32 +72,20 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(users).where(eq(users.id, id)).limit(1);
-=======
-    const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(users).where(eq(users.username, username)).limit(1);
-=======
-    const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result[0];
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(users).where(eq(users.email, email)).limit(1);
-=======
-    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result[0];
   }
 
@@ -133,12 +104,8 @@ export class DatabaseStorage implements IStorage {
     } 
     
     // Create user with the name they provided
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.insert(users).values({
-=======
-    const result = await db.insert(users).values({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       email: registerUser.email,
       username: registerUser.username,
       passwordHash,
@@ -156,11 +123,7 @@ export class DatabaseStorage implements IStorage {
       });
       
       // Update user with the new household ID
-<<<<<<< HEAD
       const updatedResult = await database.update(users)
-=======
-      const updatedResult = await db.update(users)
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
         .set({ householdId: newHousehold.id })
         .where(eq(users.id, newUser.id))
         .returning();
@@ -180,41 +143,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateUserUsername(userId: number, username: string): Promise<void> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     console.log(`Updating user ${userId} username to: ${username}`);
     const result = await database.update(users).set({ username }).where(eq(users.id, userId)).returning();
-=======
-    console.log(`Updating user ${userId} username to: ${username}`);
-    const result = await db.update(users).set({ username }).where(eq(users.id, userId)).returning();
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     console.log(`Update result:`, result);
   }
 
   async createHousehold(household: InsertHousehold): Promise<Household> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const [newHousehold] = await database.insert(households).values(household).returning();
-=======
-    const [newHousehold] = await db.insert(households).values(household).returning();
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return newHousehold;
   }
 
   async createHouseholdWithoutCreator(name: string): Promise<Household> {
-<<<<<<< HEAD
     const database = initializeDatabase();
-=======
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     // Generate a new invite code
     const inviteCode = Math.random().toString(36).substring(2, 8).toUpperCase();
     
     // Create the household without a creator
-<<<<<<< HEAD
     const [household] = await database.insert(households).values({
-=======
-    const [household] = await db.insert(households).values({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       name,
       inviteCode,
       creatorId: null,
@@ -224,32 +171,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHousehold(householdId: number): Promise<Household | undefined> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(households).where(eq(households.id, householdId)).limit(1);
-=======
-    const result = await db.select().from(households).where(eq(households.id, householdId)).limit(1);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result[0];
   }
 
   async getHouseholdByInviteCode(inviteCode: string): Promise<Household | undefined> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(households).where(eq(households.inviteCode, inviteCode)).limit(1);
-=======
-    const result = await db.select().from(households).where(eq(households.inviteCode, inviteCode)).limit(1);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result[0];
   }
 
   async getHouseholdMembers(householdId: number): Promise<SafeUser[]> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(users).where(eq(users.householdId, householdId)).orderBy(users.createdAt);
-=======
-    const result = await db.select().from(users).where(eq(users.householdId, householdId)).orderBy(users.createdAt);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result.map(user => {
       const { passwordHash, ...userWithoutPassword } = user;
       return userWithoutPassword;
@@ -257,54 +192,35 @@ export class DatabaseStorage implements IStorage {
   }
 
   async removeUserFromHousehold(userId: number): Promise<void> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     await database.update(users).set({ 
-=======
-    await db.update(users).set({ 
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       householdId: null,
       householdJoinedAt: null
     }).where(eq(users.id, userId));
   }
 
   async joinHousehold(userId: number, householdId: number): Promise<void> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     await database.update(users).set({ 
-=======
-    await db.update(users).set({ 
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       householdId,
       householdJoinedAt: new Date()
     }).where(eq(users.id, userId));
   }
 
   async createHouseholdAndAssignUser(name: string, userId: number): Promise<Household> {
-<<<<<<< HEAD
     const database = initializeDatabase();
-=======
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     // Generate a new invite code
     const inviteCode = Math.random().toString(36).substring(2, 10);
     
     // Create the household
-<<<<<<< HEAD
     const [household] = await database.insert(households).values({
-=======
-    const [household] = await db.insert(households).values({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       name,
       inviteCode,
       creatorId: userId,
     }).returning();
     
     // Assign user to the new household
-<<<<<<< HEAD
     await database.update(users).set({ 
-=======
-    await db.update(users).set({ 
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       householdId: household.id,
       householdJoinedAt: new Date()
     }).where(eq(users.id, userId));
@@ -313,7 +229,6 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateHouseholdCreator(householdId: number, newCreatorId: number): Promise<void> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     await database.update(households).set({ creatorId: newCreatorId }).where(eq(households.id, householdId));
   }
@@ -321,48 +236,27 @@ export class DatabaseStorage implements IStorage {
   async createPet(pet: InsertPet): Promise<Pet> {
     const database = initializeDatabase();
     const [newPet] = await database.insert(pets).values(pet).returning();
-=======
-    await db.update(households).set({ creatorId: newCreatorId }).where(eq(households.id, householdId));
-  }
-
-  async createPet(pet: InsertPet): Promise<Pet> {
-    const [newPet] = await db.insert(pets).values(pet).returning();
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return newPet;
   }
 
   async getHouseholdPets(householdId: number): Promise<Pet[]> {
-<<<<<<< HEAD
     const database = initializeDatabase();
-    const result = await database.select().from(pets).where(eq(pets.householdId, householdId)).orderBy(pets.createdAt);
-=======
-    const result = await db.select().from(pets).where(eq(pets.householdId, householdId)).orderBy(pets.createdAt);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
-    return result;
+    return await database.select().from(pets).where(eq(pets.householdId, householdId));
   }
 
   async getPet(petId: number): Promise<Pet | undefined> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(pets).where(eq(pets.id, petId)).limit(1);
-=======
-    const result = await db.select().from(pets).where(eq(pets.id, petId)).limit(1);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result[0];
   }
 
   async updatePet(petId: number, updates: Partial<InsertPet>): Promise<Pet> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const [updatedPet] = await database.update(pets).set(updates).where(eq(pets.id, petId)).returning();
-=======
-    const [updatedPet] = await db.update(pets).set(updates).where(eq(pets.id, petId)).returning();
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return updatedPet;
   }
 
   async deletePet(petId: number): Promise<void> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     // Simply delete the pet - activities are preserved for historical tracking
     // Even if a pet ID in an activity becomes invalid, the activity record remains
@@ -375,41 +269,26 @@ export class DatabaseStorage implements IStorage {
     // Get the user's household ID to associate the activity with the household
     const user = await this.getUser(activity.userId);
     
-    const result = await database.insert(activities).values({
-=======
-    // Simply delete the pet - activities are preserved for historical tracking
-    // Even if a pet ID in an activity becomes invalid, the activity record remains
-    // as a historical record of what happened
-    await db.delete(pets).where(eq(pets.id, petId));
-  }
-
-  async createActivity(activity: InsertActivity): Promise<Activity> {
-    // Get the user's household ID to associate the activity with the household
-    const user = await this.getUser(activity.userId);
+    if (!user?.householdId) {
+      throw new Error('User must be part of a household to create activities');
+    }
     
-    const result = await db.insert(activities).values({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
-      userId: activity.userId,
-      petIds: activity.petIds,
-      action: activity.action,
-      householdId: user?.householdId // Don't default to household 1 if no household
-    }).returning();
+    const activityWithHousehold = {
+      ...activity,
+      householdId: user.householdId,
+    };
     
-    return result[0];
+    const [newActivity] = await database.insert(activities).values(activityWithHousehold).returning();
+    return newActivity;
   }
 
   async getActivity(activityId: number): Promise<Activity | undefined> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     const result = await database.select().from(activities).where(eq(activities.id, activityId)).limit(1);
-=======
-    const result = await db.select().from(activities).where(eq(activities.id, activityId)).limit(1);
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     return result[0];
   }
 
   async deleteActivity(activityId: number): Promise<void> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     await database.delete(activities).where(eq(activities.id, activityId));
   }
@@ -421,169 +300,146 @@ export class DatabaseStorage implements IStorage {
 
   async getTodayActivitiesByUser(userId: number): Promise<Activity[]> {
     const database = initializeDatabase();
-=======
-    await db.delete(activities).where(eq(activities.id, activityId));
-  }
-
-  async getActivitiesByUser(userId: number): Promise<Activity[]> {
-    return await db.select().from(activities).where(eq(activities.userId, userId)).orderBy(desc(activities.timestamp));
-  }
-
-  async getTodayActivitiesByUser(userId: number): Promise<Activity[]> {
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
-    // Get start of today in Eastern time
-    const now = new Date();
-    const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
-    const startOfToday = new Date(easternTime);
-    startOfToday.setHours(0, 0, 0, 0);
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
     
-    // Convert back to UTC for database query
-    const startOfTodayUTC = new Date(startOfToday.getTime() - (easternTime.getTimezoneOffset() * 60000));
-    
-<<<<<<< HEAD
     return await database.select().from(activities)
-=======
-    return await db.select().from(activities)
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       .where(and(
         eq(activities.userId, userId),
-        gte(activities.timestamp, startOfTodayUTC)
+        gte(activities.timestamp, startOfDay),
+        lt(activities.timestamp, endOfDay)
       ))
       .orderBy(desc(activities.timestamp));
   }
 
   async getHouseholdAllActivities(householdId: number): Promise<(Activity & { username: string })[]> {
-<<<<<<< HEAD
     const database = initializeDatabase();
-    const activitiesWithUsers = await database.select({
-=======
-    const activitiesWithUsers = await db.select({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
-      id: activities.id,
-      userId: activities.userId,
-      householdId: activities.householdId,
-      petIds: activities.petIds,
-      action: activities.action,
-      timestamp: activities.timestamp,
-      username: users.username,
-    })
-    .from(activities)
-    .innerJoin(users, eq(activities.userId, users.id))
-    .where(eq(activities.householdId, householdId))
-    .orderBy(desc(activities.timestamp));
+    const activitiesWithUsers = await database
+      .select({
+        id: activities.id,
+        userId: activities.userId,
+        householdId: activities.householdId,
+        petIds: activities.petIds,
+        action: activities.action,
+        timestamp: activities.timestamp,
+        username: users.username,
+      })
+      .from(activities)
+      .leftJoin(users, eq(activities.userId, users.id))
+      .where(eq(activities.householdId, householdId))
+      .orderBy(desc(activities.timestamp));
     
-    return activitiesWithUsers;
+    return activitiesWithUsers.map(activity => ({
+      id: activity.id,
+      userId: activity.userId,
+      householdId: activity.householdId,
+      petIds: activity.petIds,
+      action: activity.action,
+      timestamp: activity.timestamp,
+      username: activity.username || 'Unknown User'
+    }));
   }
 
   async getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]> {
-<<<<<<< HEAD
     const database = initializeDatabase();
-=======
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
-    // Get start of today in Eastern time
-    const now = new Date();
-    const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
-    const startOfToday = new Date(easternTime);
-    startOfToday.setHours(0, 0, 0, 0);
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
     
-    // Convert back to UTC for database query
-    const startOfTodayUTC = new Date(startOfToday.getTime() - (easternTime.getTimezoneOffset() * 60000));
+    const activitiesWithUsers = await database
+      .select({
+        id: activities.id,
+        userId: activities.userId,
+        householdId: activities.householdId,
+        petIds: activities.petIds,
+        action: activities.action,
+        timestamp: activities.timestamp,
+        username: users.username,
+      })
+      .from(activities)
+      .leftJoin(users, eq(activities.userId, users.id))
+      .where(and(
+        eq(activities.householdId, householdId),
+        gte(activities.timestamp, startOfDay),
+        lt(activities.timestamp, endOfDay)
+      ))
+      .orderBy(desc(activities.timestamp));
     
-<<<<<<< HEAD
-    const activitiesWithUsers = await database.select({
-=======
-    const activitiesWithUsers = await db.select({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
-      id: activities.id,
-      userId: activities.userId,
-      householdId: activities.householdId,
-      petIds: activities.petIds,
-      action: activities.action,
-      timestamp: activities.timestamp,
-      username: users.username,
-    })
-    .from(activities)
-    .innerJoin(users, eq(activities.userId, users.id))
-    .where(and(
-      eq(activities.householdId, householdId),
-      gte(activities.timestamp, startOfTodayUTC)
-    ))
-    .orderBy(desc(activities.timestamp));
-    
-    return activitiesWithUsers;
+    return activitiesWithUsers.map(activity => ({
+      id: activity.id,
+      userId: activity.userId,
+      householdId: activity.householdId,
+      petIds: activity.petIds,
+      action: activity.action,
+      timestamp: activity.timestamp,
+      username: activity.username || 'Unknown User'
+    }));
   }
 
   async getHouseholdCurrentCarePeriodActivities(householdId: number): Promise<(Activity & { username: string })[]> {
-<<<<<<< HEAD
     const database = initializeDatabase();
-=======
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     const now = new Date();
-    const currentHour = now.getHours();
-    
-    // For completion status, we need to check both current period and previous evening if in morning
-    // This handles the case where dogs were fed yesterday evening and we're now in morning
     let carePeriodStart: Date;
     
+    // Care periods: Morning (4am-12pm), Evening (4pm-12am), Late night rest (12am-3:59am - hidden banner)
+    const currentHour = now.getHours();
+    
     if (currentHour >= 4 && currentHour < 12) {
-      // Morning period: Include previous evening period (yesterday 4pm) for completion tracking
-      carePeriodStart = new Date(now);
-      carePeriodStart.setDate(carePeriodStart.getDate() - 1);
-      carePeriodStart.setHours(16, 0, 0, 0);
-    } else if (currentHour >= 16 && currentHour <= 23) {
-      // Evening period: Include from this morning (today 4am) 
-      carePeriodStart = new Date(now);
-      carePeriodStart.setHours(4, 0, 0, 0);
-    } else if (currentHour >= 0 && currentHour < 4) {
-      // Late night (part of previous evening): Include from yesterday morning
-      carePeriodStart = new Date(now);
-      carePeriodStart.setDate(carePeriodStart.getDate() - 1);
-      carePeriodStart.setHours(4, 0, 0, 0);
+      // Morning period: 4am-12pm
+      carePeriodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4, 0, 0);
+    } else if (currentHour >= 16 || currentHour < 4) {
+      // Evening/night period: 4pm-4am next day
+      if (currentHour >= 16) {
+        // After 4pm today
+        carePeriodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16, 0, 0);
+      } else {
+        // Before 4am today (continuation of yesterday's evening)
+        const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        carePeriodStart = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate(), 16, 0, 0);
+      }
     } else {
-      // Afternoon (12pm-4pm): Include from this morning
-      carePeriodStart = new Date(now);
-      carePeriodStart.setHours(4, 0, 0, 0);
+      // Rest period: 12pm-4pm, show activities from morning period
+      carePeriodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4, 0, 0);
     }
     
-<<<<<<< HEAD
-    const activitiesWithUsers = await database.select({
-=======
-    const activitiesWithUsers = await db.select({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
-      id: activities.id,
-      userId: activities.userId,
-      householdId: activities.householdId,
-      petIds: activities.petIds,
-      action: activities.action,
-      timestamp: activities.timestamp,
-      username: users.username,
-    })
-    .from(activities)
-    .innerJoin(users, eq(activities.userId, users.id))
-    .where(and(
-      eq(activities.householdId, householdId),
-      gte(activities.timestamp, carePeriodStart)
-    ))
-    .orderBy(desc(activities.timestamp));
+    const activitiesWithUsers = await database
+      .select({
+        id: activities.id,
+        userId: activities.userId,
+        householdId: activities.householdId,
+        petIds: activities.petIds,
+        action: activities.action,
+        timestamp: activities.timestamp,
+        username: users.username,
+      })
+      .from(activities)
+      .leftJoin(users, eq(activities.userId, users.id))
+      .where(and(
+        eq(activities.householdId, householdId),
+        gte(activities.timestamp, carePeriodStart)
+      ))
+      .orderBy(desc(activities.timestamp));
     
-    return activitiesWithUsers;
+    return activitiesWithUsers.map(activity => ({
+      id: activity.id,
+      userId: activity.userId,
+      householdId: activity.householdId,
+      petIds: activity.petIds,
+      action: activity.action,
+      timestamp: activity.timestamp,
+      username: activity.username || 'Unknown User'
+    }));
   }
 
   async hasHouseholdPreviousActivities(householdId: number): Promise<boolean> {
-<<<<<<< HEAD
     const database = initializeDatabase();
-=======
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
     // Get start of today - simplified approach
     const now = new Date();
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     
     // Check if any activities exist before today
-<<<<<<< HEAD
     const result = await database.select({ id: activities.id })
-=======
-    const result = await db.select({ id: activities.id })
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       .from(activities)
       .where(and(
         eq(activities.householdId, householdId),
@@ -595,12 +451,8 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createPasswordResetToken(userId: number, token: string, expiresAt: Date): Promise<void> {
-<<<<<<< HEAD
     const database = initializeDatabase();
     await database.insert(passwordResetTokens).values({
-=======
-    await db.insert(passwordResetTokens).values({
->>>>>>> 549a69c6d819e6dc44e2dd8e2811e920981d5a7d
       userId,
       token,
       expiresAt,
@@ -609,33 +461,31 @@ export class DatabaseStorage implements IStorage {
   }
 
   async validatePasswordResetToken(token: string): Promise<{ userId: number } | null> {
-    const result = await db
-      .select({
-        userId: passwordResetTokens.userId,
-      })
+    const database = initializeDatabase();
+    const result = await database.select()
       .from(passwordResetTokens)
-      .where(
-        and(
-          eq(passwordResetTokens.token, token),
-          eq(passwordResetTokens.used, false),
-          gte(passwordResetTokens.expiresAt, new Date())
-        )
-      )
+      .where(and(
+        eq(passwordResetTokens.token, token),
+        eq(passwordResetTokens.used, false),
+        gte(passwordResetTokens.expiresAt, new Date())
+      ))
       .limit(1);
-
-    return result[0] || null;
+    
+    if (result.length === 0) return null;
+    
+    return { userId: result[0].userId };
   }
 
   async markPasswordResetTokenAsUsed(token: string): Promise<void> {
-    await db
-      .update(passwordResetTokens)
+    const database = initializeDatabase();
+    await database.update(passwordResetTokens)
       .set({ used: true })
       .where(eq(passwordResetTokens.token, token));
   }
 
   async updateUserPassword(userId: number, passwordHash: string): Promise<void> {
-    await db
-      .update(users)
+    const database = initializeDatabase();
+    await database.update(users)
       .set({ passwordHash })
       .where(eq(users.id, userId));
   }
