@@ -3,7 +3,7 @@ import { useLocation } from 'wouter';
 
 const THEME_COLORS = {
   dashboard: '#FFD5DC', // Pup pink for dashboard
-  default: '#F5E1C0'    // Golden tan background (33 100% 76%) for other pages
+  default: '#FDF2F8'    // Pink-50 from the gradient background for other pages
 };
 
 export function useThemeColor() {
