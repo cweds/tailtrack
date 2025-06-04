@@ -177,11 +177,13 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHouseholdByInviteCode(inviteCode: string): Promise<Household | undefined> {
+    const database = initializeDatabase();
     const result = await database.select().from(households).where(eq(households.inviteCode, inviteCode)).limit(1);
     return result[0];
   }
 
   async getHouseholdMembers(householdId: number): Promise<SafeUser[]> {
+    const database = initializeDatabase();
     const result = await database.select().from(users).where(eq(users.householdId, householdId)).orderBy(users.createdAt);
     return result.map(user => {
       const { passwordHash, ...userWithoutPassword } = user;
@@ -190,6 +192,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async removeUserFromHousehold(userId: number): Promise<void> {
+    const database = initializeDatabase();
     await database.update(users).set({ 
       householdId: null,
       householdJoinedAt: null
@@ -197,6 +200,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async joinHousehold(userId: number, householdId: number): Promise<void> {
+    const database = initializeDatabase();
     await database.update(users).set({ 
       householdId,
       householdJoinedAt: new Date()
@@ -233,6 +237,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHouseholdPets(householdId: number): Promise<Pet[]> {
+    const database = initializeDatabase();
     const result = await database.select().from(pets).where(eq(pets.householdId, householdId)).orderBy(pets.createdAt);
     return result;
   }
