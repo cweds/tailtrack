@@ -67,7 +67,8 @@
 
 /* Custom utilities for the dog care app */
 .app-container {
-  @apply max-w-md mx-auto bg-white min-h-screen shadow-xl;
+  @apply max-w-md mx-auto min-h-screen shadow-xl;
+  background-color: transparent;
 }
 
 .header-static {
