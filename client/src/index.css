@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 33 100% 96%; /* goldenTan background */
+  --foreground: 25 20% 30%; /* dogBrown text */
+  --muted: 33 80% 88%; /* Light goldenTan */
+  --muted-foreground: 25 15% 45%;
+  --popover: 33 100% 96%;
+  --popover-foreground: 25 20% 30%;
+  --card: 0 0% 100%; /* Pure white cards for contrast */
+  --card-foreground: 25 20% 30%;
+  --border: 33 60% 85%; /* Warm borders */
+  --input: 33 60% 90%;
+  --primary: 350 100% 91%; /* pupPink primary */
+  --primary-foreground: 25 20% 30%;
+  --secondary: 33 100% 76%; /* goldenTan */
+  --secondary-foreground: 25 20% 30%;
+  --accent: 207 100% 88%; /* softBlue accent */
+  --accent-foreground: 25 20% 30%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --ring: 350 100% 91%;
+  --radius: 1rem; /* More playful rounded corners */
+  
+  /* Custom playful pet colors */
+  --pup-pink: 350 100% 91%; /* #FFD5DC */
+  --golden-tan: 33 100% 76%; /* #F5E1C0 */
+  --soft-blue: 207 100% 88%; /* #D4EAF7 */
+  --dog-brown: 25 20% 58%; /* #B48A78 */
+  --pup-green: 113 42% 84%; /* #C8EBC5 */
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 22 88% 56%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 4.9% 83.9%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gradient-to-br from-amber-50 via-pink-50 to-blue-50 text-foreground min-h-screen;
+  }
+}
+
+/* Custom utilities for the dog care app */
+.app-container {
+  @apply max-w-md mx-auto bg-white min-h-screen shadow-xl;
+}
+
+.header-static {
+  background: #FFD5DC !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: default;
+}
+
+.header-static:hover,
+.header-static:focus,
+.header-static:active,
+.header-static:visited {
+  background: #FFD5DC !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.header-static * {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: default;
+}
+
+.pup-pink-gradient {
+  background: linear-gradient(135deg, #FFD5DC 0%, #FFC0CB 100%);
+  border: 2px solid transparent;
+  transition: all 0.2s ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pup-pink-gradient:hover {
+    background: linear-gradient(135deg, #FFC0CB 0%, #FFB6C1 100%);
+    border-color: #FF9FAB;
+  }
+}
+
+.golden-tan-gradient {
+  background: linear-gradient(135deg, #FDF4E7 0%, #F5E8D3 100%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .golden-tan-gradient:hover {
+    background: rgb(253 242 248) !important;
+    border-color: rgb(249 168 212) !important;
+  }
+}
+
+.soft-blue-gradient {
+  background: linear-gradient(135deg, #D4EAF7 0%, #B3D9F2 100%);
+  border: 2px solid transparent;
+  transition: all 0.2s ease-out;
+}
+
+.soft-blue-gradient:hover {
+  background: linear-gradient(135deg, #B3D9F2 0%, #9AC7E8 100%);
+  border-color: #7BB3DD;
+}
+
+.pup-green-gradient {
+  background: linear-gradient(135deg, #C8EBC5 0%, #B5E3B1 100%);
+}
+
+.playful-bounce {
+  @apply transition-all duration-200 ease-out;
+  will-change: transform, box-shadow;
+  position: relative;
+}
+
+.playful-bounce:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 213, 220, 0.4);
+}
+
+.playful-bounce:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 10px rgba(255, 213, 220, 0.3);
+}
+
+/* Mobile touch feedback */
+@media (hover: none) {
+  .playful-bounce:active {
+    transform: translateY(1px);
+    transition: all 100ms ease-out;
+  }
+}
+
+/* Mobile touch button - disable hover states on touch devices */
+.mobile-touch-button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) {
+  .mobile-touch-button.golden-tan-gradient:hover {
+    border-color: rgb(249 168 212) !important;
+    background: rgb(253 242 248) !important;
+  }
+}
+
+@media (hover: none) {
+  .mobile-touch-button:hover {
+    /* Prevent hover styles from sticking on touch devices */
+  }
+}
+
+.paw-shadow {
+  box-shadow: 0 4px 20px rgba(255, 213, 220, 0.3);
+}
