@@ -5,19 +5,27 @@ import { eq, desc, and, gte, lt } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { nanoid } from "nanoid";
 
-// Use DATABASE_URL from environment
-const databaseUrl = process.env.DATABASE_URL;
+// Lazy-load database connection to ensure environment variables are loaded
+let db: ReturnType<typeof drizzle>;
+let sql: ReturnType<typeof postgres>;
 
-if (!databaseUrl) {
-  const availableVars = Object.keys(process.env).filter(key => key.includes('DATABASE')).join(', ');
-  throw new Error(`DATABASE_URL environment variable is required. Available: ${availableVars}`);
+function initializeDatabase() {
+  if (db) return db;
+  
+  const databaseUrl = process.env.DATABASE_URL;
+  
+  if (!databaseUrl) {
+    const availableVars = Object.keys(process.env).filter(key => key.includes('DATABASE')).join(', ');
+    throw new Error(`DATABASE_URL environment variable is required. Available: ${availableVars}`);
+  }
+  
+  // Log which database we're connecting to for safety
+  console.log(`🔗 Connecting to database`);
+  
+  sql = postgres(databaseUrl);
+  db = drizzle(sql);
+  return db;
 }
-
-// Log which database we're connecting to for safety
-console.log(`🔗 Connecting to database`);
-
-const sql = postgres(databaseUrl);
-const db = drizzle(sql);
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -64,17 +72,20 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    const database = initializeDatabase();
+    const result = await database.select().from(users).where(eq(users.id, id)).limit(1);
     return result[0];
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.username, username)).limit(1);
+    const database = initializeDatabase();
+    const result = await database.select().from(users).where(eq(users.username, username)).limit(1);
     return result[0];
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const result = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    const database = initializeDatabase();
+    const result = await database.select().from(users).where(eq(users.email, email)).limit(1);
     return result[0];
   }
 
@@ -93,7 +104,8 @@ export class DatabaseStorage implements IStorage {
     } 
     
     // Create user with the name they provided
-    const result = await db.insert(users).values({
+    const database = initializeDatabase();
+    const result = await database.insert(users).values({
       email: registerUser.email,
       username: registerUser.username,
       passwordHash,
