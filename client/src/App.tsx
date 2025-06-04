@@ -12,9 +12,11 @@ import HouseholdManagement from "@/pages/household-management";
 import ResetPassword from "@/pages/reset-password";
 import NotFound from "@/pages/not-found";
 import { useHouseholdProtection } from "@/hooks/use-household-protection";
+import { useThemeColor } from "@/hooks/use-theme-color";
 
 function Router() {
   useHouseholdProtection();
+  useThemeColor();
   
   return (
     <Switch>
