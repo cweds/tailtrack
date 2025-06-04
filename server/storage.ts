@@ -228,10 +228,12 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateHouseholdCreator(householdId: number, newCreatorId: number): Promise<void> {
+    const database = initializeDatabase();
     await database.update(households).set({ creatorId: newCreatorId }).where(eq(households.id, householdId));
   }
 
   async createPet(pet: InsertPet): Promise<Pet> {
+    const database = initializeDatabase();
     const [newPet] = await database.insert(pets).values(pet).returning();
     return newPet;
   }
@@ -243,16 +245,19 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getPet(petId: number): Promise<Pet | undefined> {
+    const database = initializeDatabase();
     const result = await database.select().from(pets).where(eq(pets.id, petId)).limit(1);
     return result[0];
   }
 
   async updatePet(petId: number, updates: Partial<InsertPet>): Promise<Pet> {
+    const database = initializeDatabase();
     const [updatedPet] = await database.update(pets).set(updates).where(eq(pets.id, petId)).returning();
     return updatedPet;
   }
 
   async deletePet(petId: number): Promise<void> {
+    const database = initializeDatabase();
     // Simply delete the pet - activities are preserved for historical tracking
     // Even if a pet ID in an activity becomes invalid, the activity record remains
     // as a historical record of what happened
@@ -260,6 +265,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createActivity(activity: InsertActivity): Promise<Activity> {
+    const database = initializeDatabase();
     // Get the user's household ID to associate the activity with the household
     const user = await this.getUser(activity.userId);
     
@@ -274,19 +280,23 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getActivity(activityId: number): Promise<Activity | undefined> {
+    const database = initializeDatabase();
     const result = await database.select().from(activities).where(eq(activities.id, activityId)).limit(1);
     return result[0];
   }
 
   async deleteActivity(activityId: number): Promise<void> {
+    const database = initializeDatabase();
     await database.delete(activities).where(eq(activities.id, activityId));
   }
 
   async getActivitiesByUser(userId: number): Promise<Activity[]> {
+    const database = initializeDatabase();
     return await database.select().from(activities).where(eq(activities.userId, userId)).orderBy(desc(activities.timestamp));
   }
 
   async getTodayActivitiesByUser(userId: number): Promise<Activity[]> {
+    const database = initializeDatabase();
     // Get start of today in Eastern time
     const now = new Date();
     const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
@@ -305,6 +315,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHouseholdAllActivities(householdId: number): Promise<(Activity & { username: string })[]> {
+    const database = initializeDatabase();
     const activitiesWithUsers = await database.select({
       id: activities.id,
       userId: activities.userId,
