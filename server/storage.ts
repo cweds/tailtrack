@@ -323,6 +323,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]> {
+    const database = initializeDatabase();
     // Get start of today in Eastern time
     const now = new Date();
     const easternTime = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
@@ -353,6 +354,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getHouseholdCurrentCarePeriodActivities(householdId: number): Promise<(Activity & { username: string })[]> {
+    const database = initializeDatabase();
     const now = new Date();
     const currentHour = now.getHours();
     
