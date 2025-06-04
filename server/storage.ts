@@ -208,6 +208,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createHouseholdAndAssignUser(name: string, userId: number): Promise<Household> {
+    const database = initializeDatabase();
     // Generate a new invite code
     const inviteCode = Math.random().toString(36).substring(2, 10);
     
@@ -414,6 +415,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async hasHouseholdPreviousActivities(householdId: number): Promise<boolean> {
+    const database = initializeDatabase();
     // Get start of today - simplified approach
     const now = new Date();
     const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -431,6 +433,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createPasswordResetToken(userId: number, token: string, expiresAt: Date): Promise<void> {
+    const database = initializeDatabase();
     await database.insert(passwordResetTokens).values({
       userId,
       token,
