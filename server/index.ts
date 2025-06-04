@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
@@ -38,6 +37,18 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  // Load dotenv conditionally to avoid production build issues
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      // Use eval to avoid TypeScript module resolution
+      const dotenvModule = await eval('import("dotenv")');
+      dotenvModule.config();
+    } catch (error) {
+      // dotenv not available in production build, environment variables should be set directly
+      console.log('dotenv not available, using environment variables directly');
+    }
+  }
+
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -57,9 +68,9 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // Serve the app on the specified port (default 3000)
+  // Serve the app on the specified port (default 5000 for Replit, 3000 for local)
   // this serves both the API and the client.
-  const port = Number(process.env.PORT) || 3000;
+  const port = Number(process.env.PORT) || (process.env.REPL_ID ? 5000 : 3000);
   server.listen(port as number, "0.0.0.0", () => {
     log(`serving on port ${port}`);
     console.log(`TailTrack app is running at http://localhost:${port}`);
