@@ -60,7 +60,8 @@
   }
 
   body {
-    @apply font-sans antialiased bg-gradient-to-br from-amber-50 via-pink-50 to-blue-50 text-foreground min-h-screen;
+    @apply font-sans antialiased text-foreground min-h-screen;
+    background-color: #FAF7F0; /* Light golden tan */
   }
 }
 
