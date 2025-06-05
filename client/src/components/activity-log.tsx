@@ -250,32 +250,31 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               return (
                 <div key={activity.id}>
                   <div
-                    className={`flex items-center justify-between p-3 rounded-lg border ${
-                      hasNote ? 'border-l-4 border-l-blue-500 bg-gray-50' : 'border-gray-100 bg-gray-50'
-                    }`}
+                    className="flex items-start justify-between p-3 rounded-lg border border-gray-100 bg-gray-50"
                     title={formatFullTimestamp(activity.timestamp)}
                   >
-                    <div className="flex items-start space-x-3 flex-1">
-                      <div className="relative">
+                    <div className="flex items-start space-x-3 flex-1 min-w-0">
+                      <div className="relative flex-shrink-0">
                         <span className="text-2xl mt-0.5">{actionEmoji}</span>
                         {hasNote && (
                           <span className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border border-white"></span>
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-gray-900">
+                        <div className="text-gray-900 mb-1">
                           <span className="font-medium">{activity.action}</span>
-                          <span className="text-gray-600 mx-2">•</span>
-                          <span className="text-gray-700 break-words">{petsList}</span>
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                        <div className="text-sm text-gray-600 mb-1 break-words">
+                          {petsList}
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
                           <span>{getDisplayName({ username: activity.username || 'Unknown user' } as any)}</span>
                           <span>•</span>
                           <span>{timeAgo}</span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-start gap-1 flex-shrink-0 ml-2">
                       {isOwner ? (
                         <>
                           <Button
