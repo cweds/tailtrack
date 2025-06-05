@@ -343,9 +343,8 @@ export class DatabaseStorage implements IStorage {
 
   async getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]> {
     const database = initializeDatabase();
-    const today = new Date();
-    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    const endOfDay = new Date(startOfDay.getTime() + 24 * 60 * 60 * 1000);
+    // Get activities from the last 48 hours, then filter client-side for today
+    const twoDaysAgo = new Date(Date.now() - (48 * 60 * 60 * 1000));
     
     const activitiesWithUsers = await database
       .select({
@@ -361,12 +360,21 @@ export class DatabaseStorage implements IStorage {
       .leftJoin(users, eq(activities.userId, users.id))
       .where(and(
         eq(activities.householdId, householdId),
-        gte(activities.timestamp, startOfDay),
-        lt(activities.timestamp, endOfDay)
+        gte(activities.timestamp, twoDaysAgo)
       ))
       .orderBy(desc(activities.timestamp));
     
-    return activitiesWithUsers.map(activity => ({
+    // Filter for today's activities based on activity timestamp
+    const now = new Date();
+    const todayString = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+    
+    const todayActivities = activitiesWithUsers.filter(activity => {
+      const activityDate = new Date(activity.timestamp);
+      const activityDateString = activityDate.toISOString().split('T')[0];
+      return activityDateString === todayString;
+    });
+    
+    return todayActivities.map(activity => ({
       id: activity.id,
       userId: activity.userId,
       householdId: activity.householdId,
