@@ -369,10 +369,10 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               </div>
               <div className="flex gap-3 justify-end pt-2">
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={cancelEditing}
-                  className="text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100"
+                  className="text-gray-600 px-4 py-2 rounded-lg border-gray-300 bg-white hover:bg-gray-50"
                 >
                   Cancel
                 </Button>
