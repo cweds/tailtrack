@@ -74,7 +74,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ user: userWithoutPassword });
     } catch (error) {
-      console.error(`Registration error: ${error}`);
       res.status(400).json({ error: "Invalid registration data" });
     }
   });
@@ -91,7 +90,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { passwordHash, ...userWithoutPassword } = user;
       res.json({ user: userWithoutPassword });
     } catch (error) {
-      console.error(`Login error: ${error}`);
       res.status(400).json({ error: "Invalid login data" });
     }
   });
@@ -107,7 +105,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { passwordHash, ...userWithoutPassword } = user;
       res.json({ user: userWithoutPassword });
     } catch (error) {
-      console.error(`Get user error: ${error}`);
       res.status(400).json({ error: "Failed to get user" });
     }
   });
@@ -124,7 +121,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.updateUserUsername(userId, username);
       res.json({ success: true });
     } catch (error) {
-      console.error(`Update user error: ${error}`);
       res.status(400).json({ error: "Failed to update user" });
     }
   });
@@ -139,7 +135,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       res.json({ household });
     } catch (error) {
-      console.error(`Get household error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get household" });
     }
   });
@@ -150,7 +146,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const members = await storage.getHouseholdMembers(householdId);
       res.json({ members });
     } catch (error) {
-      console.error(`Get household members error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get household members" });
     }
   });
@@ -162,7 +158,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const activity = await storage.createActivity(activityData);
       res.json({ activity });
     } catch (error) {
-      console.error(`Create activity error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Invalid activity data" });
     }
   });
@@ -173,7 +169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const activities = await storage.getActivitiesByUser(userId);
       res.json({ activities });
     } catch (error) {
-      console.error(`Get activities error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get activities" });
     }
   });
@@ -185,7 +181,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const activities = await storage.getHouseholdAllActivities(householdId);
       res.json({ activities });
     } catch (error) {
-      console.error(`Get all household activities error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get household activities" });
     }
   });
@@ -199,7 +195,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const hasPrevious = await storage.hasHouseholdPreviousActivities(householdId);
       res.json({ activities, hasPrevious });
     } catch (error) {
-      console.error(`Get household activities error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get household activities" });
     }
   });
@@ -211,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const activities = await storage.getHouseholdCurrentCarePeriodActivities(householdId, timezone);
       res.json({ activities });
     } catch (error) {
-      console.error(`Get care period activities error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get care period activities" });
     }
   });
@@ -222,7 +218,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const activities = await storage.getTodayActivitiesByUser(userId);
       res.json({ activities });
     } catch (error) {
-      console.error(`Get today activities error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get today's activities" });
     }
   });
@@ -250,7 +246,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.deleteActivity(activityId);
       res.json({ success: true });
     } catch (error) {
-      console.error(`Delete activity error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to delete activity" });
     }
   });
@@ -262,7 +258,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pet = await storage.createPet(petData);
       res.json({ pet });
     } catch (error) {
-      console.error(`Create pet error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to create pet" });
     }
   });
@@ -273,7 +269,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pets = await storage.getHouseholdPets(householdId);
       res.json({ pets });
     } catch (error) {
-      console.error(`Get household pets error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get pets" });
     }
   });
@@ -287,7 +283,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       res.json({ pet });
     } catch (error) {
-      console.error(`Get pet error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get pet" });
     }
   });
@@ -299,7 +295,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pet = await storage.updatePet(petId, updates);
       res.json({ pet });
     } catch (error) {
-      console.error(`Update pet error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to update pet" });
     }
   });
@@ -310,7 +306,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.deletePet(petId);
       res.json({ success: true });
     } catch (error) {
-      console.error(`Delete pet error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to delete pet" });
     }
   });
@@ -342,7 +338,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
     } catch (error) {
-      console.error(`Get household error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get household" });
     }
   });
@@ -357,7 +353,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const members = await storage.getHouseholdMembers(householdId);
       res.json({ members });
     } catch (error) {
-      console.error(`Get household members error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to get household members" });
     }
   });
@@ -402,7 +398,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.removeUserFromHousehold(userId);
       res.json({ success: true });
     } catch (error) {
-      console.error(`Leave household error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to leave household" });
     }
   });
@@ -418,7 +414,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const household = await storage.createHouseholdAndAssignUser(name, userId);
       res.json({ household });
     } catch (error) {
-      console.error(`Create household error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to create household" });
     }
   });
@@ -440,7 +436,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.joinHousehold(userId, household.id);
       res.json({ household });
     } catch (error) {
-      console.error(`Join household error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to join household" });
     }
   });
@@ -472,7 +468,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.removeUserFromHousehold(userIdToRemove);
       res.json({ success: true });
     } catch (error) {
-      console.error(`Remove member error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to remove member" });
     }
   });
@@ -480,11 +476,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Password recovery routes
   app.post("/api/auth/forgot-password", async (req, res) => {
     try {
-      console.log('Forgot password request received for:', req.body.email);
-      console.log('Environment variables check:');
-      console.log('- RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
-      console.log('- RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length || 0);
-      console.log('- FRONTEND_URL:', process.env.FRONTEND_URL);
+      // Debug logging removed for production security
       
       const { email } = forgotPasswordSchema.parse(req.body);
       
@@ -494,7 +486,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json({ message: "If an account with that email exists, a password reset link has been sent." });
       }
 
-      console.log('User found, generating reset token...');
       
       // Generate secure reset token
       const resetToken = nanoid(32);
@@ -502,7 +493,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Save token to database
       await storage.createPasswordResetToken(user.id, resetToken, expiresAt);
-      console.log('Reset token saved to database');
 
       // Send email
       const emailSent = await sendPasswordResetEmail(email, resetToken);
@@ -514,7 +504,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({ message: "If an account with that email exists, a password reset link has been sent." });
     } catch (error) {
-      console.error(`Forgot password error: ${error}`);
+      // Error logging removed for production security
       if (error instanceof Error) {
         console.error('Error stack:', error.stack);
       }
@@ -543,7 +533,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({ message: "Password reset successfully" });
     } catch (error) {
-      console.error(`Reset password error: ${error}`);
+      // Error logging removed for production security
       res.status(400).json({ error: "Failed to reset password" });
     }
   });
