@@ -87,10 +87,23 @@ app.use((req, res, next) => {
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    
+    // Provide secure, user-friendly error messages
+    let message = "Something went wrong. Please try again.";
+    
+    if (status === 400) {
+      message = "Invalid request. Please check your input and try again.";
+    } else if (status === 401) {
+      message = "Please log in to continue.";
+    } else if (status === 403) {
+      message = "You don't have permission to access this resource.";
+    } else if (status === 404) {
+      message = "The requested resource was not found.";
+    } else if (status === 429) {
+      message = "Too many requests. Please wait a moment and try again.";
+    }
 
-    res.status(status).json({ message });
-    throw err;
+    res.status(status).json({ error: message });
   });
 
   // importantly only setup vite in development and after

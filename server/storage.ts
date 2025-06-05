@@ -20,7 +20,7 @@ function initializeDatabase() {
   }
   
   // Log which database we're connecting to for safety
-  console.log(`🔗 Connecting to database`);
+  // Database connection initialized
   
   sql = postgres(databaseUrl);
   db = drizzle(sql);
@@ -144,9 +144,9 @@ export class DatabaseStorage implements IStorage {
 
   async updateUserUsername(userId: number, username: string): Promise<void> {
     const database = initializeDatabase();
-    console.log(`Updating user ${userId} username to: ${username}`);
+    // Updating user username
     const result = await database.update(users).set({ username }).where(eq(users.id, userId)).returning();
-    console.log(`Update result:`, result);
+    // Update completed
   }
 
   async createHousehold(household: InsertHousehold): Promise<Household> {
