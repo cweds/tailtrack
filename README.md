@@ -244,22 +244,40 @@ npm run db:studio    # Open database studio
 
 ### Production Build
 ```bash
-npm run build
+npm run build          # Creates optimized production build
+npm run preview        # Preview production build locally
+```
+
+### Environment Variables
+Required for production deployment:
+```bash
+DATABASE_URL=postgresql://[user]:[password]@[host]:[port]/[database]
+RESEND_API_KEY=re_[your_resend_api_key]     # For password reset emails
+NODE_ENV=production
 ```
 
 ### Replit Deployment
-The application is configured for seamless Replit deployment:
-1. Push code to repository
-2. Connect to Replit
-3. Set DATABASE_URL environment variable
-4. Deploy with built-in Replit hosting
+The application is production-ready for Replit deployment:
+1. Push security-hardened code to repository
+2. Connect to Replit with environment variables
+3. Deploy with built-in Replit hosting at tailtrack.app domain
+4. Automatic HTTPS and CDN optimization included
 
-### Capacitor Integration (Future)
-Ready for mobile app conversion:
+### App Store Submission
+TailTrack is prepared for mobile app store submission:
+- **Security hardened** - Comprehensive information disclosure protection
+- **Progressive Web App** - Full offline support and native mobile experience
+- **Performance optimized** - Fast loading and smooth interactions
+- **Production tested** - All systems validated for deployment
+
+### Mobile App Conversion
+Ready for native mobile app development:
 ```bash
 npm install @capacitor/core @capacitor/cli
-npx cap init
+npx cap init TailTrack com.tailtrack.app
 npx cap add ios android
+npx cap run ios
+npx cap run android
 ```
 
 ## 🤝 Contributing
