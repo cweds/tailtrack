@@ -300,10 +300,9 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => toggleNoteView(activity.id)}
-                          className="text-gray-600 text-xs px-2 py-1 rounded hover:bg-gray-50"
+                          onClick={() => setViewingNoteId(activity.id)}
+                          className="text-blue-600 text-xs px-2 py-1 rounded hover:bg-blue-50"
                         >
-                          <Eye className="h-3 w-3 mr-1" />
                           View
                         </Button>
                       ) : null}
@@ -312,27 +311,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
 
 
-                  {/* Note Viewing */}
-                  {isViewingNote && hasNote && (
-                    <div className="mt-3 bg-blue-50 rounded-lg p-4 border border-l-4 border-l-blue-300">
-                      <div className="flex items-start justify-between mb-2">
-                        <div className="text-xs font-medium text-gray-500">
-                          {activity.username}'s note:
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setViewingNoteId(null)}
-                          className="text-gray-400 hover:text-gray-600 text-sm p-0 h-4 w-4"
-                        >
-                          <X className="h-3 w-3" />
-                        </Button>
-                      </div>
-                      <div className="bg-white rounded p-3 text-sm text-gray-700">
-                        {activity.notes}
-                      </div>
-                    </div>
-                  )}
+
                 </div>
               );
             })}
@@ -402,6 +381,60 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                 </Button>
               </div>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* View Note Modal */}
+      {viewingNoteId && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-md mx-auto my-auto shadow-xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-blue-800">Activity Note</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setViewingNoteId(null)}
+                className="text-gray-400 hover:text-gray-600 p-0 h-6 w-6"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            
+            {(() => {
+              const viewingActivity = displayActivities.find(a => a.id === viewingNoteId);
+              if (!viewingActivity) return null;
+              
+              const activityPets = pets?.filter(pet => viewingActivity.petIds?.includes(pet.id)) || [];
+              const formatPetNames = (names: string[]) => {
+                if (names.length === 0) return '';
+                if (names.length === 1) return names[0];
+                if (names.length === 2) return `${names[0]} & ${names[1]}`;
+                const allButLast = names.slice(0, -1).join(', ');
+                const last = names[names.length - 1];
+                return `${allButLast} & ${last}`;
+              };
+              const petNames = activityPets.map(pet => pet.name);
+              const petsList = formatPetNames(petNames);
+              
+              return (
+                <div className="space-y-4">
+                  <div className="bg-white rounded-lg p-4 border">
+                    <div className="text-sm text-gray-600 mb-2">
+                      <span className="font-medium">{viewingActivity.action}</span>
+                      <span className="mx-2">•</span>
+                      <span>{petsList}</span>
+                    </div>
+                    <div className="text-xs text-gray-500 mb-3">
+                      By {getDisplayName({ username: viewingActivity.username || 'Unknown user' } as any)} • {formatTime(viewingActivity.timestamp)}
+                    </div>
+                    <div className="bg-blue-50 rounded p-3 text-sm text-gray-700">
+                      {viewingActivity.notes}
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         </div>
       )}
