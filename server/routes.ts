@@ -13,15 +13,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ status: "ok", timestamp: new Date().toISOString(), app: "TailTrack" });
   });
 
-  // Debug endpoint for production environment
-  app.get("/api/debug/env", (req, res) => {
-    res.json({
-      resendKeyExists: !!process.env.RESEND_API_KEY,
-      resendKeyLength: process.env.RESEND_API_KEY?.length || 0,
-      frontendUrl: process.env.FRONTEND_URL,
-      nodeEnv: process.env.NODE_ENV
-    });
-  });
+  // Debug endpoint removed for production security
 
   // Authentication routes
   app.post("/api/auth/register", async (req, res) => {
