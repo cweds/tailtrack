@@ -405,21 +405,24 @@ export class DatabaseStorage implements IStorage {
     
     if (currentHour >= 4 && currentHour < 12) {
       // Morning period: 4am-12pm
-      carePeriodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4, 0, 0);
+      carePeriodStart = new Date(userNow.getFullYear(), userNow.getMonth(), userNow.getDate(), 4, 0, 0);
     } else if (currentHour >= 16 || currentHour < 4) {
       // Evening/night period: 4pm-4am next day
       if (currentHour >= 16) {
         // After 4pm today
-        carePeriodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 16, 0, 0);
+        carePeriodStart = new Date(userNow.getFullYear(), userNow.getMonth(), userNow.getDate(), 16, 0, 0);
       } else {
         // Before 4am today (continuation of yesterday's evening)
-        const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+        const yesterday = new Date(userNow.getTime() - 24 * 60 * 60 * 1000);
         carePeriodStart = new Date(yesterday.getFullYear(), yesterday.getMonth(), yesterday.getDate(), 16, 0, 0);
       }
     } else {
       // Rest period: 12pm-4pm, show activities from morning period
-      carePeriodStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 4, 0, 0);
+      carePeriodStart = new Date(userNow.getFullYear(), userNow.getMonth(), userNow.getDate(), 4, 0, 0);
     }
+    
+    // Convert care period start to UTC for database comparison
+    const carePeriodStartUTC = new Date(carePeriodStart.toLocaleString("en-US", { timeZone: "UTC" }));
     
     const activitiesWithUsers = await database
       .select({
@@ -435,7 +438,7 @@ export class DatabaseStorage implements IStorage {
       .leftJoin(users, eq(activities.userId, users.id))
       .where(and(
         eq(activities.householdId, householdId),
-        gte(activities.timestamp, carePeriodStart)
+        gte(activities.timestamp, carePeriodStartUTC)
       ))
       .orderBy(desc(activities.timestamp));
     
