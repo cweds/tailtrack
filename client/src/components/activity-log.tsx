@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, Edit3, Eye, Save, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -65,6 +65,12 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
   const { user } = useAuth();
   const [showAllDays, setShowAllDays] = useState(false);
   const { toast } = useToast();
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [viewingNoteId, setViewingNoteId] = useState<number | null>(null);
+  const [editFormData, setEditFormData] = useState<{
+    timestamp: string;
+    notes: string;
+  }>({ timestamp: '', notes: '' });
 
   // Lazy load all activities when "View More Days" is clicked
   const { data: allActivitiesData, isLoading: isLoadingAllActivities } = useQuery({
@@ -81,6 +87,32 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
       }
     },
     enabled: showAllDays, // Only fetch when showAllDays is true
+  });
+
+  const updateActivityMutation = useMutation({
+    mutationFn: async ({ activityId, timestamp, notes }: { activityId: number; timestamp?: string; notes?: string }) => {
+      return await apiRequest("PATCH", `/api/activities/${activityId}`, { 
+        userId: user?.id,
+        timestamp,
+        notes 
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Activity updated",
+        description: "Changes have been saved.",
+      });
+      setEditingId(null);
+      // Invalidate activities queries to refresh the list
+      queryClient.invalidateQueries({ queryKey: ["/api/activities"] });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to update activity. Please try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   const deleteActivityMutation = useMutation({
@@ -103,6 +135,35 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
       });
     },
   });
+
+  // Helper functions for editing
+  const startEditing = (activity: DatabaseActivity) => {
+    const timestamp = activity.timestamp instanceof Date ? activity.timestamp : new Date(activity.timestamp);
+    setEditFormData({
+      timestamp: timestamp.toISOString().slice(0, 16), // Format for datetime-local input
+      notes: activity.notes || ''
+    });
+    setEditingId(activity.id);
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditFormData({ timestamp: '', notes: '' });
+  };
+
+  const saveChanges = () => {
+    if (editingId) {
+      updateActivityMutation.mutate({
+        activityId: editingId,
+        timestamp: editFormData.timestamp,
+        notes: editFormData.notes
+      });
+    }
+  };
+
+  const toggleNoteView = (activityId: number) => {
+    setViewingNoteId(viewingNoteId === activityId ? null : activityId);
+  };
   
   // Use all activities when showAllDays is true, otherwise use today's activities
   // Show today's activities while loading all activities to prevent white screen
@@ -168,37 +229,140 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               
               const timeAgo = formatTime(activity.timestamp);
 
+              const isOwner = user?.id === activity.userId;
+              const hasNote = activity.notes && activity.notes.trim().length > 0;
+              const isEditing = editingId === activity.id;
+              const isViewingNote = viewingNoteId === activity.id;
+
               return (
-                <div
-                  key={activity.id}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100"
-                  title={formatFullTimestamp(activity.timestamp)}
-                >
-                  <div className="flex items-start space-x-3 flex-1">
-                    <span className="text-2xl mt-0.5">{actionEmoji}</span>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-gray-900">
-                        <span className="font-medium">{activity.action}</span>
-                        <span className="text-gray-600 mx-2">•</span>
-                        <span className="text-gray-700 break-words">{petsList}</span>
+                <div key={activity.id}>
+                  <div
+                    className={`flex items-center justify-between p-3 rounded-lg border ${
+                      hasNote ? 'border-l-4 border-l-blue-500 bg-blue-50' : 'border-gray-100 bg-gray-50'
+                    }`}
+                    title={formatFullTimestamp(activity.timestamp)}
+                  >
+                    <div className="flex items-start space-x-3 flex-1">
+                      <div className="relative">
+                        <span className="text-2xl mt-0.5">{actionEmoji}</span>
+                        {hasNote && (
+                          <span className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border border-white"></span>
+                        )}
                       </div>
-                      <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
-                        <span>{getDisplayName({ username: activity.username || 'Unknown user' } as any)}</span>
-                        <span>•</span>
-                        <span>{timeAgo}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-gray-900">
+                          <span className="font-medium">{activity.action}</span>
+                          <span className="text-gray-600 mx-2">•</span>
+                          <span className="text-gray-700 break-words">{petsList}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                          <span>{getDisplayName({ username: activity.username || 'Unknown user' } as any)}</span>
+                          <span>•</span>
+                          <span>{timeAgo}</span>
+                        </div>
                       </div>
                     </div>
+                    <div className="flex items-center gap-1">
+                      {isOwner ? (
+                        <>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => startEditing(activity)}
+                            className="text-blue-600 text-xs px-2 py-1 rounded hover:bg-blue-50"
+                          >
+                            <Edit3 className="h-3 w-3 mr-1" />
+                            Edit
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => deleteActivityMutation.mutate(activity.id)}
+                            disabled={deleteActivityMutation.isPending}
+                            className="text-red-600 text-xs px-2 py-1 rounded hover:bg-red-50"
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </>
+                      ) : hasNote ? (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => toggleNoteView(activity.id)}
+                          className="text-gray-600 text-xs px-2 py-1 rounded hover:bg-gray-50"
+                        >
+                          <Eye className="h-3 w-3 mr-1" />
+                          View
+                        </Button>
+                      ) : null}
+                    </div>
                   </div>
-                  {activity.userId === user?.id && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => deleteActivityMutation.mutate(activity.id)}
-                      disabled={deleteActivityMutation.isPending}
-                      className="ml-2 p-1 h-6 w-6 text-gray-400 hover:text-red-500 hover:bg-red-50"
-                    >
-                      <X className="h-3 w-3" />
-                    </Button>
+
+                  {/* Editing Form */}
+                  {isEditing && (
+                    <div className="mt-3 bg-green-50 rounded-lg p-4 border border-l-4 border-l-green-300">
+                      <div className="space-y-3">
+                        <div>
+                          <label className="text-xs font-medium text-gray-600 block mb-1">Time:</label>
+                          <input
+                            type="datetime-local"
+                            value={editFormData.timestamp}
+                            onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
+                            className="block w-full text-sm border rounded px-2 py-1"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs font-medium text-gray-600 block mb-1">Note:</label>
+                          <textarea
+                            value={editFormData.notes}
+                            onChange={(e) => setEditFormData(prev => ({ ...prev, notes: e.target.value }))}
+                            className="block w-full text-sm border rounded px-2 py-1 h-16 resize-none"
+                            placeholder="Add details about this activity..."
+                          />
+                        </div>
+                        <div className="flex gap-2 justify-end">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={cancelEditing}
+                            className="text-gray-600 text-xs px-3 py-1 rounded hover:bg-gray-100"
+                          >
+                            Cancel
+                          </Button>
+                          <Button
+                            size="sm"
+                            onClick={saveChanges}
+                            disabled={updateActivityMutation.isPending}
+                            className="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700"
+                          >
+                            <Save className="h-3 w-3 mr-1" />
+                            Save
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Note Viewing */}
+                  {isViewingNote && hasNote && (
+                    <div className="mt-3 bg-blue-50 rounded-lg p-4 border border-l-4 border-l-blue-300">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="text-xs font-medium text-gray-500">
+                          {activity.username}'s note:
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setViewingNoteId(null)}
+                          className="text-gray-400 hover:text-gray-600 text-sm p-0 h-4 w-4"
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+                      <div className="bg-white rounded p-3 text-sm text-gray-700">
+                        {activity.notes}
+                      </div>
+                    </div>
                   )}
                 </div>
               );
