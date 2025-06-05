@@ -1,11 +1,6 @@
 import { Resend } from 'resend';
 
 export async function sendPasswordResetEmail(email: string, resetToken: string) {
-  console.log('Attempting to send password reset email to:', email);
-  console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
-  console.log('RESEND_API_KEY first 10 chars:', process.env.RESEND_API_KEY?.substring(0, 10));
-  console.log('RESEND_API_KEY length:', process.env.RESEND_API_KEY?.length);
-  
   if (!process.env.RESEND_API_KEY) {
     console.error('RESEND_API_KEY environment variable is not set');
     return false;
