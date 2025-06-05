@@ -13,6 +13,7 @@ export interface DatabaseActivity {
   petIds: number[];
   action: Action;
   timestamp: Date;
+  notes?: string | null;
   username?: string;
 }
 

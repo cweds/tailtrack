@@ -223,6 +223,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.patch("/api/activities/:activityId", async (req, res) => {
+    try {
+      const activityId = parseInt(req.params.activityId);
+      const { userId, timestamp, notes } = req.body;
+      
+      if (!userId) {
+        return res.status(400).json({ error: "User ID required" });
+      }
+
+      // Get the activity to verify ownership
+      const activity = await storage.getActivity(activityId);
+      if (!activity) {
+        return res.status(404).json({ error: "Activity not found" });
+      }
+
+      // Only allow users to update their own activities
+      if (activity.userId !== userId) {
+        return res.status(403).json({ error: "Not authorized to update this activity" });
+      }
+
+      const updates: any = {};
+      if (timestamp !== undefined) {
+        updates.timestamp = new Date(timestamp);
+      }
+      if (notes !== undefined) {
+        updates.notes = notes;
+      }
+
+      const updatedActivity = await storage.updateActivity(activityId, updates);
+      res.json({ activity: updatedActivity });
+    } catch (error) {
+      // Error logging removed for production security
+      res.status(400).json({ error: "Failed to update activity" });
+    }
+  });
+
   app.delete("/api/activities/:activityId", async (req, res) => {
     try {
       const activityId = parseInt(req.params.activityId);

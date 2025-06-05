@@ -348,6 +348,7 @@ export class DatabaseStorage implements IStorage {
       petIds: activity.petIds,
       action: activity.action,
       timestamp: activity.timestamp,
+      notes: activity.notes,
       username: activity.username || 'Unknown User'
     }));
   }
@@ -365,6 +366,7 @@ export class DatabaseStorage implements IStorage {
         petIds: activities.petIds,
         action: activities.action,
         timestamp: activities.timestamp,
+        notes: activities.notes,
         username: users.username,
       })
       .from(activities)
@@ -401,6 +403,7 @@ export class DatabaseStorage implements IStorage {
       petIds: activity.petIds,
       action: activity.action,
       timestamp: activity.timestamp,
+      notes: activity.notes,
       username: activity.username || 'Unknown User'
     }));
   }
@@ -443,6 +446,7 @@ export class DatabaseStorage implements IStorage {
         petIds: activities.petIds,
         action: activities.action,
         timestamp: activities.timestamp,
+        notes: activities.notes,
         username: users.username,
       })
       .from(activities)
@@ -460,6 +464,7 @@ export class DatabaseStorage implements IStorage {
       petIds: activity.petIds,
       action: activity.action,
       timestamp: activity.timestamp,
+      notes: activity.notes,
       username: activity.username || 'Unknown User'
     }));
   }
