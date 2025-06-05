@@ -1,219 +1,325 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time Picker Mockups - TailTrack</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .pup-pink-gradient {
-            background: linear-gradient(135deg, #FFD5DC 0%, #FFADB8 100%);
-        }
-        .soft-blue-gradient {
-            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
-        }
-    </style>
-</head>
-<body class="bg-gray-50 p-6">
-    <div class="max-w-4xl mx-auto space-y-8">
-        <h1 class="text-3xl font-bold text-gray-900 mb-8">Time Picker Feature Mockups</h1>
-        
-        <!-- Option 1: Expandable Time Section -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-xl font-semibold mb-4">Option 1: Expandable Time Section</h2>
-            
-            <!-- Normal state -->
-            <div class="mb-6">
-                <h3 class="text-sm font-medium text-gray-600 mb-3">Default State (Normal Quick Actions)</h3>
-                <div class="space-y-3">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Time Picker Mockups - TailTrack</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            .pup-pink-gradient {
+                background: linear-gradient(135deg, #ffd5dc 0%, #ffadb8 100%);
+            }
+            .soft-blue-gradient {
+                background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            }
+        </style>
+    </head>
+    <body class="bg-gray-50 p-6">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-8">
+                Time Picker Feature Mockups
+            </h1>
+
+            <!-- Option 1: Expandable Time Section -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">
+                    Option 1: Expandable Time Section
+                </h2>
+
+                <!-- Normal state -->
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-3">
+                        Default State (Normal Quick Actions)
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-3">
+                            <button
+                                class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm hover:shadow-md transition-shadow"
+                            >
+                                🍖 Feed
+                            </button>
+                            <button
+                                class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm hover:shadow-md transition-shadow"
+                            >
+                                🚽 Bathroom
+                            </button>
+                        </div>
+                        <button
+                            class="text-blue-600 text-sm flex items-center gap-1"
+                        >
+                            <svg
+                                class="w-4 h-4"
+                                fill="currentColor"
+                                viewBox="0 0 20 20"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                            Log for different time
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Expanded state -->
+                <div class="border-t pt-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-3">
+                        Expanded State (Time Selection)
+                    </h3>
+                    <div class="bg-blue-50 rounded-lg p-4 space-y-4">
+                        <div class="flex items-center gap-4">
+                            <label class="text-sm font-medium text-gray-700"
+                                >When did this happen?</label
+                            >
+                            <input
+                                type="datetime-local"
+                                class="border rounded-lg px-3 py-2 text-sm"
+                                value="2024-12-05T14:30"
+                            />
+                        </div>
+                        <div class="flex gap-3">
+                            <button
+                                class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm"
+                            >
+                                🍖 Feed at 2:30 PM
+                            </button>
+                            <button
+                                class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm"
+                            >
+                                🚽 Bathroom at 2:30 PM
+                            </button>
+                        </div>
+                        <button class="text-gray-600 text-sm">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2: Modal Dialog -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">
+                    Option 2: Modal Dialog After Action
+                </h2>
+
+                <div class="mb-4">
+                    <h3 class="text-sm font-medium text-gray-600 mb-3">
+                        Normal Actions (No Change)
+                    </h3>
                     <div class="flex gap-3">
-                        <button class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm hover:shadow-md transition-shadow">
+                        <button
+                            class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm"
+                        >
                             🍖 Feed
                         </button>
-                        <button class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm hover:shadow-md transition-shadow">
+                        <button
+                            class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm"
+                        >
                             🚽 Bathroom
                         </button>
                     </div>
-                    <button class="text-blue-600 text-sm flex items-center gap-1">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                        </svg>
-                        Log for different time
-                    </button>
                 </div>
-            </div>
-            
-            <!-- Expanded state -->
-            <div class="border-t pt-6">
-                <h3 class="text-sm font-medium text-gray-600 mb-3">Expanded State (Time Selection)</h3>
-                <div class="bg-blue-50 rounded-lg p-4 space-y-4">
-                    <div class="flex items-center gap-4">
-                        <label class="text-sm font-medium text-gray-700">When did this happen?</label>
-                        <input type="datetime-local" class="border rounded-lg px-3 py-2 text-sm" value="2024-12-05T14:30">
-                    </div>
-                    <div class="flex gap-3">
-                        <button class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
-                            🍖 Feed at 2:30 PM
-                        </button>
-                        <button class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
-                            🚽 Bathroom at 2:30 PM
-                        </button>
-                    </div>
-                    <button class="text-gray-600 text-sm">Cancel</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Option 2: Modal Dialog -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-xl font-semibold mb-4">Option 2: Modal Dialog After Action</h2>
-            
-            <div class="mb-4">
-                <h3 class="text-sm font-medium text-gray-600 mb-3">Normal Actions (No Change)</h3>
-                <div class="flex gap-3">
-                    <button class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
-                        🍖 Feed
-                    </button>
-                    <button class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
-                        🚽 Bathroom
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Modal overlay mockup -->
-            <div class="relative">
-                <div class="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
-                    <div class="bg-white rounded-lg p-6 w-80 shadow-xl">
-                        <h3 class="text-lg font-semibold mb-4">Feeding Logged</h3>
-                        <p class="text-gray-600 mb-4">Charlie & Buddy were fed just now</p>
-                        
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-2">
-                                <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/>
-                                </svg>
-                                <span class="text-sm text-blue-600">Change time?</span>
+
+                <!-- Modal overlay mockup -->
+                <div class="relative">
+                    <div
+                        class="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center"
+                    >
+                        <div class="bg-white rounded-lg p-6 w-80 shadow-xl">
+                            <h3 class="text-lg font-semibold mb-4">
+                                Feeding Logged
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                Charlie & Buddy were fed just now
+                            </p>
+
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <svg
+                                        class="w-4 h-4 text-blue-600"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                    <span class="text-sm text-blue-600"
+                                        >Change time?</span
+                                    >
+                                </div>
+                                <input
+                                    type="datetime-local"
+                                    class="w-full border rounded-lg px-3 py-2 text-sm"
+                                    value="2024-12-05T15:45"
+                                />
                             </div>
-                            <input type="datetime-local" class="w-full border rounded-lg px-3 py-2 text-sm" value="2024-12-05T15:45">
-                        </div>
-                        
-                        <div class="flex gap-3 mt-6">
-                            <button class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                                Update Time
-                            </button>
-                            <button class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium">
-                                Keep Current Time
-                            </button>
+
+                            <div class="flex gap-3 mt-6">
+                                <button
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+                                >
+                                    Update Time
+                                </button>
+                                <button
+                                    class="bg-gray-200 text-gray-800 px-4 py-2 rounded-lg text-sm font-medium"
+                                >
+                                    Keep Current Time
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
-                    Background Content (Blurred)
-                </div>
-            </div>
-        </div>
-        
-        <!-- Option 3: Inline Quick Select -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-xl font-semibold mb-4">Option 3: Inline Quick Time Select</h2>
-            
-            <div class="space-y-4">
-                <div class="flex items-center gap-3">
-                    <button class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
-                        🍖 Feed
-                    </button>
-                    <div class="flex items-center gap-2 text-sm">
-                        <span class="text-gray-600">at</span>
-                        <select class="border rounded px-2 py-1 text-sm">
-                            <option>Now</option>
-                            <option>30 min ago</option>
-                            <option>1 hour ago</option>
-                            <option>2 hours ago</option>
-                            <option>Custom time...</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="flex items-center gap-3">
-                    <button class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm">
-                        🚽 Bathroom
-                    </button>
-                    <div class="flex items-center gap-2 text-sm">
-                        <span class="text-gray-600">at</span>
-                        <input type="time" class="border rounded px-2 py-1 text-sm" value="14:30">
-                        <span class="text-gray-500">today</span>
+                    <div
+                        class="h-40 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500"
+                    >
+                        Background Content (Blurred)
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Option 4: Long Press / Hold -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-xl font-semibold mb-4">Option 4: Long Press for Time Options</h2>
-            
-            <div class="space-y-4">
-                <div>
-                    <p class="text-sm text-gray-600 mb-3">Normal tap = log now | Long press = time options</p>
-                    <div class="flex gap-3">
-                        <button class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm relative">
+
+            <!-- Option 3: Inline Quick Select -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">
+                    Option 3: Inline Quick Time Select
+                </h2>
+
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <button
+                            class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm"
+                        >
                             🍖 Feed
-                            <span class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs px-1.5 py-0.5 rounded-full">⏱</span>
                         </button>
-                        <button class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm relative">
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="text-gray-600">at</span>
+                            <select class="border rounded px-2 py-1 text-sm">
+                                <option>Now</option>
+                                <option>30 min ago</option>
+                                <option>1 hour ago</option>
+                                <option>2 hours ago</option>
+                                <option>Custom time...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <button
+                            class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm"
+                        >
                             🚽 Bathroom
-                            <span class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs px-1.5 py-0.5 rounded-full">⏱</span>
                         </button>
+                        <div class="flex items-center gap-2 text-sm">
+                            <span class="text-gray-600">at</span>
+                            <input
+                                type="time"
+                                class="border rounded px-2 py-1 text-sm"
+                                value="14:30"
+                            />
+                            <span class="text-gray-500">today</span>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Long press menu -->
-                <div class="bg-gray-50 rounded-lg p-4 border-2 border-dashed border-gray-300">
-                    <p class="text-sm font-medium text-gray-700 mb-2">Long Press Menu:</p>
-                    <div class="space-y-2">
-                        <button class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm">
-                            🍖 Feed now
-                        </button>
-                        <button class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm">
-                            🍖 Feed 30 minutes ago
-                        </button>
-                        <button class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm">
-                            🍖 Feed 1 hour ago
-                        </button>
-                        <button class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm">
-                            🍖 Feed at custom time...
-                        </button>
+            </div>
+
+            <!-- Option 4: Long Press / Hold -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">
+                    Option 4: Long Press for Time Options
+                </h2>
+
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-gray-600 mb-3">
+                            Normal tap = log now | Long press = time options
+                        </p>
+                        <div class="flex gap-3">
+                            <button
+                                class="pup-pink-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm relative"
+                            >
+                                🍖 Feed
+                                <span
+                                    class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs px-1.5 py-0.5 rounded-full"
+                                    >⏱</span
+                                >
+                            </button>
+                            <button
+                                class="soft-blue-gradient px-4 py-2 rounded-lg text-gray-800 font-medium shadow-sm relative"
+                            >
+                                🚽 Bathroom
+                                <span
+                                    class="absolute -top-2 -right-2 bg-blue-600 text-white text-xs px-1.5 py-0.5 rounded-full"
+                                    >⏱</span
+                                >
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Long press menu -->
+                    <div
+                        class="bg-gray-50 rounded-lg p-4 border-2 border-dashed border-gray-300"
+                    >
+                        <p class="text-sm font-medium text-gray-700 mb-2">
+                            Long Press Menu:
+                        </p>
+                        <div class="space-y-2">
+                            <button
+                                class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm"
+                            >
+                                🍖 Feed now
+                            </button>
+                            <button
+                                class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm"
+                            >
+                                🍖 Feed 30 minutes ago
+                            </button>
+                            <button
+                                class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm"
+                            >
+                                🍖 Feed 1 hour ago
+                            </button>
+                            <button
+                                class="block w-full text-left px-3 py-2 bg-white rounded border hover:bg-gray-50 text-sm"
+                            >
+                                🍖 Feed at custom time...
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Considerations -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-xl font-semibold mb-4">
+                    Mobile Considerations
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-medium mb-3">Good for Mobile:</h3>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• Large touch targets</li>
+                            <li>• Native datetime picker</li>
+                            <li>
+                                • Quick preset options (30 min ago, 1 hr ago)
+                            </li>
+                            <li>• Clear visual feedback</li>
+                            <li>• One-handed operation</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-medium mb-3">Avoid on Mobile:</h3>
+                        <ul class="space-y-2 text-sm text-gray-600">
+                            <li>• Complex dropdown menus</li>
+                            <li>• Long press without clear indication</li>
+                            <li>• Tiny time input fields</li>
+                            <li>• Multi-step flows</li>
+                            <li>• Overlapping touch areas</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <!-- Mobile Considerations -->
-        <div class="bg-white rounded-lg shadow-lg p-6">
-            <h2 class="text-xl font-semibold mb-4">Mobile Considerations</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <h3 class="font-medium mb-3">Good for Mobile:</h3>
-                    <ul class="space-y-2 text-sm text-gray-600">
-                        <li>• Large touch targets</li>
-                        <li>• Native datetime picker</li>
-                        <li>• Quick preset options (30 min ago, 1 hr ago)</li>
-                        <li>• Clear visual feedback</li>
-                        <li>• One-handed operation</li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="font-medium mb-3">Avoid on Mobile:</h3>
-                    <ul class="space-y-2 text-sm text-gray-600">
-                        <li>• Complex dropdown menus</li>
-                        <li>• Long press without clear indication</li>
-                        <li>• Tiny time input fields</li>
-                        <li>• Multi-step flows</li>
-                        <li>• Overlapping touch areas</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+    </body>
 </html>
