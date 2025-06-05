@@ -30,7 +30,7 @@ export function PetAvatar({
   className = ""
 }: PetAvatarProps) {
   const sizeClasses = {
-    sm: "w-8 h-8",
+    sm: "w-9 h-9",
     md: "w-12 h-12", 
     lg: "w-16 h-16"
   };
@@ -86,7 +86,7 @@ export function PetAvatar({
             textAlign: "center"
           }}
         >
-          <span style={{ transform: "translateX(-0.5px)" }}>{petEmoji}</span>
+          <span style={{ transform: "translateX(-1px)" }}>{petEmoji}</span>
         </div>
       )}
       
