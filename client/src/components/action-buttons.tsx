@@ -102,7 +102,7 @@ const ACTIVITY_CONFIG = {
   },
   'Clean Tank': { 
     icon: Trash2, 
-    emoji: '💧', 
+    emoji: '✨', 
     label: 'Clean Tank', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-orange-100 hover:bg-orange-200',
