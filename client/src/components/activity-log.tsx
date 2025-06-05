@@ -238,7 +238,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                 <div key={activity.id}>
                   <div
                     className={`flex items-center justify-between p-3 rounded-lg border ${
-                      hasNote ? 'border-l-4 border-l-blue-500 bg-blue-50' : 'border-gray-100 bg-gray-50'
+                      hasNote ? 'border-l-4 border-l-blue-500 bg-gray-50' : 'border-gray-100 bg-gray-50'
                     }`}
                     title={formatFullTimestamp(activity.timestamp)}
                   >
@@ -271,7 +271,6 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                             onClick={() => startEditing(activity)}
                             className="text-blue-600 text-xs px-2 py-1 rounded hover:bg-blue-50"
                           >
-                            <Edit3 className="h-3 w-3 mr-1" />
                             Edit
                           </Button>
                           <Button
@@ -298,50 +297,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                     </div>
                   </div>
 
-                  {/* Editing Form */}
-                  {isEditing && (
-                    <div className="mt-3 bg-green-50 rounded-lg p-4 border border-l-4 border-l-green-300">
-                      <div className="space-y-3">
-                        <div>
-                          <label className="text-xs font-medium text-gray-600 block mb-1">Time:</label>
-                          <input
-                            type="datetime-local"
-                            value={editFormData.timestamp}
-                            onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
-                            className="block w-full text-sm border rounded px-2 py-1"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs font-medium text-gray-600 block mb-1">Note:</label>
-                          <textarea
-                            value={editFormData.notes}
-                            onChange={(e) => setEditFormData(prev => ({ ...prev, notes: e.target.value }))}
-                            className="block w-full text-sm border rounded px-2 py-1 h-16 resize-none"
-                            placeholder="Add details about this activity..."
-                          />
-                        </div>
-                        <div className="flex gap-2 justify-end">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={cancelEditing}
-                            className="text-gray-600 text-xs px-3 py-1 rounded hover:bg-gray-100"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
-                            size="sm"
-                            onClick={saveChanges}
-                            disabled={updateActivityMutation.isPending}
-                            className="bg-green-600 text-white text-xs px-3 py-1 rounded hover:bg-green-700"
-                          >
-                            <Save className="h-3 w-3 mr-1" />
-                            Save
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+
 
                   {/* Note Viewing */}
                   {isViewingNote && hasNote && (
@@ -383,6 +339,55 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
           >
             {isLoadingAllActivities ? 'Loading...' : (showAllDays ? 'Show Today Only' : 'View More')}
           </Button>
+        </div>
+      )}
+
+      {/* Edit Modal */}
+      {editingId && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-80 shadow-xl border-l-4 border-l-blue-500">
+            <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium text-gray-700 block mb-2">Time:</label>
+                <input
+                  type="datetime-local"
+                  value={editFormData.timestamp}
+                  onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
+                  className="block w-full text-sm border rounded-lg px-3 py-2 border-blue-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 block mb-2">Note:</label>
+                <textarea
+                  value={editFormData.notes}
+                  onChange={(e) => setEditFormData(prev => ({ ...prev, notes: e.target.value }))}
+                  className="block w-full text-sm border rounded-lg px-3 py-2 h-20 resize-none border-blue-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  placeholder="Add details about this activity..."
+                />
+              </div>
+              <div className="flex gap-3 justify-end pt-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={cancelEditing}
+                  className="text-gray-600 px-4 py-2 rounded-lg hover:bg-gray-100"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={saveChanges}
+                  disabled={updateActivityMutation.isPending}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                >
+                  <Save className="h-4 w-4 mr-1" />
+                  Save
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
