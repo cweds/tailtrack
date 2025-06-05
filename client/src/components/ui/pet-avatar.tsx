@@ -78,11 +78,8 @@ export function PetAvatar({
             showEditButton && "group-hover:opacity-75"
           )}
           style={{ 
-            fontSize: size === "sm" ? "16px" : size === "md" ? "24px" : "32px",
-            lineHeight: "1",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
+            fontSize: size === "sm" ? "18px" : size === "md" ? "20px" : "28px",
+            lineHeight: "1"
           }}
         >
           {petEmoji}
