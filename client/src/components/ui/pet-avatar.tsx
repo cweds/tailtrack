@@ -77,7 +77,13 @@ export function PetAvatar({
             "rounded-full border-2 border-gray-200 transition-opacity flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100",
             showEditButton && "group-hover:opacity-75"
           )}
-          style={{ fontSize: size === "sm" ? "14px" : size === "md" ? "20px" : "28px" }}
+          style={{ 
+            fontSize: size === "sm" ? "16px" : size === "md" ? "24px" : "32px",
+            lineHeight: "1",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
         >
           {petEmoji}
         </div>
