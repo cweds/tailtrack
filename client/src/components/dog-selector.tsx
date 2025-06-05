@@ -70,15 +70,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
     localStorage.setItem('petLayoutPreference', newLayout);
   };
 
-  const getAvatarForPet = (pet: Pet): string => {
-    // Use the pet's uploaded photo if available
-    if (pet.photoUrl) {
-      return pet.photoUrl;
-    }
-    
-    // Use generic pet icon for pets without photos
-    return "/icon-192.png";
-  };
+
 
   // Dynamic emoji based on pet composition
   const getContextualEmoji = (): string => {
@@ -161,14 +153,12 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               )}
             >
               <div className="mb-1">
-                <img 
-                  src={getAvatarForPet(pet)} 
-                  alt={pet.name}
+                <PetAvatar 
+                  pet={pet} 
+                  size="md" 
                   className={cn(
-                    "w-12 h-12 rounded-full object-cover mx-auto",
-                    selectedDogs.has(pet) ? "border-2 border-white" : "",
-                    !pet.photoUrl && selectedDogs.has(pet) ? "border border-pink-200 bg-pink-50 p-1.5" : "",
-                    !pet.photoUrl && !selectedDogs.has(pet) ? "border border-amber-200 bg-amber-50 p-1.5" : ""
+                    "mx-auto",
+                    selectedDogs.has(pet) ? "ring-2 ring-white ring-offset-2" : ""
                   )}
                 />
               </div>
@@ -193,16 +183,12 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               )}
               style={{ width: '80px', height: '80px', padding: '8px' }}
             >
-              <img 
-                src={getAvatarForPet(pet)} 
-                alt={pet.name}
+              <PetAvatar 
+                pet={pet} 
+                size="sm" 
                 className={cn(
-                  "rounded-full object-cover",
-                  selectedDogs.has(pet) ? "border-2 border-white" : "",
-                  !pet.photoUrl && selectedDogs.has(pet) ? "border border-pink-200 bg-pink-50 p-1.5" : "",
-                  !pet.photoUrl && !selectedDogs.has(pet) ? "border border-amber-200 bg-amber-50 p-1.5" : ""
+                  selectedDogs.has(pet) ? "ring-2 ring-white" : ""
                 )}
-                style={{ width: '40px', height: '40px' }}
               />
               <div 
                 className="font-medium text-center" 

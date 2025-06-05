@@ -2,6 +2,18 @@ import { Camera } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Pet } from "@shared/schema";
 
+// Map pet types to their corresponding emojis
+const PET_TYPE_EMOJIS: Record<string, string> = {
+  dog: "🐶",
+  cat: "🐱", 
+  bird: "🐦",
+  fish: "🐠",
+  rabbit: "🐰",
+  hamster: "🐹",
+  "guinea pig": "🐹", // Using hamster emoji for guinea pig
+  other: "🐾"
+};
+
 interface PetAvatarProps {
   pet: Pet;
   size?: "sm" | "md" | "lg";
@@ -35,8 +47,9 @@ export function PetAvatar({
     lg: "w-4 h-4"
   };
 
-  const avatarSrc = pet.photoUrl || "/icon-192.png";
-  const isGenericIcon = !pet.photoUrl && pet.name !== 'Natty' && pet.name !== 'Murphy';
+  // Get the emoji for this pet type, fallback to generic pet emoji
+  const petEmoji = PET_TYPE_EMOJIS[pet.petType?.toLowerCase() || ""] || "🐾";
+  const hasCustomPhoto = !!pet.photoUrl;
 
   return (
     <div 
@@ -47,16 +60,28 @@ export function PetAvatar({
       onClick={onEdit}
       title={showEditButton ? "Change photo" : undefined}
     >
-      <img 
-        src={avatarSrc}
-        alt={pet.name}
-        className={cn(
-          sizeClasses[size],
-          "rounded-full object-cover border-2 border-gray-200 transition-opacity",
-          showEditButton && "group-hover:opacity-75",
-          isGenericIcon && "bg-gray-50 p-1"
-        )}
-      />
+      {hasCustomPhoto ? (
+        <img 
+          src={pet.photoUrl!}
+          alt={pet.name}
+          className={cn(
+            sizeClasses[size],
+            "rounded-full object-cover border-2 border-gray-200 transition-opacity",
+            showEditButton && "group-hover:opacity-75"
+          )}
+        />
+      ) : (
+        <div 
+          className={cn(
+            sizeClasses[size],
+            "rounded-full border-2 border-gray-200 transition-opacity flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100",
+            showEditButton && "group-hover:opacity-75"
+          )}
+          style={{ fontSize: size === "sm" ? "14px" : size === "md" ? "20px" : "28px" }}
+        >
+          {petEmoji}
+        </div>
+      )}
       
       {showEditButton && (
         <>
