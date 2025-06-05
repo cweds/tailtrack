@@ -79,7 +79,7 @@ app.use((req, res, next) => {
       dotenvModule.config();
     } catch (error) {
       // dotenv not available in production build, environment variables should be set directly
-      console.log('dotenv not available, using environment variables directly');
+      // Using environment variables directly
     }
   }
 
@@ -107,6 +107,6 @@ app.use((req, res, next) => {
   const port = Number(process.env.PORT) || (process.env.REPL_ID ? 5000 : 3000);
   server.listen(port as number, "0.0.0.0", () => {
     log(`serving on port ${port}`);
-    console.log(`TailTrack app is running at http://localhost:${port}`);
+    // Server started successfully
   });
 })();

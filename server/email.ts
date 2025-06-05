@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 export async function sendPasswordResetEmail(email: string, resetToken: string) {
   if (!process.env.RESEND_API_KEY) {
-    console.error('RESEND_API_KEY environment variable is not set');
+    // RESEND_API_KEY environment variable is not set
     return false;
   }
 
@@ -74,17 +74,16 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
     const result = await response.json();
     
     if (!response.ok) {
-      console.error('Resend API error via fetch:', JSON.stringify(result, null, 2));
+      // Resend API error occurred
       return false;
     }
 
-    console.log('Password reset email sent successfully via fetch:', result);
+    // Password reset email sent successfully
     return true;
   } catch (error) {
-    console.error('Failed to send password reset email:', error);
+    // Email sending failed
     if (error instanceof Error) {
-      console.error('Error message:', error.message);
-      console.error('Error stack:', error.stack);
+      // Error details suppressed for security
     }
     return false;
   }
