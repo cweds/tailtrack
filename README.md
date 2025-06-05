@@ -120,7 +120,8 @@ TailTrack is designed as a Progressive Web App with:
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This work is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License.  
+See the [LICENSE](./LICENSE) file for full details.
 
 
 ## 🙏 Acknowledgments
@@ -129,6 +130,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
 - [Supabase](https://supabase.com/) for the backend infrastructure
 - [Lucide React](https://lucide.dev/) for the icon library
+
 
 ---
 
