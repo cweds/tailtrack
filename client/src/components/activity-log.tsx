@@ -250,7 +250,9 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               return (
                 <div key={activity.id}>
                   <div
-                    className="flex items-start justify-between p-3 rounded-lg border border-gray-100 bg-gray-50"
+                    className={`flex items-start justify-between p-3 rounded-lg border ${
+                      hasNote ? 'border-l-4 border-l-blue-500 border-gray-100 bg-gray-50' : 'border-gray-100 bg-gray-50'
+                    }`}
                     title={formatFullTimestamp(activity.timestamp)}
                   >
                     <div className="flex items-start space-x-3 flex-1 min-w-0">
@@ -264,10 +266,10 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                         <div className="text-gray-900 mb-1">
                           <span className="font-medium">{activity.action}</span>
                         </div>
-                        <div className="text-sm text-gray-600 mb-1 break-words">
+                        <div className="text-sm text-gray-700 mb-1 break-words font-medium">
                           {petsList}
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <div className="flex items-center gap-2 text-xs text-gray-500 italic">
                           <span>{getDisplayName({ username: activity.username || 'Unknown user' } as any)}</span>
                           <span>•</span>
                           <span>{timeAgo}</span>
