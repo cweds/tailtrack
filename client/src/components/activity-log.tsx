@@ -357,8 +357,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-blue-50 rounded-lg p-6 w-96 shadow-xl">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-md mx-auto my-auto shadow-xl max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
@@ -378,6 +378,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                   onChange={(e) => setEditFormData(prev => ({ ...prev, notes: e.target.value }))}
                   className="block w-full text-sm border rounded-lg px-3 py-2 h-20 resize-none border-blue-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                   placeholder="Add details about this activity..."
+                  style={{ fontSize: '16px' }}
                 />
               </div>
               <div className="flex gap-3 justify-end pt-2">
