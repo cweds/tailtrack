@@ -29,6 +29,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let householdId = null;
       
       // Handle household logic based on user choice
+      let joiningExistingHousehold = false;
+      
       if (userData.inviteCode) {
         // User has an invite code - join existing household
         const household = await storage.getHouseholdByInviteCode(userData.inviteCode);
@@ -36,6 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(400).json({ error: "Invalid invite code" });
         }
         householdId = household.id;
+        joiningExistingHousehold = true;
       } else if (userData.householdChoice === 'join' && !userData.inviteCode) {
         return res.status(400).json({ error: "Invite code required to join a household" });
       } else if (userData.householdChoice === 'create' || !userData.householdChoice) {
@@ -44,16 +47,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         householdId = null;
       }
       
-      // Create user first
+      // Create user first (without household assignment for joiners)
       const userToCreate = {
         ...userData,
-        householdId
+        householdId: joiningExistingHousehold ? null : householdId
       };
       
       const user = await storage.createUser(userToCreate);
       
-      // If user chose to create a household, create it now and assign the user
-      if (userData.householdChoice === 'create' || (!userData.householdChoice && !userData.inviteCode)) {
+      // Handle post-creation household logic
+      if (joiningExistingHousehold) {
+        // User is joining existing household - use joinHousehold to set timestamp
+        await storage.joinHousehold(user.id, householdId);
+        user.householdId = householdId;
+      } else if (userData.householdChoice === 'create' || (!userData.householdChoice && !userData.inviteCode)) {
+        // User is creating new household
         const defaultHouseholdName = `${userData.username}'s Household`;
         const newHousehold = await storage.createHouseholdWithoutCreator(defaultHouseholdName);
         // Update user with the new household ID and set them as creator
