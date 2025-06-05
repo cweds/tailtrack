@@ -498,7 +498,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const emailSent = await sendPasswordResetEmail(email, resetToken);
       
       if (!emailSent) {
-        console.error('Failed to send password reset email');
+        // Error logging removed for production security
         return res.status(500).json({ error: "Failed to send reset email" });
       }
 
@@ -506,7 +506,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       // Error logging removed for production security
       if (error instanceof Error) {
-        console.error('Error stack:', error.stack);
+        // Error logging removed for production security
       }
       res.status(400).json({ error: "Invalid request" });
     }
