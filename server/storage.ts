@@ -364,15 +364,26 @@ export class DatabaseStorage implements IStorage {
       ))
       .orderBy(desc(activities.timestamp));
     
-    // Filter for today's activities based on activity timestamp
+    console.log(`[DEBUG] Raw activities found: ${activitiesWithUsers.length}`);
+    activitiesWithUsers.forEach(activity => {
+      console.log(`[DEBUG] Activity ${activity.id}: ${activity.action} at ${activity.timestamp}`);
+    });
+    
+    // Filter for today's activities - consider last 24 hours from now
     const now = new Date();
-    const todayString = now.toISOString().split('T')[0]; // YYYY-MM-DD format
+    const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+    
+    console.log(`[DEBUG] Now: ${now.toISOString()}`);
+    console.log(`[DEBUG] 24h ago: ${twentyFourHoursAgo.toISOString()}`);
     
     const todayActivities = activitiesWithUsers.filter(activity => {
       const activityDate = new Date(activity.timestamp);
-      const activityDateString = activityDate.toISOString().split('T')[0];
-      return activityDateString === todayString;
+      const inRange = activityDate >= twentyFourHoursAgo && activityDate <= now;
+      console.log(`[DEBUG] Activity ${activity.id} (${activityDate.toISOString()}): ${inRange ? 'INCLUDED' : 'EXCLUDED'}`);
+      return inRange;
     });
+    
+    console.log(`[DEBUG] Today activities filtered: ${todayActivities.length}`);
     
     return todayActivities.map(activity => ({
       id: activity.id,
