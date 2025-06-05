@@ -211,16 +211,29 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               // Get pet names for this activity
               const activityPets = pets?.filter(pet => activity.petIds?.includes(pet.id)) || [];
               
+              // Helper function to format pet names with proper comma and ampersand usage
+              const formatPetNames = (names: string[]) => {
+                if (names.length === 0) return '';
+                if (names.length === 1) return names[0];
+                if (names.length === 2) return `${names[0]} & ${names[1]}`;
+                // For 3+ pets: "Bonnie, Murphy & Vixen"
+                const allButLast = names.slice(0, -1).join(', ');
+                const last = names[names.length - 1];
+                return `${allButLast} & ${last}`;
+              };
+
               // Handle cases where some or all pets are removed
               let petsList = '';
               if (activityPets.length === activity.petIds?.length) {
                 // All pets still exist
-                petsList = activityPets.map(pet => pet.name).join(' & ');
+                const petNames = activityPets.map(pet => pet.name);
+                petsList = formatPetNames(petNames);
               } else if (activityPets.length > 0) {
                 // Some pets exist, some removed
-                const existingNames = activityPets.map(pet => pet.name).join(' & ');
+                const existingNames = activityPets.map(pet => pet.name);
+                const formattedExisting = formatPetNames(existingNames);
                 const removedCount = (activity.petIds?.length || 0) - activityPets.length;
-                petsList = `${existingNames} & ${removedCount} removed pet${removedCount > 1 ? 's' : ''}`;
+                petsList = `${formattedExisting} & ${removedCount} removed pet${removedCount > 1 ? 's' : ''}`;
               } else {
                 // All pets removed
                 const removedCount = activity.petIds?.length || 0;
