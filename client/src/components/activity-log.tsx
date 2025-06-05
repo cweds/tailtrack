@@ -34,19 +34,26 @@ function formatTime(timestamp: Date | string): string {
   if (diffMins < 1) return 'Just now';
   if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
   
-  // If it's the same calendar day, show hours
+  // If it's the same calendar day, show hours for recent activities
   if (dayDifference === 0) {
     return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
   }
   
-  // If it's exactly one calendar day ago, show "Yesterday"
-  if (dayDifference === 1) return 'Yesterday';
+  // For previous days, show date and time
+  const options: Intl.DateTimeFormatOptions = {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  };
   
-  // For multiple days ago within a week
-  if (dayDifference < 7) return `${dayDifference} days ago`;
+  // Include year if it's not current year
+  if (timestampDate.getFullYear() !== now.getFullYear()) {
+    options.year = 'numeric';
+  }
   
-  // For older activities, show the date
-  return timestampDate.toLocaleDateString();
+  return timestampDate.toLocaleDateString('en-US', options);
 }
 
 function formatFullTimestamp(timestamp: Date | string): string {
