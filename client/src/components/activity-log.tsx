@@ -19,17 +19,33 @@ interface ActivityLogProps {
 function formatTime(timestamp: Date | string): string {
   const now = new Date();
   const timestampDate = timestamp instanceof Date ? timestamp : new Date(timestamp);
+  
+  // Get dates without time for proper day comparison
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const activityDay = new Date(timestampDate.getFullYear(), timestampDate.getMonth(), timestampDate.getDate());
+  
   const diffMs = now.getTime() - timestampDate.getTime();
   const diffMins = Math.floor(diffMs / (1000 * 60));
   const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  // Calculate day difference based on calendar days, not 24-hour periods
+  const dayDifference = Math.floor((today.getTime() - activityDay.getTime()) / (1000 * 60 * 60 * 24));
 
   if (diffMins < 1) return 'Just now';
   if (diffMins < 60) return `${diffMins} min${diffMins > 1 ? 's' : ''} ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays} days ago`;
   
+  // If it's the same calendar day, show hours
+  if (dayDifference === 0) {
+    return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+  }
+  
+  // If it's exactly one calendar day ago, show "Yesterday"
+  if (dayDifference === 1) return 'Yesterday';
+  
+  // For multiple days ago within a week
+  if (dayDifference < 7) return `${dayDifference} days ago`;
+  
+  // For older activities, show the date
   return timestampDate.toLocaleDateString();
 }
 
