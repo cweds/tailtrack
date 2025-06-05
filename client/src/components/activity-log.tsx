@@ -118,7 +118,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                   case 'Training': return '🎓';
                   case 'Litter Box': return '🧹';
                   case 'Clean Cage': return '🧽';
-                  case 'Clean Tank': return '🪣';
+                  case 'Clean Tank': return '✨';
                   default: return '🐾';
                 }
               };
