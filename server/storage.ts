@@ -55,6 +55,7 @@ export interface IStorage {
   // Activity methods
   createActivity(activity: InsertActivity): Promise<Activity>;
   getActivity(activityId: number): Promise<Activity | undefined>;
+  updateActivity(activityId: number, updates: Partial<InsertActivity>): Promise<Activity>;
   deleteActivity(activityId: number): Promise<void>;
   getActivitiesByUser(userId: number): Promise<Activity[]>;
   getTodayActivitiesByUser(userId: number): Promise<Activity[]>;
@@ -288,6 +289,15 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
+  async updateActivity(activityId: number, updates: Partial<InsertActivity>): Promise<Activity> {
+    const database = initializeDatabase();
+    const [updatedActivity] = await database.update(activities)
+      .set(updates)
+      .where(eq(activities.id, activityId))
+      .returning();
+    return updatedActivity;
+  }
+
   async deleteActivity(activityId: number): Promise<void> {
     const database = initializeDatabase();
     await database.delete(activities).where(eq(activities.id, activityId));
@@ -323,6 +333,7 @@ export class DatabaseStorage implements IStorage {
         petIds: activities.petIds,
         action: activities.action,
         timestamp: activities.timestamp,
+        notes: activities.notes,
         username: users.username,
       })
       .from(activities)

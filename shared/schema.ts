@@ -37,6 +37,7 @@ export const activities = pgTable("activities", {
   petIds: integer("pet_ids").array().notNull(),
   action: text("action").notNull(),
   timestamp: timestamp("timestamp").defaultNow().notNull(),
+  notes: text("notes"),
 });
 
 export const passwordResetTokens = pgTable("password_reset_tokens", {
@@ -84,6 +85,7 @@ export const insertActivitySchema = createInsertSchema(activities).pick({
   householdId: true,
   petIds: true,
   action: true,
+  notes: true,
 });
 
 export const forgotPasswordSchema = z.object({
