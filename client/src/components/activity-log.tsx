@@ -345,7 +345,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
       {/* Edit Modal */}
       {editingId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
+          <div className="bg-blue-50 rounded-lg p-6 w-96 shadow-xl">
             <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
