@@ -26,7 +26,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "User already exists with this email" });
       }
       
-      let householdId = null;
+      let householdId: number | null = null;
       
       // Handle household logic based on user choice
       let joiningExistingHousehold = false;
@@ -56,7 +56,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = await storage.createUser(userToCreate);
       
       // Handle post-creation household logic
-      if (joiningExistingHousehold) {
+      if (joiningExistingHousehold && householdId) {
         // User is joining existing household - use joinHousehold to set timestamp
         await storage.joinHousehold(user.id, householdId);
         user.householdId = householdId;

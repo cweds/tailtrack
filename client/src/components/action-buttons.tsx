@@ -102,7 +102,7 @@ const ACTIVITY_CONFIG = {
   },
   'Clean Tank': { 
     icon: Trash2, 
-    emoji: '🪣', 
+    emoji: '💧', 
     label: 'Clean Tank', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-orange-100 hover:bg-orange-200',
@@ -126,7 +126,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
     
     // Filter activities that are relevant to selected pets
     const relevantActivities = Object.entries(ACTIVITY_CONFIG).filter(([_, config]) => {
-      return selectedPetTypes.some(petType => config.petTypes.includes(petType as any));
+      return selectedPetTypes.some(petType => config.petTypes.includes(petType));
     });
     
     // Determine primary activities
@@ -138,7 +138,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
     } else if (uniquePetTypes.length === 1) {
       // Single pet type: use its specific primary activities
       const petType = uniquePetTypes[0] as keyof typeof PET_PRIMARY_ACTIVITIES;
-      primaryActivityNames = PET_PRIMARY_ACTIVITIES[petType] || ['Fed'];
+      primaryActivityNames = [...(PET_PRIMARY_ACTIVITIES[petType] || ['Fed'])];
     }
     
     // Split into primary and secondary
