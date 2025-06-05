@@ -194,7 +194,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/activities/household/:householdId/today", async (req, res) => {
     try {
       const householdId = parseInt(req.params.householdId);
-      const activities = await storage.getHouseholdTodayActivities(householdId);
+      const timezone = req.query.timezone as string || 'UTC';
+      const activities = await storage.getHouseholdTodayActivities(householdId, timezone);
       const hasPrevious = await storage.hasHouseholdPreviousActivities(householdId);
       res.json({ activities, hasPrevious });
     } catch (error) {
@@ -206,7 +207,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/activities/household/:householdId/care-period", async (req, res) => {
     try {
       const householdId = parseInt(req.params.householdId);
-      const activities = await storage.getHouseholdCurrentCarePeriodActivities(householdId);
+      const timezone = req.query.timezone as string || 'UTC';
+      const activities = await storage.getHouseholdCurrentCarePeriodActivities(householdId, timezone);
       res.json({ activities });
     } catch (error) {
       console.error(`Get care period activities error: ${error}`);

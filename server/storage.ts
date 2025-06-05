@@ -59,8 +59,8 @@ export interface IStorage {
   getActivitiesByUser(userId: number): Promise<Activity[]>;
   getTodayActivitiesByUser(userId: number): Promise<Activity[]>;
   getHouseholdAllActivities(householdId: number): Promise<(Activity & { username: string })[]>;
-  getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]>;
-  getHouseholdCurrentCarePeriodActivities(householdId: number): Promise<(Activity & { username: string })[]>;
+  getHouseholdTodayActivities(householdId: number, timezone?: string): Promise<(Activity & { username: string })[]>;
+  getHouseholdCurrentCarePeriodActivities(householdId: number, timezone?: string): Promise<(Activity & { username: string })[]>;
   hasHouseholdPreviousActivities(householdId: number): Promise<boolean>;
   
   // Password reset methods
@@ -341,10 +341,10 @@ export class DatabaseStorage implements IStorage {
     }));
   }
 
-  async getHouseholdTodayActivities(householdId: number): Promise<(Activity & { username: string })[]> {
+  async getHouseholdTodayActivities(householdId: number, timezone: string = 'UTC'): Promise<(Activity & { username: string })[]> {
     const database = initializeDatabase();
-    // Get activities from the last 48 hours, then filter client-side for today
-    const twoDaysAgo = new Date(Date.now() - (48 * 60 * 60 * 1000));
+    // Get activities from the last 72 hours to ensure we capture activities across timezone differences
+    const threeDaysAgo = new Date(Date.now() - (72 * 60 * 60 * 1000));
     
     const activitiesWithUsers = await database
       .select({
@@ -360,17 +360,27 @@ export class DatabaseStorage implements IStorage {
       .leftJoin(users, eq(activities.userId, users.id))
       .where(and(
         eq(activities.householdId, householdId),
-        gte(activities.timestamp, twoDaysAgo)
+        gte(activities.timestamp, threeDaysAgo)
       ))
       .orderBy(desc(activities.timestamp));
     
-    // Filter for today's activities - consider last 24 hours from now
+    // Calculate today's date range in the user's timezone
     const now = new Date();
-    const twentyFourHoursAgo = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+    const userNow = new Date(now.toLocaleString("en-US", { timeZone: timezone }));
+    const startOfToday = new Date(userNow.getFullYear(), userNow.getMonth(), userNow.getDate());
+    const endOfToday = new Date(startOfToday.getTime() + (24 * 60 * 60 * 1000));
+    
+    // Convert back to UTC for comparison with stored timestamps
+    const startOfTodayUTC = new Date(startOfToday.getTime() - startOfToday.getTimezoneOffset() * 60 * 1000);
+    const endOfTodayUTC = new Date(endOfToday.getTime() - endOfToday.getTimezoneOffset() * 60 * 1000);
     
     const todayActivities = activitiesWithUsers.filter(activity => {
       const activityDate = new Date(activity.timestamp);
-      return activityDate >= twentyFourHoursAgo && activityDate <= now;
+      const activityInUserTz = new Date(activityDate.toLocaleString("en-US", { timeZone: timezone }));
+      const userTodayStart = new Date(userNow.getFullYear(), userNow.getMonth(), userNow.getDate());
+      const userTodayEnd = new Date(userTodayStart.getTime() + (24 * 60 * 60 * 1000));
+      
+      return activityInUserTz >= userTodayStart && activityInUserTz < userTodayEnd;
     });
     
     return todayActivities.map(activity => ({
@@ -384,13 +394,14 @@ export class DatabaseStorage implements IStorage {
     }));
   }
 
-  async getHouseholdCurrentCarePeriodActivities(householdId: number): Promise<(Activity & { username: string })[]> {
+  async getHouseholdCurrentCarePeriodActivities(householdId: number, timezone: string = 'UTC'): Promise<(Activity & { username: string })[]> {
     const database = initializeDatabase();
     const now = new Date();
+    const userNow = new Date(now.toLocaleString("en-US", { timeZone: timezone }));
     let carePeriodStart: Date;
     
     // Care periods: Morning (4am-12pm), Evening (4pm-12am), Late night rest (12am-3:59am - hidden banner)
-    const currentHour = now.getHours();
+    const currentHour = userNow.getHours();
     
     if (currentHour >= 4 && currentHour < 12) {
       // Morning period: 4am-12pm

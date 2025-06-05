@@ -50,12 +50,13 @@ export function usePetCare(username: string, userId: number, householdId: number
   const { data: activitiesData, isLoading: activitiesLoading } = useQuery({
     queryKey: ['/api/activities', userId, 'today'],
     queryFn: async () => {
+      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (!householdId) {
-        const response = await fetch(`/api/activities/${userId}/today`);
+        const response = await fetch(`/api/activities/${userId}/today?timezone=${encodeURIComponent(userTimezone)}`);
         if (!response.ok) throw new Error('Failed to fetch activities');
         return response.json();
       } else {
-        const response = await fetch(`/api/activities/household/${householdId}/today`);
+        const response = await fetch(`/api/activities/household/${householdId}/today?timezone=${encodeURIComponent(userTimezone)}`);
         if (!response.ok) throw new Error('Failed to fetch household activities');
         return response.json();
       }
@@ -69,13 +70,14 @@ export function usePetCare(username: string, userId: number, householdId: number
   const { data: carePeriodActivitiesData } = useQuery({
     queryKey: ['/api/activities', userId, 'care-period'],
     queryFn: async () => {
+      const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       if (!householdId) {
         // For individual users, fallback to today's activities
-        const response = await fetch(`/api/activities/${userId}/today`);
+        const response = await fetch(`/api/activities/${userId}/today?timezone=${encodeURIComponent(userTimezone)}`);
         if (!response.ok) throw new Error('Failed to fetch activities');
         return response.json();
       } else {
-        const response = await fetch(`/api/activities/household/${householdId}/care-period`);
+        const response = await fetch(`/api/activities/household/${householdId}/care-period?timezone=${encodeURIComponent(userTimezone)}`);
         if (!response.ok) throw new Error('Failed to fetch care period activities');
         return response.json();
       }
