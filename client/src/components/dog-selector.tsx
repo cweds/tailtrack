@@ -161,6 +161,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                     pet={pet} 
                     size="md" 
                     className="rounded-full"
+                    backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
                   />
                 </div>
               </div>
@@ -198,6 +199,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                   pet={pet} 
                   size="sm" 
                   className="rounded-full"
+                  backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
                 />
               </div>
               <div 
