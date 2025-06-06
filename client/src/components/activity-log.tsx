@@ -250,7 +250,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               return (
                 <div key={activity.id}>
                   <div
-                    className={`flex items-center justify-between pl-3 pr-1 py-3 rounded-lg border ${
+                    className={`flex items-center justify-between pl-3 pr-3 py-3 rounded-lg border ${
                       hasNote ? 'border-l-4 border-l-blue-500 border-gray-100 bg-gray-50' : 'border-gray-100 bg-gray-50'
                     }`}
                     title={formatFullTimestamp(activity.timestamp)}
