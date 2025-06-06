@@ -148,9 +148,10 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               className={cn(
                 "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button",
                 selectedDogs.has(pet)
-                  ? "border-pink-300 pup-pink-gradient text-gray-800"
+                  ? "border-pink-300 pup-pink-gradient text-gray-800 !bg-transparent"
                   : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
+              style={selectedDogs.has(pet) ? { backgroundColor: 'transparent' } : undefined}
             >
               <div className="mb-1">
                 <PetAvatar 
@@ -179,10 +180,15 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               className={cn(
                 "rounded-lg border-2 transition-all duration-200 cursor-pointer mobile-touch-button flex-shrink-0 flex flex-col items-center justify-center",
                 selectedDogs.has(pet)
-                  ? "border-pink-300 pup-pink-gradient text-gray-800"
+                  ? "border-pink-300 pup-pink-gradient text-gray-800 !bg-transparent"
                   : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
-              style={{ width: '80px', height: '80px', padding: '8px' }}
+              style={{ 
+                width: '80px', 
+                height: '80px', 
+                padding: '8px',
+                ...(selectedDogs.has(pet) ? { backgroundColor: 'transparent' } : {})
+              }}
             >
               <PetAvatar 
                 pet={pet} 
