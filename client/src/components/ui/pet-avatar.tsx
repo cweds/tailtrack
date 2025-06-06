@@ -93,7 +93,6 @@ export function PetAvatar({
           }}
         >
           <span style={{ 
-            transform: size === "sm" ? "translateX(-1.5px)" : "translateX(-1px)",
             display: "block"
           }}>{petEmoji}</span>
         </div>
