@@ -346,6 +346,13 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                 <label className="text-sm font-medium text-gray-700 block mb-2">Time:</label>
                 <div className="relative">
                   <input
+                    ref={(ref) => {
+                      if (ref) {
+                        ref.addEventListener('click', () => {
+                          ref.showPicker?.();
+                        });
+                      }
+                    }}
                     type="datetime-local"
                     value={editFormData.timestamp}
                     onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
