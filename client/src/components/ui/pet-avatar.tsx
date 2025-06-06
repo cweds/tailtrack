@@ -77,7 +77,6 @@ export function PetAvatar({
           className={cn(
             sizeClasses[size],
             "rounded-full transition-opacity flex items-center justify-center",
-            !isSelected && "border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100",
             showEditButton && "group-hover:opacity-75"
           )}
           style={{ 
