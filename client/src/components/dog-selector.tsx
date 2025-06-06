@@ -107,10 +107,11 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               className={`
                 px-2 py-1.5 transition-all duration-200
                 ${layoutType === 'grid' 
-                  ? 'pup-pink-gradient text-gray-800 border-r border-orange-300' 
+                  ? 'text-gray-800 border-r border-orange-300' 
                   : 'bg-white text-gray-600 hover:bg-orange-50 border-r border-orange-200'
                 }
               `}
+              style={layoutType === 'grid' ? { backgroundColor: 'rgba(255, 213, 220, 0.4)' } : {}}
               title="Grid Layout"
             >
               <Grid3X3 size={15} />
@@ -120,10 +121,11 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               className={`
                 px-2 py-1.5 transition-all duration-200
                 ${layoutType === 'scroll' 
-                  ? 'pup-pink-gradient text-gray-800' 
+                  ? 'text-gray-800' 
                   : 'bg-white text-gray-600 hover:bg-orange-50'
                 }
               `}
+              style={layoutType === 'scroll' ? { backgroundColor: 'rgba(255, 213, 220, 0.4)' } : {}}
               title="Scroll Layout"
             >
               <ArrowRight size={15} />
