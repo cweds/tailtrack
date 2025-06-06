@@ -337,9 +337,10 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-md shadow-xl my-8">
-            <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4">
+            <div className="bg-blue-50 rounded-lg p-6 w-full max-w-md shadow-xl my-8">
+              <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
               <div>
@@ -384,6 +385,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                   Save
                 </Button>
               </div>
+            </div>
             </div>
           </div>
         </div>
