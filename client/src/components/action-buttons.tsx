@@ -251,7 +251,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
           <Button
             variant="outline"
             onClick={() => setShowMoreActivities(!showMoreActivities)}
-            className="w-full py-3 text-amber-700 border-amber-300 bg-amber-50 font-medium"
+            className="w-full py-3 text-gray-700 border-gray-400 bg-gray-100 font-medium hover:bg-gray-100 hover:border-gray-400"
           >
             <span className="flex items-center justify-center gap-2">
               <span>More Activities</span>
