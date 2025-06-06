@@ -167,7 +167,7 @@ export default function Dashboard() {
         }}
       >
         <div className="flex items-center justify-center gap-3">
-          <div className="w-12 h-12 rounded-lg shadow-md border-2 border-white flex items-center justify-center" style={{ backgroundColor: '#FFC0CB' }}>
+          <div className="w-12 h-12 rounded-lg shadow-md border-2 border-white flex items-center justify-center" style={{ backgroundColor: '#FAF7F0' }}>
             <img src="/icon-192.png" alt="TailTrack" className="w-10 h-10 rounded-md" />
           </div>
           <h1 className="text-2xl font-bold text-gray-800">TailTrack</h1>
