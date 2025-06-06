@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Edit3, Eye, Save, FileText, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -144,11 +144,15 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
       notes: activity.notes || ''
     });
     setEditingId(activity.id);
+    // Prevent body scroll when modal opens
+    document.body.style.overflow = 'hidden';
   };
 
   const cancelEditing = () => {
     setEditingId(null);
     setEditFormData({ timestamp: '', notes: '' });
+    // Restore body scroll when modal closes
+    document.body.style.overflow = 'unset';
   };
 
   const saveChanges = () => {
@@ -164,6 +168,20 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
   const toggleNoteView = (activityId: number) => {
     setViewingNoteId(viewingNoteId === activityId ? null : activityId);
   };
+
+  // Clean up body scroll on component unmount
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
+  // Clean up body scroll when modal closes
+  useEffect(() => {
+    if (!editingId) {
+      document.body.style.overflow = 'unset';
+    }
+  }, [editingId]);
   
   // Use all activities when showAllDays is true, otherwise use today's activities
   // Show today's activities while loading all activities to prevent white screen
@@ -337,8 +355,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-md shadow-xl max-h-[80vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-50 rounded-lg p-6 w-full max-w-md mx-4 shadow-xl max-h-[80vh] overflow-y-auto">
             <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
