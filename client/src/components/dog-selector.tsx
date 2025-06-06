@@ -141,30 +141,47 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
           ${dogs.length >= 4 ? 'grid-cols-2' : ''}
         `}>
           {dogs.map((pet) => (
-            <Button
-              key={pet.id}
-              onClick={() => onDogToggle(pet)}
-              variant={selectedDogs.has(pet) ? "ghost" : "outline"}
-              className={cn(
-                "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button",
-                selectedDogs.has(pet)
-                  ? "border-pink-300 pup-pink-gradient text-gray-800"
-                  : "border-amber-200 text-gray-700 golden-tan-gradient"
-              )}
-            >
-              <div className="mb-1">
-                <PetAvatar 
-                  pet={pet} 
-                  size="md" 
-                  isSelected={selectedDogs.has(pet)}
-                  className={cn(
-                    "mx-auto",
-                    selectedDogs.has(pet) ? "ring-2 ring-white" : ""
-                  )}
-                />
+            selectedDogs.has(pet) ? (
+              <div
+                key={pet.id}
+                onClick={() => onDogToggle(pet)}
+                className={cn(
+                  "p-3 rounded-lg border-2 transition-all duration-200 text-center flex flex-col h-auto mobile-touch-button cursor-pointer",
+                  "border-pink-300 pup-pink-gradient text-gray-800"
+                )}
+                style={{ backgroundColor: 'transparent' }}
+              >
+                <div className="mb-1">
+                  <PetAvatar 
+                    pet={pet} 
+                    size="md" 
+                    isSelected={true}
+                    className="mx-auto ring-2 ring-white"
+                  />
+                </div>
+                <div className="font-medium text-sm">{pet.name}</div>
               </div>
-              <div className="font-medium text-sm">{pet.name}</div>
-            </Button>
+            ) : (
+              <Button
+                key={pet.id}
+                onClick={() => onDogToggle(pet)}
+                variant="outline"
+                className={cn(
+                  "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button",
+                  "border-amber-200 text-gray-700 golden-tan-gradient"
+                )}
+              >
+                <div className="mb-1">
+                  <PetAvatar 
+                    pet={pet} 
+                    size="md" 
+                    isSelected={false}
+                    className="mx-auto"
+                  />
+                </div>
+                <div className="font-medium text-sm">{pet.name}</div>
+              </Button>
+            )
           ))}
         </div>
       )}
@@ -179,7 +196,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               className={cn(
                 "rounded-lg border-2 transition-all duration-200 cursor-pointer mobile-touch-button flex-shrink-0 flex flex-col items-center justify-center",
                 selectedDogs.has(pet)
-                  ? "border-pink-300 pup-pink-gradient text-gray-800 !bg-transparent"
+                  ? "border-pink-300 pup-pink-gradient text-gray-800"
                   : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
               style={{ 
