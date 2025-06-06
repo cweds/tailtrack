@@ -237,7 +237,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {/* Primary Actions */}
       <div className="space-y-4">
         {primaryActions.map(([actionKey, config]) => 
