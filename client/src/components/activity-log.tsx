@@ -138,15 +138,6 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   // Helper functions for editing
   const startEditing = (activity: DatabaseActivity) => {
-    // Scroll to the bottom of the activities container for proper modal positioning
-    const element = document.getElementById('todays-activities');
-    if (element) {
-      const container = element.closest('.bg-white.p-4.rounded-xl');
-      if (container) {
-        container.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }
-    }
-    
     const timestamp = activity.timestamp instanceof Date ? activity.timestamp : new Date(activity.timestamp);
     setEditFormData({
       timestamp: timestamp.toISOString().slice(0, 16), // Format for datetime-local input
@@ -155,6 +146,29 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
     setEditingId(activity.id);
     // Prevent body scroll when modal opens
     document.body.style.overflow = 'hidden';
+    
+    // Position modal dynamically after state update
+    setTimeout(() => {
+      const element = document.getElementById('todays-activities');
+      if (element) {
+        const container = element.closest('.bg-white.p-4.rounded-xl') as HTMLElement;
+        if (container) {
+          // Calculate optimal scroll position to center modal over activities
+          const containerRect = container.getBoundingClientRect();
+          const viewportHeight = window.innerHeight;
+          const modalHeight = Math.min(400, viewportHeight * 0.6); // Approximate modal height
+          
+          // Calculate desired position: center modal vertically in viewport
+          const desiredTop = (viewportHeight - modalHeight) / 2;
+          const scrollOffset = containerRect.bottom - viewportHeight + desiredTop;
+          
+          window.scrollBy({
+            top: scrollOffset,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }, 100);
   };
 
   const cancelEditing = () => {
@@ -364,7 +378,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end justify-center pb-32 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[60vh] overflow-y-auto">
               <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
@@ -418,7 +432,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* View Note Modal */}
       {viewingNoteId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end justify-center pb-32 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[60vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-blue-800">Activity Note</h3>
