@@ -43,7 +43,7 @@ const ACTIVITY_CONFIG = {
     label: 'Bathroom Break', 
     spamThreshold: 10 * 1000,
     gradient: 'soft-blue-gradient',
-    petTypes: ['dog', 'rabbit', 'guinea pig']
+    petTypes: ['dog', 'rabbit', 'guinea pig', 'other']
   },
   'Walked': { 
     icon: Footprints, 
@@ -51,7 +51,7 @@ const ACTIVITY_CONFIG = {
     label: 'Walk', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-green-100 hover:bg-green-200',
-    petTypes: ['dog']
+    petTypes: ['dog', 'other']
   },
   'Played': { 
     icon: GamepadIcon, 
@@ -83,7 +83,7 @@ const ACTIVITY_CONFIG = {
     label: 'Train', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-blue-100 hover:bg-blue-200',
-    petTypes: ['dog', 'bird']
+    petTypes: ['dog', 'bird', 'other']
   },
   'Litter Box': { 
     icon: Trash2, 
@@ -91,7 +91,7 @@ const ACTIVITY_CONFIG = {
     label: 'Clean Litter Box', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-orange-100 hover:bg-orange-200',
-    petTypes: ['cat']
+    petTypes: ['cat', 'other']
   },
   'Clean Cage': { 
     icon: Trash2, 
@@ -99,7 +99,7 @@ const ACTIVITY_CONFIG = {
     label: 'Clean Cage', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-orange-100 hover:bg-orange-200',
-    petTypes: ['hamster', 'bird', 'rabbit', 'guinea pig']
+    petTypes: ['hamster', 'bird', 'rabbit', 'guinea pig', 'other']
   },
   'Clean Tank': { 
     icon: Trash2, 
@@ -107,7 +107,7 @@ const ACTIVITY_CONFIG = {
     label: 'Clean Tank', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-orange-100 hover:bg-orange-200',
-    petTypes: ['fish']
+    petTypes: ['fish', 'other']
   },
 } as const;
 
