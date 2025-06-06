@@ -355,8 +355,26 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-50 rounded-lg p-6 w-full max-w-md shadow-xl max-h-[90vh] overflow-y-auto mx-4">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-auto"
+          style={{ 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '100vh',
+            padding: '1rem'
+          }}
+        >
+          <div 
+            className="bg-blue-50 rounded-lg p-6 shadow-xl"
+            style={{
+              width: '100%',
+              maxWidth: '384px',
+              maxHeight: '80vh',
+              overflowY: 'auto',
+              margin: 'auto'
+            }}
+          >
               <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
@@ -409,8 +427,26 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* View Note Modal */}
       {viewingNoteId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-50 rounded-lg p-6 w-full max-w-md shadow-xl max-h-[90vh] overflow-y-auto mx-4">
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-auto"
+          style={{ 
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            minHeight: '100vh',
+            padding: '1rem'
+          }}
+        >
+          <div 
+            className="bg-blue-50 rounded-lg p-6 shadow-xl"
+            style={{
+              width: '100%',
+              maxWidth: '384px',
+              maxHeight: '80vh',
+              overflowY: 'auto',
+              margin: 'auto'
+            }}
+          >
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-blue-800">Activity Note</h3>
               <Button
