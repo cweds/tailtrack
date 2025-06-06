@@ -59,7 +59,7 @@ const ACTIVITY_CONFIG = {
     label: 'Play', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-yellow-100 hover:bg-yellow-200',
-    petTypes: ['dog', 'cat', 'bird', 'hamster', 'rabbit', 'guinea pig']
+    petTypes: ['dog', 'cat', 'bird', 'hamster', 'rabbit', 'guinea pig', 'other']
   },
   'Groomed': { 
     icon: Scissors, 
@@ -67,7 +67,7 @@ const ACTIVITY_CONFIG = {
     label: 'Groom', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-purple-100 hover:bg-purple-200',
-    petTypes: ['dog', 'cat', 'bird', 'rabbit', 'guinea pig']
+    petTypes: ['dog', 'cat', 'bird', 'rabbit', 'guinea pig', 'other']
   },
   'Medication': { 
     icon: Pill, 
@@ -75,7 +75,7 @@ const ACTIVITY_CONFIG = {
     label: 'Medicine', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-red-100 hover:bg-red-200',
-    petTypes: ['dog', 'cat', 'bird', 'hamster', 'rabbit', 'guinea pig', 'fish']
+    petTypes: ['dog', 'cat', 'bird', 'hamster', 'rabbit', 'guinea pig', 'fish', 'other']
   },
   'Training': { 
     icon: GraduationCap, 
