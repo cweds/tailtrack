@@ -250,7 +250,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               return (
                 <div key={activity.id}>
                   <div
-                    className={`flex items-center justify-between pl-3 pr-3 py-3 rounded-lg border ${
+                    className={`flex items-center justify-between pl-3 pr-1 py-3 rounded-lg border ${
                       hasNote ? 'border-l-4 border-l-blue-500 border-gray-100 bg-gray-50' : 'border-gray-100 bg-gray-50'
                     }`}
                     title={formatFullTimestamp(activity.timestamp)}
@@ -302,7 +302,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                           variant="ghost"
                           size="sm"
                           onClick={() => setViewingNoteId(activity.id)}
-                          className="text-blue-600 text-xs px-1.5 py-1 rounded hover:bg-blue-50 flex items-center justify-center"
+                          className="text-blue-600 text-xs px-1.5 py-1 rounded hover:bg-blue-50 flex items-center justify-center mr-2"
                         >
                           View
                         </Button>
