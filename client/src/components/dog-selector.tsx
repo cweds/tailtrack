@@ -121,7 +121,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 px-2 py-1.5 transition-all duration-200
                 ${layoutType === 'scroll' 
                   ? 'pup-pink-gradient text-gray-800' 
-                  : 'bg-white text-gray-600 hover:bg-pink-50'
+                  : 'bg-white text-gray-600 hover:bg-orange-50'
                 }
               `}
               title="Scroll Layout"
