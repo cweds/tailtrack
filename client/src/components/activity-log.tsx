@@ -276,7 +276,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-start gap-1 flex-shrink-0 ml-2">
+                    <div className="flex items-center gap-1 flex-shrink-0 ml-2">
                       {isOwner ? (
                         <>
                           <Button
