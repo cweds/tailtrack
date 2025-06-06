@@ -153,11 +153,16 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               )}
             >
               <div className="mb-1">
-                <PetAvatar 
-                  pet={pet} 
-                  size="md" 
-                  className="mx-auto"
-                />
+                <div className={cn(
+                  "mx-auto rounded-full",
+                  selectedDogs.has(pet) ? "ring-2 ring-white ring-offset-0" : ""
+                )}>
+                  <PetAvatar 
+                    pet={pet} 
+                    size="md" 
+                    className="rounded-full"
+                  />
+                </div>
               </div>
               <div className="font-medium text-sm">{pet.name}</div>
             </Button>
@@ -185,11 +190,16 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 ...(selectedDogs.has(pet) ? { backgroundColor: 'transparent' } : {})
               }}
             >
-              <PetAvatar 
-                pet={pet} 
-                size="sm" 
-                className=""
-              />
+              <div className={cn(
+                "rounded-full",
+                selectedDogs.has(pet) ? "ring-2 ring-white ring-offset-0" : ""
+              )}>
+                <PetAvatar 
+                  pet={pet} 
+                  size="sm" 
+                  className="rounded-full"
+                />
+              </div>
               <div 
                 className="font-medium text-center" 
                 style={{ 
