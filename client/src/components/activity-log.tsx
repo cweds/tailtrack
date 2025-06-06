@@ -138,10 +138,13 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   // Helper functions for editing
   const startEditing = (activity: DatabaseActivity) => {
-    // Scroll to the activity section header for proper modal positioning
+    // Scroll to the bottom of the activities container for proper modal positioning
     const element = document.getElementById('todays-activities');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const container = element.closest('.bg-white.p-4.rounded-xl');
+      if (container) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
     }
     
     const timestamp = activity.timestamp instanceof Date ? activity.timestamp : new Date(activity.timestamp);
