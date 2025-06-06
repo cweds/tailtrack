@@ -73,29 +73,24 @@ export function PetAvatar({
           )}
         />
       ) : (
-        <div 
+        <span 
           className={cn(
-            sizeClasses[size],
-            "transition-opacity flex items-center justify-center",
             showEditButton && "group-hover:opacity-75"
           )}
           style={{ 
             fontSize: size === "sm" ? "16px" : size === "md" ? "20px" : "28px",
             lineHeight: "1",
+            display: "block",
+            width: size === "sm" ? "36px" : size === "md" ? "48px" : "64px",
+            height: size === "sm" ? "36px" : size === "md" ? "48px" : "64px",
+            textAlign: "center",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            textAlign: "center",
-            background: "transparent",
-            border: "none"
+            justifyContent: "center"
           }}
         >
-          <span style={{ 
-            transform: size === "sm" ? "translateX(-1.5px)" : "translateX(-1px)",
-            display: "block",
-            background: "transparent"
-          }}>{petEmoji}</span>
-        </div>
+          {petEmoji}
+        </span>
       )}
       
       {showEditButton && (
