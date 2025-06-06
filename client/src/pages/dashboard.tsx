@@ -176,7 +176,7 @@ export default function Dashboard() {
       </header>
 
       {/* User Info Bar */}
-      <div className="px-4 py-3 flex justify-between items-center" style={{ background: '#FFD5DC', borderBottom: '1px solid #f3c6d4' }}>
+      <div className="px-4 py-3 flex justify-between items-center" style={{ background: 'rgba(255, 213, 220, 0.6)', borderBottom: '1px solid rgba(243, 198, 212, 0.4)' }}>
         <span className="text-sm text-gray-800">
           {(() => {
             if (!user) return "Welcome! 🦴";
