@@ -146,12 +146,18 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               onClick={() => onDogToggle(pet)}
               variant="outline"
               className={cn(
-                "p-3 rounded-lg transition-all duration-200 text-center flex-col h-auto mobile-touch-button relative",
+                "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button relative",
                 selectedDogs.has(pet)
-                  ? "border-4 border-amber-600 golden-tan-gradient text-gray-800"
-                  : "border-2 border-amber-200 text-gray-700 golden-tan-gradient"
+                  ? "border-amber-600 golden-tan-gradient text-gray-800"
+                  : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
             >
+              {/* Selected checkmark - positioned inside card to avoid cutoff */}
+              {selectedDogs.has(pet) && (
+                <div className="absolute top-1 right-1 bg-amber-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+                  ✓
+                </div>
+              )}
 
               <div className="mb-1">
                 <PetAvatar 
@@ -176,10 +182,10 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               key={pet.id}
               onClick={() => onDogToggle(pet)}
               className={cn(
-                "rounded-lg transition-all duration-200 cursor-pointer mobile-touch-button flex-shrink-0 flex flex-col items-center justify-center relative",
+                "rounded-lg border-2 transition-all duration-200 cursor-pointer mobile-touch-button flex-shrink-0 flex flex-col items-center justify-center relative",
                 selectedDogs.has(pet)
-                  ? "border-4 border-amber-600 golden-tan-gradient text-gray-800"
-                  : "border-2 border-amber-200 text-gray-700 golden-tan-gradient"
+                  ? "border-amber-600 golden-tan-gradient text-gray-800"
+                  : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
               style={{ 
                 width: '80px', 
@@ -187,6 +193,12 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 padding: '8px'
               }}
             >
+              {/* Selected checkmark - positioned inside card to avoid cutoff */}
+              {selectedDogs.has(pet) && (
+                <div className="absolute top-1 right-1 bg-amber-600 text-white rounded-full w-4 h-4 flex items-center justify-center text-xs font-bold">
+                  ✓
+                </div>
+              )}
 
               <PetAvatar 
                 pet={pet} 
