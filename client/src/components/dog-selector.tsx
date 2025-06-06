@@ -146,19 +146,25 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               onClick={() => onDogToggle(pet)}
               variant="outline"
               className={cn(
-                "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button",
+                "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button relative",
                 selectedDogs.has(pet)
-                  ? "border-pink-300 pup-pink-gradient text-gray-800"
+                  ? "border-blue-500 border-4 bg-blue-50 text-gray-800"
                   : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
             >
+              {/* Selected badge overlay */}
+              {selectedDogs.has(pet) && (
+                <div className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shadow-lg">
+                  ✓
+                </div>
+              )}
               <div className="mb-1">
                 <PetAvatar 
                   pet={pet} 
                   size="md" 
                   className="mx-auto"
                   isSelected={selectedDogs.has(pet)}
-                  backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
+                  backgroundColor={selectedDogs.has(pet) ? "#DBEAFE" : "#F5E8D3"}
                 />
               </div>
               <div className="font-medium text-sm">{pet.name}</div>
@@ -175,23 +181,28 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               key={pet.id}
               onClick={() => onDogToggle(pet)}
               className={cn(
-                "rounded-lg border-2 transition-all duration-200 cursor-pointer mobile-touch-button flex-shrink-0 flex flex-col items-center justify-center",
+                "rounded-lg border-2 transition-all duration-200 cursor-pointer mobile-touch-button flex-shrink-0 flex flex-col items-center justify-center relative",
                 selectedDogs.has(pet)
-                  ? "border-pink-300 pup-pink-gradient text-gray-800"
+                  ? "border-blue-500 border-4 bg-blue-50 text-gray-800"
                   : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
               style={{ 
                 width: '80px', 
                 height: '80px', 
-                padding: '8px',
-                ...(selectedDogs.has(pet) ? { backgroundColor: 'transparent' } : {})
+                padding: '8px'
               }}
             >
+              {/* Selected badge overlay */}
+              {selectedDogs.has(pet) && (
+                <div className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold shadow-lg">
+                  ✓
+                </div>
+              )}
               <PetAvatar 
                 pet={pet} 
                 size="sm" 
                 isSelected={selectedDogs.has(pet)}
-                backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
+                backgroundColor={selectedDogs.has(pet) ? "#DBEAFE" : "#F5E8D3"}
               />
               <div 
                 className="font-medium text-center" 
