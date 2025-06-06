@@ -1,7 +1,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { X, Edit3, Eye, Save, FileText } from "lucide-react";
+import { X, Edit3, Eye, Save, FileText, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -344,13 +344,16 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">Time:</label>
-                <input
-                  type="datetime-local"
-                  value={editFormData.timestamp}
-                  onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
-                  className="block w-full text-sm border-2 rounded-lg px-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-gradient-to-r from-blue-50 to-white text-gray-900 cursor-pointer hover:border-blue-400 hover:from-blue-100 hover:to-blue-50 transition-all duration-200 shadow-sm hover:shadow-md text-center font-medium"
-                  style={{ fontSize: '16px' }}
-                />
+                <div className="relative">
+                  <input
+                    type="datetime-local"
+                    value={editFormData.timestamp}
+                    onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
+                    className="block w-full text-sm border-2 rounded-lg pl-10 pr-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-gradient-to-r from-blue-50 to-white text-gray-900 cursor-pointer shadow-sm text-center font-medium"
+                    style={{ fontSize: '16px' }}
+                  />
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-500 pointer-events-none" />
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">Note:</label>
