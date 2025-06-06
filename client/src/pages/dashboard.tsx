@@ -134,7 +134,7 @@ export default function Dashboard() {
           style={{ 
             height: `${pullDistance}px`,
             transform: `translateY(-${pullDistance}px)`,
-            background: '#ffffff',
+            background: '#FAF7F0',
             zIndex: 50
           }}
         >
@@ -153,9 +153,9 @@ export default function Dashboard() {
 
       {/* Header - extends under status bar */}
       <header 
-        className="header-static text-center"
+        className="text-center"
         style={{ 
-          background: '#ffffff',
+          background: '#FAF7F0',
           userSelect: 'none',
           WebkitUserSelect: 'none',
           MozUserSelect: 'none',

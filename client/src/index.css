@@ -92,23 +92,13 @@
 }
 
 .header-static {
-  background: #ffffff !important;
+  background: #FAF7F0 !important;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-tap-highlight-color: transparent;
   cursor: default;
-}
-
-.header-static:hover,
-.header-static:focus,
-.header-static:active,
-.header-static:visited {
-  background: #FFD5DC !important;
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
 }
 
 .header-static * {
