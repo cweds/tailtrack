@@ -158,7 +158,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                   size="md" 
                   className={cn(
                     "mx-auto",
-                    selectedDogs.has(pet) ? "ring-2 ring-white" : ""
+                    selectedDogs.has(pet) && "shadow-[0_0_0_2px_white]"
                   )}
                 />
               </div>
@@ -192,7 +192,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 pet={pet} 
                 size="sm" 
                 className={cn(
-                  selectedDogs.has(pet) ? "ring-2 ring-white" : ""
+                  selectedDogs.has(pet) && "shadow-[0_0_0_2px_white]"
                 )}
               />
               <div 

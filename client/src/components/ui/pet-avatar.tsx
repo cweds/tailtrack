@@ -80,7 +80,6 @@ export function PetAvatar({
           style={{ 
             fontSize: size === "sm" ? "16px" : size === "md" ? "20px" : "28px",
             lineHeight: "1",
-            display: "block",
             width: size === "sm" ? "36px" : size === "md" ? "48px" : "64px",
             height: size === "sm" ? "36px" : size === "md" ? "48px" : "64px",
             textAlign: "center",
