@@ -226,31 +226,16 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
       )}
       <div
         onClick={onSelectBothDogs}
-        className="w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center playful-bounce hover:scale-105 active:scale-95"
+        className={cn(
+          "w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center",
+          selectedDogs.size === dogs.length
+            ? "bg-gray-100 border-gray-300 text-gray-700"
+            : "bg-white border-pink-300 text-pink-600"
+        )}
         style={{ 
           WebkitTapHighlightColor: 'transparent',
           touchAction: 'manipulation',
-          userSelect: 'none',
-          backgroundColor: selectedDogs.size === dogs.length ? '#fef3c7' : '#ffffff',
-          borderColor: selectedDogs.size === dogs.length ? '#f59e0b' : '#ec4899',
-          color: selectedDogs.size === dogs.length ? '#374151' : '#ec4899',
-          backgroundImage: selectedDogs.size === dogs.length ? 'linear-gradient(to right, #fef3c7, #fed7aa)' : 'none'
-        }}
-        onMouseEnter={(e) => {
-          if (selectedDogs.size === dogs.length) {
-            e.currentTarget.style.opacity = '0.9';
-          } else {
-            e.currentTarget.style.backgroundColor = '#fdf2f8';
-            e.currentTarget.style.borderColor = '#f472b6';
-          }
-        }}
-        onMouseLeave={(e) => {
-          if (selectedDogs.size === dogs.length) {
-            e.currentTarget.style.opacity = '1';
-          } else {
-            e.currentTarget.style.backgroundColor = '#ffffff';
-            e.currentTarget.style.borderColor = '#ec4899';
-          }
+          userSelect: 'none'
         }}
       >
 {selectedDogs.size === dogs.length ? "Deselect All" : dogs.length === 1 ? "Select Pet" : dogs.length === 2 ? "Select Both Pets" : `Select All ${dogs.length} Pets`}
