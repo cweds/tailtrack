@@ -76,7 +76,7 @@ export function PetAvatar({
         <div 
           className={cn(
             sizeClasses[size],
-            "rounded-full transition-opacity flex items-center justify-center",
+            "transition-opacity flex items-center justify-center",
             showEditButton && "group-hover:opacity-75"
           )}
           style={{ 
@@ -85,12 +85,15 @@ export function PetAvatar({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            textAlign: "center"
+            textAlign: "center",
+            background: "transparent",
+            border: "none"
           }}
         >
           <span style={{ 
             transform: size === "sm" ? "translateX(-1.5px)" : "translateX(-1px)",
-            display: "block"
+            display: "block",
+            background: "transparent"
           }}>{petEmoji}</span>
         </div>
       )}
