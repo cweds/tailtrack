@@ -117,12 +117,7 @@
   background: linear-gradient(135deg, #FDF4E7 0%, #F5E8D3 100%);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .golden-tan-gradient:hover {
-    background: rgb(253 242 248) !important;
-    border-color: rgb(249 168 212) !important;
-  }
-}
+
 
 .soft-blue-gradient {
   background: linear-gradient(135deg, #D4EAF7 0%, #B3D9F2 100%);
@@ -168,12 +163,7 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-@media (hover: hover) {
-  .mobile-touch-button.golden-tan-gradient:hover {
-    border-color: rgb(249 168 212) !important;
-    background: rgb(253 242 248) !important;
-  }
-}
+
 
 @media (hover: none) {
   .mobile-touch-button:hover {
