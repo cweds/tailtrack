@@ -138,12 +138,6 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   // Helper functions for editing
   const startEditing = (activity: DatabaseActivity) => {
-    // Scroll to Today's Activities section to ensure modal is visible
-    const element = document.getElementById('todays-activities');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    
     const timestamp = activity.timestamp instanceof Date ? activity.timestamp : new Date(activity.timestamp);
     setEditFormData({
       timestamp: timestamp.toISOString().slice(0, 16), // Format for datetime-local input
@@ -152,6 +146,14 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
     setEditingId(activity.id);
     // Prevent body scroll when modal opens
     document.body.style.overflow = 'hidden';
+    
+    // Scroll to Today's Activities section after modal state is set
+    setTimeout(() => {
+      const element = document.getElementById('todays-activities');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   const cancelEditing = () => {
