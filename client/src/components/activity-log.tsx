@@ -138,6 +138,9 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   // Helper functions for editing
   const startEditing = (activity: DatabaseActivity) => {
+    // Scroll to top to ensure modal is visible
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     const timestamp = activity.timestamp instanceof Date ? activity.timestamp : new Date(activity.timestamp);
     setEditFormData({
       timestamp: timestamp.toISOString().slice(0, 16), // Format for datetime-local input
@@ -355,21 +358,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div 
-            className="bg-blue-50 rounded-lg p-6 shadow-xl"
-            style={{
-              position: 'fixed',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 'calc(100% - 2rem)',
-              maxWidth: '384px',
-              maxHeight: '80vh',
-              overflowY: 'auto',
-              zIndex: 51
-            }}
-          >
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[80vh] overflow-y-auto">
               <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
@@ -422,21 +412,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* View Note Modal */}
       {viewingNoteId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-          <div 
-            className="bg-blue-50 rounded-lg p-6 shadow-xl"
-            style={{
-              position: 'fixed',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              width: 'calc(100% - 2rem)',
-              maxWidth: '384px',
-              maxHeight: '80vh',
-              overflowY: 'auto',
-              zIndex: 51
-            }}
-          >
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[80vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-blue-800">Activity Note</h3>
               <Button
