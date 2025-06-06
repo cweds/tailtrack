@@ -138,8 +138,11 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   // Helper functions for editing
   const startEditing = (activity: DatabaseActivity) => {
-    // Scroll to top to ensure modal is visible
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to Today's Activities section to ensure modal is visible
+    const element = document.getElementById('todays-activities');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     
     const timestamp = activity.timestamp instanceof Date ? activity.timestamp : new Date(activity.timestamp);
     setEditFormData({
@@ -194,7 +197,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm border border-orange-200">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+      <h3 id="todays-activities" className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
         📋 {showAllDays ? 'All Activity' : 'Today\'s Activity'}
       </h3>
       
