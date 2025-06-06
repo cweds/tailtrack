@@ -93,7 +93,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
   };
 
   return (
-    <div className="bg-white p-4 rounded-xl paw-shadow border border-pink-200">
+    <div className="bg-white p-4 rounded-xl paw-shadow border border-orange-200">
       <div className="flex items-center justify-between mb-3">
         <label className="text-sm font-medium text-gray-700">
           {getContextualEmoji()} {dogs.length === 1 ? "Which pet needs care?" : "Which pets need care?"}
@@ -101,14 +101,14 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
         
         {/* Layout Toggle - only show if more than 3 pets */}
         {dogs.length > 3 && (
-          <div className="flex rounded-lg border border-pink-200 overflow-hidden bg-white">
+          <div className="flex rounded-lg border border-orange-200 overflow-hidden bg-white">
             <button
               onClick={() => handleLayoutChange('grid')}
               className={`
                 px-2 py-1.5 transition-all duration-200
                 ${layoutType === 'grid' 
-                  ? 'pup-pink-gradient text-gray-800 border-r border-pink-300' 
-                  : 'bg-white text-gray-600 hover:bg-pink-50 border-r border-pink-200'
+                  ? 'pup-pink-gradient text-gray-800 border-r border-orange-300' 
+                  : 'bg-white text-gray-600 hover:bg-orange-50 border-r border-orange-200'
                 }
               `}
               title="Grid Layout"
