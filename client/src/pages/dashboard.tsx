@@ -134,7 +134,7 @@ export default function Dashboard() {
           style={{ 
             height: `${pullDistance}px`,
             transform: `translateY(-${pullDistance}px)`,
-            background: '#FAF7F0',
+            background: '#ffffff',
             zIndex: 50
           }}
         >
@@ -155,7 +155,7 @@ export default function Dashboard() {
       <header 
         className="header-static text-center"
         style={{ 
-          background: '#FAF7F0',
+          background: '#ffffff',
           userSelect: 'none',
           WebkitUserSelect: 'none',
           MozUserSelect: 'none',
