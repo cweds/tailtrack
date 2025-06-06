@@ -431,7 +431,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
               
               return (
                 <div className="space-y-4">
-                  <div className="bg-white rounded-lg p-4 border">
+                  <div className="bg-white rounded-lg p-4 border border-blue-300">
                     <div className="text-sm text-gray-600 mb-2">
                       <span className="font-medium">{viewingActivity.action}</span>
                       <span className="mx-2">•</span>
