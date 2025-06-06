@@ -70,22 +70,26 @@ export function PetAvatar({
           alt={pet.name}
           className={cn(
             sizeClasses[size],
-            "rounded-full object-cover border-2 border-white transition-opacity",
+            "rounded-full object-cover border-2 transition-opacity",
             showEditButton && "group-hover:opacity-75"
           )}
-          style={backgroundColor ? { backgroundColor } : undefined}
+          style={{ 
+            backgroundColor: backgroundColor || "#F5E8D3",
+            borderColor: isSelected ? "#ec4899" : "#f59e0b"
+          }}
         />
       ) : (
         <div 
           className={cn(
             sizeClasses[size],
-            "rounded-full border-2 border-white transition-opacity flex items-center justify-center",
+            "rounded-full border-2 transition-opacity flex items-center justify-center",
             showEditButton && "group-hover:opacity-75"
           )}
           style={{ 
             fontSize: size === "sm" ? "16px" : size === "md" ? "20px" : "28px",
             lineHeight: "1",
-            backgroundColor: backgroundColor || "#F5E8D3"
+            backgroundColor: backgroundColor || "#F5E8D3",
+            borderColor: isSelected ? "#ec4899" : "#f59e0b"
           }}
         >
           <span style={{ 

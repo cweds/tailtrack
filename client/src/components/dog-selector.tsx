@@ -153,17 +153,13 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               )}
             >
               <div className="mb-1">
-                <div className={cn(
-                  "mx-auto rounded-full",
-                  selectedDogs.has(pet) ? "ring-2 ring-white ring-offset-0" : ""
-                )}>
-                  <PetAvatar 
-                    pet={pet} 
-                    size="md" 
-                    className="rounded-full"
-                    backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
-                  />
-                </div>
+                <PetAvatar 
+                  pet={pet} 
+                  size="md" 
+                  className="mx-auto"
+                  isSelected={selectedDogs.has(pet)}
+                  backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
+                />
               </div>
               <div className="font-medium text-sm">{pet.name}</div>
             </Button>
@@ -191,17 +187,12 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 ...(selectedDogs.has(pet) ? { backgroundColor: 'transparent' } : {})
               }}
             >
-              <div className={cn(
-                "rounded-full",
-                selectedDogs.has(pet) ? "ring-2 ring-white ring-offset-0" : ""
-              )}>
-                <PetAvatar 
-                  pet={pet} 
-                  size="sm" 
-                  className="rounded-full"
-                  backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
-                />
-              </div>
+              <PetAvatar 
+                pet={pet} 
+                size="sm" 
+                isSelected={selectedDogs.has(pet)}
+                backgroundColor={selectedDogs.has(pet) ? "#FFC0CB" : "#F5E8D3"}
+              />
               <div 
                 className="font-medium text-center" 
                 style={{ 
