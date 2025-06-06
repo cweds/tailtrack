@@ -248,16 +248,15 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
       {/* More Activities Toggle */}
       {secondaryActions.length > 0 && (
         <div>
-          <Button
-            variant="outline"
+          <div
             onClick={() => setShowMoreActivities(!showMoreActivities)}
-            className="w-full py-3 text-gray-700 border-gray-400 bg-gray-100 font-medium hover:bg-gray-100 hover:border-gray-400"
+            className="w-full py-3 text-center cursor-pointer"
           >
-            <span className="flex items-center justify-center gap-2">
+            <span className="flex items-center justify-center gap-2 text-gray-600 font-medium">
               <span>More Activities</span>
               {showMoreActivities ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </span>
-          </Button>
+          </div>
           
           {showMoreActivities && (
             <div className="mt-4 space-y-3">
