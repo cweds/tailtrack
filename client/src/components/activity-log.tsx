@@ -146,14 +146,6 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
     setEditingId(activity.id);
     // Prevent body scroll when modal opens
     document.body.style.overflow = 'hidden';
-    
-    // Scroll to Today's Activities section after modal state is set
-    setTimeout(() => {
-      const element = document.getElementById('todays-activities');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }, 100);
   };
 
   const cancelEditing = () => {
@@ -198,7 +190,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
     activities;
 
   return (
-    <div className="bg-white p-4 rounded-xl shadow-sm border border-orange-200">
+    <div className="bg-white p-4 rounded-xl shadow-sm border border-orange-200 relative">
       <h3 id="todays-activities" className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
         📋 {showAllDays ? 'All Activity' : 'Today\'s Activity'}
       </h3>
@@ -363,8 +355,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20 p-4">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[65vh] overflow-y-auto">
+        <div className="absolute inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-16 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[400px] overflow-y-auto">
               <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
@@ -417,8 +409,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* View Note Modal */}
       {viewingNoteId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20 p-4">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[65vh] overflow-y-auto">
+        <div className="absolute inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-16 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[400px] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-blue-800">Activity Note</h3>
               <Button
