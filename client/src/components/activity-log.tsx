@@ -355,24 +355,19 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-auto"
-          style={{ 
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            padding: '1rem'
-          }}
-        >
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
           <div 
             className="bg-blue-50 rounded-lg p-6 shadow-xl"
             style={{
-              width: '100%',
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 'calc(100% - 2rem)',
               maxWidth: '384px',
               maxHeight: '80vh',
               overflowY: 'auto',
-              margin: 'auto'
+              zIndex: 51
             }}
           >
               <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
@@ -427,24 +422,19 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* View Note Modal */}
       {viewingNoteId && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 overflow-auto"
-          style={{ 
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: '100vh',
-            padding: '1rem'
-          }}
-        >
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
           <div 
             className="bg-blue-50 rounded-lg p-6 shadow-xl"
             style={{
-              width: '100%',
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 'calc(100% - 2rem)',
               maxWidth: '384px',
               maxHeight: '80vh',
               overflowY: 'auto',
-              margin: 'auto'
+              zIndex: 51
             }}
           >
             <div className="flex items-center justify-between mb-4">
