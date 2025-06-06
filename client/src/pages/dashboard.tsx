@@ -151,15 +151,19 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Header */}
+      {/* Header - extends under status bar */}
       <header 
-        className="header-static p-4 text-center"
+        className="header-static text-center"
         style={{ 
           background: '#FFD5DC',
           userSelect: 'none',
           WebkitUserSelect: 'none',
           MozUserSelect: 'none',
-          msUserSelect: 'none'
+          msUserSelect: 'none',
+          paddingTop: `calc(env(safe-area-inset-top, 44px) + 1rem)`,
+          paddingBottom: '1rem',
+          paddingLeft: '1rem',
+          paddingRight: '1rem'
         }}
       >
         <div className="flex items-center justify-center gap-3">

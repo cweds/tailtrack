@@ -63,6 +63,8 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <AddPetProvider>
+          {/* iOS Status Bar Overlay */}
+          <div className="ios-status-overlay"></div>
           <AppContent />
           <Toaster />
         </AddPetProvider>
