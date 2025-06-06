@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Edit3, Eye, Save, FileText, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -144,38 +144,11 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
       notes: activity.notes || ''
     });
     setEditingId(activity.id);
-    // Prevent body scroll when modal opens
-    document.body.style.overflow = 'hidden';
-    
-    // Position modal dynamically after state update
-    setTimeout(() => {
-      const element = document.getElementById('todays-activities');
-      if (element) {
-        const container = element.closest('.bg-white.p-4.rounded-xl') as HTMLElement;
-        if (container) {
-          // Calculate optimal scroll position to center modal over activities
-          const containerRect = container.getBoundingClientRect();
-          const viewportHeight = window.innerHeight;
-          const modalHeight = Math.min(400, viewportHeight * 0.6); // Approximate modal height
-          
-          // Calculate desired position: center modal vertically in viewport
-          const desiredTop = (viewportHeight - modalHeight) / 2;
-          const scrollOffset = containerRect.bottom - viewportHeight + desiredTop;
-          
-          window.scrollBy({
-            top: scrollOffset,
-            behavior: 'smooth'
-          });
-        }
-      }
-    }, 100);
   };
 
   const cancelEditing = () => {
     setEditingId(null);
     setEditFormData({ timestamp: '', notes: '' });
-    // Restore body scroll when modal closes
-    document.body.style.overflow = 'unset';
   };
 
   const saveChanges = () => {
@@ -191,20 +164,6 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
   const toggleNoteView = (activityId: number) => {
     setViewingNoteId(viewingNoteId === activityId ? null : activityId);
   };
-
-  // Clean up body scroll on component unmount
-  useEffect(() => {
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, []);
-
-  // Clean up body scroll when modal closes
-  useEffect(() => {
-    if (!editingId) {
-      document.body.style.overflow = 'unset';
-    }
-  }, [editingId]);
   
   // Use all activities when showAllDays is true, otherwise use today's activities
   // Show today's activities while loading all activities to prevent white screen
@@ -214,7 +173,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm border border-orange-200">
-      <h3 id="todays-activities" className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+      <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
         📋 {showAllDays ? 'All Activity' : 'Today\'s Activity'}
       </h3>
       
@@ -378,9 +337,9 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[60vh] overflow-y-auto">
-              <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-md mx-auto my-auto shadow-xl max-h-[90vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
               <div>
@@ -432,8 +391,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* View Note Modal */}
       {viewingNoteId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[60vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-md mx-auto my-auto shadow-xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-blue-800">Activity Note</h3>
               <Button
