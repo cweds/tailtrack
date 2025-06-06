@@ -75,7 +75,7 @@ export function PetAvatar({
           )}
           style={{ 
             backgroundColor: backgroundColor || "#F5E8D3",
-            borderColor: isSelected ? "#f9a8d4" : "#fed7aa"
+            borderColor: "#ffffff"
           }}
         />
       ) : (
@@ -89,7 +89,7 @@ export function PetAvatar({
             fontSize: size === "sm" ? "16px" : size === "md" ? "20px" : "28px",
             lineHeight: "1",
             backgroundColor: backgroundColor || "#F5E8D3",
-            borderColor: isSelected ? "#f9a8d4" : "#fed7aa"
+            borderColor: "#ffffff"
           }}
         >
           <span style={{ 
