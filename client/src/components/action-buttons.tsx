@@ -125,7 +125,10 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
     const uniquePetTypes = Array.from(new Set(selectedPetTypes));
     
     // Filter activities that are relevant to selected pets
-    const relevantActivities = Object.entries(ACTIVITY_CONFIG).filter(([_, config]) => {
+    const relevantActivities = Object.entries(ACTIVITY_CONFIG).filter(([actionKey, config]) => {
+      // Fed is always available for any pet type
+      if (actionKey === 'Fed') return true;
+      // Other activities only available if pet type is explicitly supported
       return selectedPetTypes.some(petType => config.petTypes.includes(petType));
     });
     
