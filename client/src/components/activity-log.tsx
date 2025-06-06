@@ -349,7 +349,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                     type="datetime-local"
                     value={editFormData.timestamp}
                     onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
-                    className="block w-full text-sm border-2 rounded-lg pl-10 pr-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-gradient-to-r from-blue-50 to-white text-gray-900 cursor-pointer shadow-sm text-center font-medium"
+                    className="block w-full text-sm border-2 rounded-lg pl-10 pr-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 cursor-pointer shadow-sm text-center font-medium"
                     style={{ fontSize: '16px' }}
                   />
                   <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-500 pointer-events-none" />
