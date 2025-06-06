@@ -348,7 +348,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                   type="datetime-local"
                   value={editFormData.timestamp}
                   onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
-                  className="block w-full text-sm border-2 rounded-lg px-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="block w-full text-sm border-2 rounded-lg px-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-gradient-to-r from-blue-50 to-white text-gray-900 cursor-pointer hover:border-blue-400 hover:from-blue-100 hover:to-blue-50 transition-all duration-200 shadow-sm hover:shadow-md text-center font-medium"
                   style={{ fontSize: '16px' }}
                 />
               </div>
