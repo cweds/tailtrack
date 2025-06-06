@@ -156,7 +156,10 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 <PetAvatar 
                   pet={pet} 
                   size="md" 
-                  className="mx-auto"
+                  className={cn(
+                    "mx-auto",
+                    selectedDogs.has(pet) ? "ring-2 ring-white" : ""
+                  )}
                 />
               </div>
               <div className="font-medium text-sm">{pet.name}</div>
@@ -183,6 +186,9 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               <PetAvatar 
                 pet={pet} 
                 size="sm" 
+                className={cn(
+                  selectedDogs.has(pet) ? "ring-2 ring-white" : ""
+                )}
               />
               <div 
                 className="font-medium text-center" 
