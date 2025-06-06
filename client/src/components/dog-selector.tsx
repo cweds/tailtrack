@@ -242,7 +242,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
             ? {} 
             : { 
                 backgroundColor: 'rgba(255, 213, 220, 0.4)', 
-                borderColor: 'rgba(255, 213, 220, 0.8)' 
+                borderColor: 'rgba(255, 213, 220, 1)' 
               })
         }}
       >
