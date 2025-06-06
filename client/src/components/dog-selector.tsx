@@ -144,14 +144,13 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
             <Button
               key={pet.id}
               onClick={() => onDogToggle(pet)}
-              variant="outline"
+              variant={selectedDogs.has(pet) ? "ghost" : "outline"}
               className={cn(
                 "p-3 rounded-lg border-2 transition-all duration-200 text-center flex-col h-auto mobile-touch-button",
                 selectedDogs.has(pet)
-                  ? "border-pink-300 pup-pink-gradient text-gray-800 !bg-transparent"
+                  ? "border-pink-300 pup-pink-gradient text-gray-800"
                   : "border-amber-200 text-gray-700 golden-tan-gradient"
               )}
-              style={selectedDogs.has(pet) ? { backgroundColor: 'transparent' } : undefined}
             >
               <div className="mb-1">
                 <PetAvatar 
