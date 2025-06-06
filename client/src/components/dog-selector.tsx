@@ -232,12 +232,18 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
           "w-full mt-3 p-2 text-sm font-medium rounded-lg border-2 transition-all duration-200 cursor-pointer select-none text-center",
           selectedDogs.size === dogs.length
             ? "bg-gray-100 border-gray-300 text-gray-700"
-            : "bg-white border-pink-300 text-pink-600"
+            : "text-gray-800"
         )}
         style={{ 
           WebkitTapHighlightColor: 'transparent',
           touchAction: 'manipulation',
-          userSelect: 'none'
+          userSelect: 'none',
+          ...(selectedDogs.size === dogs.length 
+            ? {} 
+            : { 
+                backgroundColor: 'rgba(255, 213, 220, 0.4)', 
+                borderColor: 'rgba(255, 213, 220, 0.6)' 
+              })
         }}
       >
 {selectedDogs.size === dogs.length ? "Deselect All" : dogs.length === 1 ? "Select Pet" : dogs.length === 2 ? "Select Both Pets" : `Select All ${dogs.length} Pets`}
