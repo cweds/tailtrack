@@ -361,8 +361,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* Edit Modal */}
       {editingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-16 p-4">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[70vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-4 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[75vh] overflow-y-auto">
               <h3 className="text-lg font-semibold mb-4 text-blue-800">Edit Activity</h3>
             
             <div className="space-y-4">
@@ -415,8 +415,8 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
       {/* View Note Modal */}
       {viewingNoteId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-16 p-4">
-          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[70vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-4 p-4">
+          <div className="bg-blue-50 rounded-lg p-6 w-full max-w-sm shadow-xl max-h-[75vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-blue-800">Activity Note</h3>
               <Button
