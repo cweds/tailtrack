@@ -33,7 +33,7 @@ const ACTIVITY_CONFIG = {
     emoji: '🍖', 
     label: 'Feed', 
     spamThreshold: 10 * 1000,
-    gradient: 'pup-pink-gradient',
+    gradient: 'bg-orange-100 hover:bg-orange-200',
     petTypes: ['dog', 'cat', 'bird', 'hamster', 'rabbit', 'guinea pig', 'fish']
   },
   'Bathroom': { 
