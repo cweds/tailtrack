@@ -24,6 +24,7 @@ const PET_PRIMARY_ACTIVITIES = {
   rabbit: ['Fed', 'Clean Cage'],
   'guinea pig': ['Fed', 'Clean Cage'],
   fish: ['Fed', 'Clean Tank'],
+  other: ['Fed'],
 } as const;
 
 // Define activity configurations
@@ -34,7 +35,7 @@ const ACTIVITY_CONFIG = {
     label: 'Feed', 
     spamThreshold: 10 * 1000,
     gradient: 'bg-red-200 hover:bg-red-300',
-    petTypes: ['dog', 'cat', 'bird', 'hamster', 'rabbit', 'guinea pig', 'fish']
+    petTypes: ['dog', 'cat', 'bird', 'hamster', 'rabbit', 'guinea pig', 'fish', 'other']
   },
   'Bathroom': { 
     icon: Home, 
@@ -125,10 +126,7 @@ export function ActionButtons({ canTakeAction, onAction, onQuickAction, selected
     const uniquePetTypes = Array.from(new Set(selectedPetTypes));
     
     // Filter activities that are relevant to selected pets
-    const relevantActivities = Object.entries(ACTIVITY_CONFIG).filter(([actionKey, config]) => {
-      // Fed is always available for any pet type
-      if (actionKey === 'Fed') return true;
-      // Other activities only available if pet type is explicitly supported
+    const relevantActivities = Object.entries(ACTIVITY_CONFIG).filter(([_, config]) => {
       return selectedPetTypes.some(petType => config.petTypes.includes(petType));
     });
     
