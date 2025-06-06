@@ -192,7 +192,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const householdId = parseInt(req.params.householdId);
       const timezone = req.query.timezone as string || 'UTC';
       const activities = await storage.getHouseholdTodayActivities(householdId, timezone);
-      const hasPrevious = await storage.hasHouseholdPreviousActivities(householdId);
+      const hasPrevious = await storage.hasHouseholdPreviousActivities(householdId, timezone);
       res.json({ activities, hasPrevious });
     } catch (error) {
       // Error logging removed for production security

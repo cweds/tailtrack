@@ -62,7 +62,7 @@ export interface IStorage {
   getHouseholdAllActivities(householdId: number): Promise<(Activity & { username: string })[]>;
   getHouseholdTodayActivities(householdId: number, timezone?: string): Promise<(Activity & { username: string })[]>;
   getHouseholdCurrentCarePeriodActivities(householdId: number, timezone?: string): Promise<(Activity & { username: string })[]>;
-  hasHouseholdPreviousActivities(householdId: number): Promise<boolean>;
+  hasHouseholdPreviousActivities(householdId: number, timezone?: string): Promise<boolean>;
   
   // Password reset methods
   createPasswordResetToken(userId: number, token: string, expiresAt: Date): Promise<void>;
@@ -469,18 +469,22 @@ export class DatabaseStorage implements IStorage {
     }));
   }
 
-  async hasHouseholdPreviousActivities(householdId: number): Promise<boolean> {
+  async hasHouseholdPreviousActivities(householdId: number, timezone: string = 'UTC'): Promise<boolean> {
     const database = initializeDatabase();
-    // Get start of today - simplified approach
+    // Get start of today in user's timezone
     const now = new Date();
-    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const userNow = new Date(now.toLocaleString("en-US", { timeZone: timezone }));
+    const startOfToday = new Date(userNow.getFullYear(), userNow.getMonth(), userNow.getDate());
+    
+    // Convert to UTC for database comparison
+    const startOfTodayUTC = new Date(startOfToday.toLocaleString("en-US", { timeZone: "UTC" }));
     
     // Check if any activities exist before today
     const result = await database.select({ id: activities.id })
       .from(activities)
       .where(and(
         eq(activities.householdId, householdId),
-        lt(activities.timestamp, startOfToday)
+        lt(activities.timestamp, startOfTodayUTC)
       ))
       .limit(1);
     
