@@ -346,20 +346,13 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                 <label className="text-sm font-medium text-gray-700 block mb-2">Time:</label>
                 <div className="relative">
                   <input
-                    ref={(ref) => {
-                      if (ref) {
-                        ref.addEventListener('click', () => {
-                          ref.showPicker?.();
-                        });
-                      }
-                    }}
                     type="datetime-local"
                     value={editFormData.timestamp}
                     onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
-                    className="flex items-center justify-center w-full text-sm border-2 rounded-lg pl-10 pr-10 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 cursor-pointer shadow-sm font-medium [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden"
+                    className="flex items-center justify-center w-full text-sm border-2 rounded-lg px-3 py-3 md:pl-3 md:pr-3 pl-10 pr-10 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 cursor-pointer shadow-sm font-medium md:[&::-webkit-calendar-picker-indicator]:inline [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-inner-spin-button]:hidden [&::-webkit-clear-button]:hidden"
                     style={{ fontSize: '16px' }}
                   />
-                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-500 pointer-events-none" />
+                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-blue-500 pointer-events-none md:hidden" />
                 </div>
               </div>
               <div>
