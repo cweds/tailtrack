@@ -276,14 +276,14 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 flex-shrink-0 ml-2">
+                    <div className="flex items-center justify-center gap-1 flex-shrink-0 ml-2">
                       {isOwner ? (
                         <>
                           <Button
                             variant="ghost"
                             size="sm"
                             onClick={() => startEditing(activity)}
-                            className="text-blue-600 text-xs px-2 py-1 rounded hover:bg-blue-50"
+                            className="text-blue-600 text-xs px-2 py-1 rounded hover:bg-blue-50 flex items-center justify-center"
                           >
                             Edit
                           </Button>
@@ -292,7 +292,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                             size="sm"
                             onClick={() => deleteActivityMutation.mutate(activity.id)}
                             disabled={deleteActivityMutation.isPending}
-                            className="text-red-600 text-xs px-2 py-1 rounded hover:bg-red-50"
+                            className="text-red-600 text-xs px-2 py-1 rounded hover:bg-red-50 flex items-center justify-center"
                           >
                             <X className="h-3 w-3" />
                           </Button>
@@ -302,7 +302,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
                           variant="ghost"
                           size="sm"
                           onClick={() => setViewingNoteId(activity.id)}
-                          className="text-blue-600 text-xs px-2 py-1 rounded hover:bg-blue-50"
+                          className="text-blue-600 text-xs px-2 py-1 rounded hover:bg-blue-50 flex items-center justify-center"
                         >
                           View
                         </Button>
