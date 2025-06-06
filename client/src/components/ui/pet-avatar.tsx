@@ -20,6 +20,7 @@ interface PetAvatarProps {
   showEditButton?: boolean;
   onEdit?: () => void;
   className?: string;
+  isSelected?: boolean;
 }
 
 export function PetAvatar({ 
@@ -27,7 +28,8 @@ export function PetAvatar({
   size = "md", 
   showEditButton = false, 
   onEdit,
-  className = ""
+  className = "",
+  isSelected = false
 }: PetAvatarProps) {
   const sizeClasses = {
     sm: "w-9 h-9",
@@ -74,7 +76,8 @@ export function PetAvatar({
         <div 
           className={cn(
             sizeClasses[size],
-            "rounded-full border-2 border-gray-200 transition-opacity bg-gradient-to-br from-gray-50 to-gray-100",
+            "rounded-full transition-opacity flex items-center justify-center",
+            isSelected ? "border-0 bg-transparent" : "border-2 border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100",
             showEditButton && "group-hover:opacity-75"
           )}
           style={{ 

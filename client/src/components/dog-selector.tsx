@@ -156,6 +156,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
                 <PetAvatar 
                   pet={pet} 
                   size="md" 
+                  isSelected={selectedDogs.has(pet)}
                   className={cn(
                     "mx-auto",
                     selectedDogs.has(pet) ? "ring-2 ring-white" : ""
@@ -186,6 +187,7 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
               <PetAvatar 
                 pet={pet} 
                 size="sm" 
+                isSelected={selectedDogs.has(pet)}
                 className={cn(
                   selectedDogs.has(pet) ? "ring-2 ring-white" : ""
                 )}
