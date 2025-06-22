@@ -162,12 +162,29 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
 
   const saveChanges = () => {
     if (editingId) {
+      // Validate that the timestamp is not in the future
+      const selectedTime = new Date(editFormData.timestamp);
+      const now = new Date();
+      
+      if (selectedTime > now) {
+        toast({
+          title: "Invalid time",
+          description: "Activity time cannot be in the future.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Convert local datetime-local value to ISO string for server
+      const isoTimestamp = selectedTime.toISOString();
+      
       updateActivityMutation.mutate({
         activityId: editingId,
-        timestamp: editFormData.timestamp,
+        timestamp: isoTimestamp,
         notes: editFormData.notes
       });
     }
+    setEditingId(null);
   };
 
   const toggleNoteView = (activityId: number) => {
