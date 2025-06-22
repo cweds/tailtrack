@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Pet } from "@shared/schema";
 import { Grid3X3, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAddPet } from "@/contexts/add-pet-context";
 import { EmptyState } from "@/components/ui/empty-state";
 import { PetAvatar } from "@/components/ui/pet-avatar";
