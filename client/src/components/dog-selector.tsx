@@ -25,6 +25,13 @@ export function DogSelector({ selectedDogs, onDogToggle, onSelectBothDogs, dogs,
     return (saved === 'grid' || saved === 'scroll') ? saved : 'grid';
   });
 
+  // Force grid layout when pets count drops to 3 or fewer
+  useEffect(() => {
+    if (dogs.length <= 3 && layoutType === 'scroll') {
+      setLayoutType('grid');
+    }
+  }, [dogs.length, layoutType]);
+
   // Show loading state
   if (isLoading) {
     return (
