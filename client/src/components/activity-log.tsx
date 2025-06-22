@@ -353,15 +353,7 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">Time:</label>
-                <div 
-                  className="relative cursor-pointer"
-                  onClick={(e) => {
-                    const input = e.currentTarget.querySelector('input[type="datetime-local"]') as HTMLInputElement;
-                    if (input && input.showPicker) {
-                      input.showPicker();
-                    }
-                  }}
-                >
+                <div className="relative">
                   <input
                     type="datetime-local"
                     value={editFormData.timestamp}
