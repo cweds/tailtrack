@@ -353,12 +353,21 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-gray-700 block mb-2">Time:</label>
-                <div className="relative">
+                <div 
+                  className="relative cursor-pointer"
+                  onClick={(e) => {
+                    const input = e.currentTarget.querySelector('input[type="datetime-local"]') as HTMLInputElement;
+                    if (input) {
+                      input.focus();
+                      input.click();
+                    }
+                  }}
+                >
                   <input
                     type="datetime-local"
                     value={editFormData.timestamp}
                     onChange={(e) => setEditFormData(prev => ({ ...prev, timestamp: e.target.value }))}
-                    className="w-full text-sm border-2 rounded-lg px-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 shadow-sm"
+                    className="w-full text-sm border-2 rounded-lg px-3 py-3 border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white text-gray-900 shadow-sm cursor-pointer"
                     style={{ fontSize: '16px' }}
                   />
                 </div>
