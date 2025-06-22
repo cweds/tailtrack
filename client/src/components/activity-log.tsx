@@ -139,8 +139,17 @@ export function ActivityLog({ activities, pets, hasPreviousActivities = false }:
   // Helper functions for editing
   const startEditing = (activity: DatabaseActivity) => {
     const timestamp = activity.timestamp instanceof Date ? activity.timestamp : new Date(activity.timestamp);
+    
+    // Format for datetime-local input in local timezone (not UTC)
+    const year = timestamp.getFullYear();
+    const month = String(timestamp.getMonth() + 1).padStart(2, '0');
+    const day = String(timestamp.getDate()).padStart(2, '0');
+    const hours = String(timestamp.getHours()).padStart(2, '0');
+    const minutes = String(timestamp.getMinutes()).padStart(2, '0');
+    const localDateTimeString = `${year}-${month}-${day}T${hours}:${minutes}`;
+    
     setEditFormData({
-      timestamp: timestamp.toISOString().slice(0, 16), // Format for datetime-local input
+      timestamp: localDateTimeString,
       notes: activity.notes || ''
     });
     setEditingId(activity.id);
