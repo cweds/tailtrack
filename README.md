@@ -2,6 +2,8 @@
 
 A comprehensive multi-pet care management application that provides an intuitive and engaging platform for pet owners to track, manage, and celebrate their pets' daily activities and health across households.
 
+https://tailtrack.app/
+
 **Caring for any pet, made simple.**
 
 
@@ -35,6 +37,8 @@ A comprehensive multi-pet care management application that provides an intuitive
 - **Resend** - Transactional email service for password resets
 
 ## 📱 Mobile & PWA Support
+
+https://tailtrack.app/
 
 TailTrack is designed as a Progressive Web App with:
 
