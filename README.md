@@ -34,49 +34,6 @@ A comprehensive multi-pet care management application that provides an intuitive
 - **bcryptjs** - Secure password hashing
 - **Resend** - Transactional email service for password resets
 
-  
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-- Supabase account and project
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/yourusername/tailtrack.git
-   cd tailtrack
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Environment setup**
-   ```bash
-   cp .env.example .env
-   ```
-   Add your Supabase database URL:
-   ```
-   DATABASE_URL="postgresql://[user]:[password]@[host]:[port]/[database]"
-   ```
-
-4. **Database setup**
-   ```bash
-   npm run db:push
-   ```
-
-5. **Start development server**
-   ```bash
-   npm run dev
-   ```
-
-Visit `http://localhost:3000` to view the application.
-
-
 ## 📱 Mobile & PWA Support
 
 TailTrack is designed as a Progressive Web App with:
